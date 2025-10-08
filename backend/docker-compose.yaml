@@ -1,0 +1,15 @@
+services:
+  mysql:
+    env_file: ".env"
+    image: mysql:latest
+    container_name: overtime-db
+    environment:
+      MYSQL_DATABASE: "overtime"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./seed:/docker-entrypoint-initdb.d
+
+volumes:
+  mysql:
