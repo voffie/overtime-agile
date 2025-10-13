@@ -1,20 +1,17 @@
 import express from "express";
 import cors from "cors";
 
-import { db } from "./db/index.js";
+import { PlayerRouter } from "./routes/playerRoutes.js";
 
 const app = express();
 
-try {
-  const [results, fields] = await db.query("SELECT * FROM `player`");
-
-  console.log(results); // results contains rows returned by server
-  console.log(fields); // fields contains extra meta data about results, if available
-} catch (err) {
-  console.log(err);
-}
-
+// Express settings
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Routes
+app.use(PlayerRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
