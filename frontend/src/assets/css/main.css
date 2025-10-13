@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --background: #000;
+  --text: #FFF;
+  --container-bg: #5b5c75;
+  --button-bg: #F3CDBF;
+  --button-text: #000;
+  --border: gray;
+
+
+  /* Extra Figma colors (group needs to decide variable names if they are used)
+  #5f4a36;
+  #85634a;
+  #9d806a;
+  #4a4e52;
+  #67503a;
+  #2D2D2D;
+  #afaca8;
+  ##767676;
+  #b58c8c
+*/
+}
+
+*,
+html {
+  border: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  line-height: 200%;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+}
