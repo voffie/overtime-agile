@@ -1,40 +1,84 @@
 <script setup>
+import { ref, reactive } from "vue"
 import Button from "@/components/Button.vue"
+
+const isLogin = ref(true)
+
+const formValues = reactive({
+  username: "",
+  password: "",
+  repeatPassword: ""
+})
 
 const test = () => {
   console.log("working")
+  console.log(formValues.username)
 
 }
-const test2 = () => {
+const registrationForm = () => {
   console.log("working 2")
+  isLogin.value = !isLogin.value
 
 }
 </script>
 
 <template>
-  <h1 class="login-header">Overtime</h1>
-  <section class="login-page">
+  <h1 class="login-header">{{ isLogin ? "Overtime" : "Credentials" }}</h1>
+  <section v-if="isLogin" class="login-page">
     <section class="form-container">
-      <form class="form-login">
+      <form class="form-login" @submit.prevent="test">
         <fieldset class="form-fieldset">
           <legend class="form-legend">Welcome</legend>
           <div class="form-field">
             <label class="form-label" for="username"><img src="@/assets/img/usernameIcon.svg"
                 alt="username icon"></label>
-            <input class="form-input" type="text" id="username" name="username" placeholder="Enter username">
+            <input v-model="formValues.username" class="form-input" type="text" id="username" name="username"
+              placeholder="Enter username" required>
           </div>
           <div class="form-field">
             <label class="form-label" for="password"><img src="@/assets/img/keyIcon.svg" alt="key icon"></label>
-            <input class="form-input" type="text" id="password" name="password" placeholder="Enter password">
+            <input class="form-input" type="text" id="password" name="password" placeholder="Enter password" required>
           </div>
         </fieldset>
         <div class="form-buttons">
-          <Button class="form-button" text="LOG IN" @click.prevent="test" />
-          <Button class="form-button" text="CREATE ACCOUNT" @click.prevent="test2" />
+          <Button class="form-button" text="LOG IN" type="submit" />
+          <Button class="form-button" text="CREATE ACCOUNT" @click.prevent="registrationForm" />
         </div>
       </form>
     </section>
   </section>
+
+  <section v-else class="registration-page">
+    <section class="registration-container">
+      <form class="form-registration" @submit.prevent="test">
+        <fieldset class="registration-fieldset">
+          <legend class="form-legend">Enter Your Credentials</legend>
+          <div class="form-field">
+            <label class="form-label" for="username"><img src="@/assets/img/usernameIcon.svg"
+                alt="username icon"></label>
+            <input class="form-input" type="text" id="username" name="username" placeholder="Enter username" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="password"><img src="@/assets/img/keyIcon.svg" alt="key icon"></label>
+            <input class="form-input" type="text" id="password" name="password" placeholder="Enter password" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="password"><img src="@/assets/img/keyIconRepeat.svg"
+                alt="two arrows icon circular pattern"></label>
+            <input class="form-input" type="text" id="password" name="password" placeholder="Repeat password" required>
+          </div>
+        </fieldset>
+
+        <div class="form-buttons">
+          <Button class="form-button" text="GO BACK TO LOG IN" @click.prevent="registrationForm" />
+          <Button class="form-button" text="CREATE ACCOUNT" type="submit" />
+        </div>
+      </form>
+    </section>
+
+  </section>
+
+
 </template>
 
 
@@ -43,7 +87,8 @@ const test2 = () => {
   text-align: center;
 }
 
-.login-page {
+.login-page,
+.registration-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,7 +97,8 @@ const test2 = () => {
 
 }
 
-.form-login {
+.form-login,
+.form-registration {
   border-radius: 2rem;
   background: var(--container-bg);
   margin: 1rem;
@@ -62,6 +108,7 @@ const test2 = () => {
   font-size: x-large;
   font-weight: 700;
   margin: 0.5rem auto;
+  text-align: center;
 
 }
 
