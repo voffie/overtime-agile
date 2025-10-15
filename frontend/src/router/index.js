@@ -6,11 +6,13 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
+      meta: {title: "Overtime"}
     },
     {
       path: "/game-intro",
       name: "game-intro",
-      component: () => import("@/views/GameIntro.vue")
+      component: () => import("@/views/GameIntro.vue"),
+      meta: {title: "Game Intro"}
     },
   ],
 })

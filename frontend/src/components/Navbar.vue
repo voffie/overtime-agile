@@ -1,24 +1,15 @@
 <script setup>
 import { RouterLink, useRoute} from 'vue-router'
-import { ref, watch} from "vue"
+import { computed } from "vue"
 import Button from "@/components/Button.vue"
 
 const route = useRoute();
-const headerText = ref("Overtime")
-
-watch(
-  () => route.fullPath, (newPath) => {
-    if (newPath === "/") {
-      headerText.value = "Overtime"
-    } else if (newPath === "/game-intro") {
-      headerText.value = "Game Intro"
-    }
-  }, {immediate: true})
+const title = computed(() => route.meta.title || "Overtime")
 </script>
 
 <template>
   <nav>
-    <p>{{ headerText }}</p>
+    <p>{{ title }}</p>
     <RouterLink to="/">
       <Button text="Home" />
     </RouterLink>
