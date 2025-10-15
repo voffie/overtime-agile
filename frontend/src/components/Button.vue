@@ -10,7 +10,9 @@ const props = defineProps(["text"])
 button {
   cursor: pointer;
   width: fit-content;
-  padding: 10px;
+  height: fit-content;
+  padding-inline: 10px;
+  padding-block: 0;
   color: var(--button-text);
   background-color: var(--button-bg);
   border-radius: 10px;

@@ -26,6 +26,7 @@ header {
 main {
   /* Calculates remaining height based on Header (80px) for mobile */
   height: calc(100vh - 80px);
+  overflow-y: scroll;
 }
 
 footer {
