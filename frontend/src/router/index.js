@@ -14,6 +14,12 @@ const router = createRouter({
       component: () => import("@/views/GameIntro.vue"),
       meta: {title: "Game Intro"}
     },
+    {
+      path: "/room/template",
+      name: "template-room",
+      component: () => import("@/views/TemplateRoom.vue"),
+      meta: {title: "Template Room"}
+    },
   ],
 })
 
