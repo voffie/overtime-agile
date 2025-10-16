@@ -13,11 +13,19 @@ const formValues = reactive({
 const test = () => {
   console.log("working")
   console.log(formValues.username)
+  isValidUsername()
 
 }
 const registrationForm = () => {
-  console.log("working 2")
+  console.log("Navigates to other page")
   isLogin.value = !isLogin.value
+
+}
+
+const isValidUsername = (userNameEntered) => {
+  const patternRegex = /^[A-Za-zÅÄÖåäö0-9. ]+$/;
+  const miniLength = 5;
+  return patternRegex.test(userNameEntered) && userNameEntered.length >= miniLength;
 
 }
 </script>
@@ -99,20 +107,28 @@ const registrationForm = () => {
   text-align: center;
 }
 
-.login-page,
-.registration-page {
+.form-container,
+.registration-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1rem;
+  margin: 1rem auto;
   flex-direction: column;
+  border-radius: 2rem;
+  background: var(--container-bg);
+  width: clamp(12.5rem, 100%, 28rem);
+
+}
+
+.login-page,
+.registration-page {
+  width: 100%;
 
 }
 
 .form-login,
 .form-registration {
-  border-radius: 2rem;
-  background: var(--container-bg);
+  width: 100%;
   margin: 1rem;
 }
 
@@ -153,7 +169,6 @@ const registrationForm = () => {
 }
 
 .form-button {
-  min-width: 12.5rem;
   width: 100%;
   margin: 1rem auto;
   font-size: larger;
@@ -171,8 +186,13 @@ const registrationForm = () => {
 
 @media screen and (min-width: 768px) {
 
-  .form-button {
-    width: 25rem;
+
+  .form-container,
+  .registration-container {
+    width: clamp(20rem, 70%, 42rem);
+    margin: 1rem auto;
+    border-radius: 2rem;
   }
+
 }
 </style>
