@@ -1,12 +1,12 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, watch } from "vue";
 import Button from "@/components/Button.vue"
 import PuzzleContainer from "@/components/PuzzleContainer.vue"
 
 // Only use ref() when you want something to be reactive, aka. when the value can change and you want Vue to react to 
 const colors = ["red", "green", "pink", "purple", "grey", "orange", "blue", "yellow", "brown"]
 const sequence = ref([])
-const userSequence = ref([])
+const playerSequence = ref([])
 
 const currentSequenceColor = ref(null)
 
@@ -17,40 +17,142 @@ let activePuzzle = ref(false)
 let activeCountdown = ref(false)
 let activeSequence = ref(false)
 let activePlayerTurn = ref(false)
-
-let currentSquare = ref("")
+let gameOver = ref(false)
 
 // Start Game
 async function startPuzzle(event) {
 
-  // Reset all values
-  resetPuzzle()
-  
-  // Add random color to sequence
-  addRandomColorToSequence()
-  console.log(sequence.value)
+  // Reset sequences
+  sequence.value = []
+  playerSequence.value = []
 
   // Set puzzle to active
   activePuzzle.value = true
 
-  // Play countdown 3, 2, 1..
-  await playCountdown(3)
+  // Play 3 rounds
+  for(let round = 0; round < 3; round++){
 
-  // Play the correct color sequence
-  await playSequence()
+    // Setup the sequence area (countdown, sequence, status-text)
+    await setupSequence()
+    console.log("Correct sequence:")
+    console.log(sequence.value)
 
-  puzzleStatus.value = "GO!"
+    // Watch player sequence and evaluate if correct
+    await watchPlayerSequence()
+    console.log("Player sequence:")
+    console.log(playerSequence.value)
 
-  // Get player answer
-  getPlayerSequence()
+    // Reset playerSequence for next round
+      playerSequence.value = []
+
+    if(gameOver.value) {
+      console.log("Game over! Wrong input!")
+      break
+    } else if(round < 2) {
+      console.log("Correct! Next round...") 
+    }
+  }
+
+  activePuzzle.value = false
+
+  if(!gameOver.value) {
+    // Continue to next room
+    console.log("Puzzle complete! You won 3 rounds!")
+  } else {
+    // Restart game
+    console.log("Restart game")
+  }
 }
 
-function getPlayerSequence() {
-  activePlayerTurn.value = true
+async function setupSequence() {
+  // Add random color to sequence
+  addRandomColorsToSequence(2);
+
+  // Play countdown 3, 2, 1..
+  await playCountdown(3);
+
+  // Play the correct color sequence
+  await playSequence();
+
+  puzzleStatus.value = "GO!";
+}
+
+/* 
+  Player needs to click the same number of squares as the sequence
+  Each click is processed by the @click event through function squareClicked(color), 
+  where the squares color is added to the playerSequence array.
+  
+  watch() lets you observe changes to reactive values and run logic when those values change.
+  Syntax: watch(source, callback, options?)
+  source = What you want to watch
+  callback = What to do when it changes
+  options = Optional controls to add (like immediate or deep)
+  always returns a stop function that lets you stop watching by calling it.
+  */
+function watchPlayerSequence() {
+
+  return new Promise( resolve => {
+    activePlayerTurn.value = true
+
+    const stop = watch(
+      // source = watch playerSequence length
+      () => playerSequence.value.length,
+      // callback = every time playerSequence length change (every time player clicks a square when activePlayerTurn)
+      (newLength) => { 
+
+        // the watcher checks if the color of the square the player clicked 
+        // matches the sequence color at the same index
+        // if not, stop watching and game over.
+        const currentIndex = newLength-1
+        const expectedColor = sequence.value[currentIndex]
+        const actualColor = playerSequence.value[currentIndex]
+
+        if(actualColor !== expectedColor) {
+          stop()
+          gameOver.value = true
+          activePlayerTurn.value = false
+          sequence.value = []
+          resolve()
+          return
+        }
+
+        // If the actualColor is equal to the expectedColor then continue until 
+        // the length of the playerSequence is the same as the correct sequence,
+        // stop watching and resolve the promise (letting the await continue).
+        if (newLength === sequence.value.length) {
+          stop()
+          activePlayerTurn.value = false
+          resolve()
+        }
+      }
+    )
+  })
+}
+
+function squareClicked(color) {
+  // Check if it is the players turn to click the sequence, if not return
+  if(!activePlayerTurn.value) return
+
+  // Adds the color of the square that the player clicks if it is a activePlayerTurn
+  playerSequence.value.push(color)
+}
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+function addRandomColorsToSequence(amount){
+
+  for(let i = 0; i < amount; i++) {
+    const randomColor = colors[Math.floor(Math.random() * colors.length)]
+    sequence.value.push(randomColor)
+  }
 }
 
 async function playSequence(){
+
   activeSequence.value = true
+
   for(const color of sequence.value) {
     console.log(color)
 
@@ -67,6 +169,7 @@ async function playSequence(){
     // clear the sequence-square
     currentSequenceColor.value = null
   }
+
   await wait(500)
   activeSequence.value = false
 }
@@ -79,28 +182,6 @@ async function playCountdown(from){
   }
   countdownText.value = null
   activeCountdown.value = false
-}
-
-function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
-
-function addRandomColorToSequence(){
-  const randomColor = colors[Math.floor(Math.random() * colors.length)]
-  sequence.value.push(randomColor)
-  sequence.value.push("red")
-  sequence.value.push("green")
-}
-
-function resetPuzzle(){
-  sequence.value = []
-  userSequence.value = []
-}
-
-function squareClicked(event) {
-  const square = event.currentTarget
-  const squareColor = square.dataset.color
-  console.log(squareColor)
 }
 </script>
 
@@ -148,15 +229,7 @@ function squareClicked(event) {
         </div>
 
         <div class="container-keypad">
-            <div class="square red" data-color="red" @click="squareClicked"></div>
-            <div class="square green" data-color="green" @click="squareClicked"></div>
-            <div class="square pink" data-color="pink" @click="squareClicked"></div>
-            <div class="square purple" data-color="purple" @click="squareClicked"></div>
-            <div class="square grey" data-color="grey" @click="squareClicked"></div>
-            <div class="square orange" data-color="orange" @click="squareClicked"></div>
-            <div class="square blue" data-color="blue" @click="squareClicked"></div>
-            <div class="square yellow" data-color="yellow" @click="squareClicked"></div>
-            <div class="square brown" data-color="brown" @click="squareClicked"></div>
+          <div v-for="color in colors" :key="color" class="square" :class="color" @click="squareClicked(color)"></div>
         </div>
 
         <!-- <Button text="Puzzle Complete" @click="completed()"/> -->
