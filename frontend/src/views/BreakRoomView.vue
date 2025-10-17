@@ -7,23 +7,82 @@ import PuzzleContainer from "@/components/PuzzleContainer.vue"
 const colors = ["red", "green", "pink", "purple", "grey", "orange", "blue", "yellow", "brown"]
 const sequence = ref([])
 const userSequence = ref([])
+
 const currentSequenceColor = ref(null)
-let puzzleActive = ref(false)
+
+const countdownText = ref("")
+const puzzleStatus = ref("")
+
+let activePuzzle = ref(false)
+let activeCountdown = ref(false)
+let activeSequence = ref(false)
+let activePlayerTurn = ref(false)
+
 let currentSquare = ref("")
 
 // Start Game
-function startPuzzle(event) {
+async function startPuzzle(event) {
 
-  // Set puzzle to active and reset all values
-  puzzleActive.value = true;
+  // Reset all values
   resetPuzzle()
   
   // Add random color to sequence
   addRandomColorToSequence()
   console.log(sequence.value)
 
-  // Play sequence
-  playSequence()
+  // Set puzzle to active
+  activePuzzle.value = true
+
+  // Play countdown 3, 2, 1..
+  await playCountdown(3)
+
+  // Play the correct color sequence
+  await playSequence()
+
+  puzzleStatus.value = "GO!"
+
+  // Get player answer
+  getPlayerSequence()
+}
+
+function getPlayerSequence() {
+  activePlayerTurn.value = true
+}
+
+async function playSequence(){
+  activeSequence.value = true
+  for(const color of sequence.value) {
+    console.log(color)
+
+    // wait for 0.5 sec
+    // (the await pauses the execution of its surrounding async function until the promise is settled)
+    await wait(500)
+
+    // set the sequence-square to this color
+    currentSequenceColor.value = color 
+
+    // wait for 1 sec
+    await wait(1000)
+
+    // clear the sequence-square
+    currentSequenceColor.value = null
+  }
+  await wait(500)
+  activeSequence.value = false
+}
+
+async function playCountdown(from){
+  activeCountdown.value = true
+  for(let i = from; i > 0; i--){
+    countdownText.value = i
+    await wait(800)
+  }
+  countdownText.value = null
+  activeCountdown.value = false
+}
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 function addRandomColorToSequence(){
@@ -33,29 +92,6 @@ function addRandomColorToSequence(){
   sequence.value.push("green")
 }
 
-async function playSequence(){
-  for(const color of sequence.value) {
-    console.log(color)
-
-    // set the sequence-square to this color
-    currentSequenceColor.value = color 
-
-    // wait for 2 sec
-    await wait(2000)
-
-    // clear the sequence-square
-    currentSequenceColor.value = "sequence-square"
-  }
-}
-
-function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
-
-/* async function wait(ms) {
-  await new Promise(resolve => setTimeout(resolve, ms));
-} */
-
 function resetPuzzle(){
   sequence.value = []
   userSequence.value = []
@@ -63,9 +99,8 @@ function resetPuzzle(){
 
 function squareClicked(event) {
   const square = event.currentTarget
-  const index = square.dataset.index
-  currentSquare.value = index
-  console.log(index)
+  const squareColor = square.dataset.color
+  console.log(squareColor)
 }
 </script>
 
@@ -84,11 +119,32 @@ function squareClicked(event) {
 
         <div class="container-sequence">
 
-          <button @click="startPuzzle" v-if="!puzzleActive">START</button>
+          <button @click="startPuzzle" v-if="!activePuzzle">START</button>
 
-          <div class="sequence-active" v-if="puzzleActive">
-            <div class="square sequence-square" :class="currentSequenceColor"></div>
-          </div> 
+          <!--
+          Vue only applies transitions when an element enters or leaves the DOM.
+          :key="countdownText" tells Vue to treat each new number as a different element (removes old and add new).
+          :key is how you force Vue to treat each change as a new element
+
+          <Transition> wraps this replacement and adds CSS classes
+          (e.g. fade-enter-active, fade-leave-active) to animate the fade effect.
+          Without :key, you're just changing text — no fade
+          -->
+          <Transition name="fade">
+            <div class="square countdown-text" :key="countdownText" v-if="activeCountdown">
+              {{ countdownText }}
+            </div>
+          </Transition>
+
+          <Transition name="fade">
+            <div class="square sequence" :class="currentSequenceColor" :key="currentSequenceColor" v-if="activeSequence"></div>
+          </Transition>
+          
+          <Transition name="fade">
+            <div class="square status-text" :key="puzzleStatus" v-if="activePlayerTurn">
+                {{ puzzleStatus }}
+            </div>
+          </Transition>
         </div>
 
         <div class="container-keypad">
@@ -130,9 +186,12 @@ function squareClicked(event) {
 }
 
 .container-sequence {
-  border: 1px solid red;
+  position: relative;
+  width: 6rem;
+  height: 6rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
@@ -145,7 +204,21 @@ function squareClicked(event) {
   gap: 1rem;
 }
 
+.countdown-text, 
+.status-text,
+.sequence  {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: lightgrey;
+  font-size: 3rem;
+}
+
 .square {
+  border: 2px solid lightgrey;
   width: 6rem;
   height: 6rem;
   border-radius: 8px;
@@ -153,7 +226,6 @@ function squareClicked(event) {
 }
 
 /* Color classes */
-.sequence-square { border: 2px solid white;}
 .red { background-color: #FF0000; }
 .grey { background-color: #5f5f5f; }
 .green { background-color: #0faf35; }
@@ -163,5 +235,15 @@ function squareClicked(event) {
 .blue { background-color: #007bff; }
 .yellow { background-color: #fff200; }
 .brown { background-color: #4e342c; }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 
 </style>
