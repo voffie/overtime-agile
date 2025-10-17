@@ -1,16 +1,44 @@
 <script setup>
 import { defineProps, defineEmits, computed } from "vue"
 
+
 const props = defineProps({
-  labelFor: "",
-  iconSrc: "",
-  iconAlt: "",
-  'model-value': "",
-  inputType: "",
-  name: "",
-  placeholder: "",
-  required: true,
-  warningMessage: "",
+  labelFor: {
+    type: String,
+    required: true
+  },
+  iconSrc: {
+    type: String,
+    required: true
+  },
+  iconAlt: {
+    type: String,
+    default: ""
+  },
+  modelValue: {
+    type: String,
+    default: ""
+  },
+  inputType: {
+    type: String,
+    default: "text"
+  },
+  name: {
+    type: String,
+    default: ""
+  },
+  placeholder: {
+    type: String,
+    default: ""
+  },
+  required: {
+    type: Boolean,
+    default: true
+  },
+  warningMessage: {
+    type: String,
+    default: ""
+  }
 });
 
 

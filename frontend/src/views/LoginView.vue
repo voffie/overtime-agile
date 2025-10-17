@@ -1,10 +1,11 @@
 <script setup>
 import { useRouter } from "vue-router"
 import { ref, reactive } from "vue"
-import Button from "@/components/Button.vue"
 import FormField from "@/components/FormField.vue"
+import FormButton from "@/components/FormButton.vue"
 import usernameIcon from "@/assets/img/usernameIcon.svg"
 import keyIcon from "@/assets/img/keyIcon.svg"
+import keyIconRepeat from "@/assets/img/keyIconRepeat.svg"
 
 const isLogin = ref(true)
 const routeToNextPage = useRouter();
@@ -31,12 +32,12 @@ const formValidator = (mode = "login") => {
   errorMessages.repeatPassword = "";
 
   if (!usernameValidator) {
-    errorMessages.username = ">>> Username requires: 5+ characters. Allowed:  A-Za-z, 0-9, space, and . <<<"
+    errorMessages.username = ">>> Username requires: 5+ characters. Allows:  A-Za-z, 0-9, space, and . <<<"
     validForm = false;
   }
 
   if (!passwordValidator) {
-    errorMessages.password = ">>> Password requires: 8+ characters. Allowed:  A-Za-z, 0-9, symbols:  @ ! ? . and space. <<<"
+    errorMessages.password = ">>> Password requires: 8+ characters. Allows:  A-Za-z, 0-9, symbols: _  @ ! ? . and space. <<<"
     validForm = false;
   }
 
@@ -68,6 +69,15 @@ const handlesRegistration = () => {
 
   }
 
+}
+
+const handlesSubmit = (isLogin) => {
+  if (isLogin) {
+    handlesLogin()
+
+  } else {
+    handlesRegistration()
+  }
 }
 
 const changeForm = () => {
@@ -107,74 +117,31 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
   return userPasswordEntered === repeatedEnteredPassword;
 
 }
-
-
 </script>
+
 
 <template>
   <section class="home-page">
     <h1 class="login-header">{{ isLogin ? "Overtime" : "Credentials" }}</h1>
-    <section v-if="isLogin" class="login-page">
+    <section class="login-page">
       <section class="form-container">
-        <form class="form-login" @submit.prevent="handlesLogin">
+        <form class="form-login" @submit.prevent="handlesSubmit(isLogin)">
           <fieldset class="form-fieldset">
-            <legend class="form-legend">Welcome</legend>
-            <FormField v-model:model-value="formValues.username" labelFor="username" :iconSrc="usernameIcon"
-              iconAlt="username icon" inputType="text" name="username" placeholder="Enter username" :required="true"
-              :warningMessage="errorMessages.username" />
-            <!-- <div class="form-field"> -->
-            <!--   <label class="form-label" for="password"><img src="@/assets/img/keyIcon.svg" alt="key icon"></label> -->
-            <!--   <input v-model="formValues.password" class="form-input" type="password" id="text" name="password" -->
-            <!--     placeholder="Enter password" required> -->
-            <!-- </div> -->
-            <!-- <p class="warning-message" v-if="errorMessages.password"> <code> {{ errorMessages.password }} </code></p> -->
-            <FormField v-model:model-value="formValues.password" labelFor="password" :iconSrc="keyIcon"
-              iconAlt="key icon" inputType="password" name="password" placeholder="Enter password" :required="true"
-              :warningMessage="errorMessages.password" />
+            <legend class="form-legend">{{ isLogin ? "Welcome" : "New Account" }}</legend>
+            <FormField v-model="formValues.username" label-for="username" :icon-src="usernameIcon"
+              icon-alt="username icon" input-type="text" name="username" placeholder="Enter username" :required="true"
+              :warning-message="errorMessages.username" />
+            <FormField v-model="formValues.password" label-for="password" :icon-src="keyIcon" icon-alt="key icon"
+              input-type="password" name="password" placeholder="Enter password" :required="true"
+              :warning-message="errorMessages.password" />
+            <FormField v-if="!isLogin" v-model="formValues.repeatPassword" label-for="repeatpassword"
+              :icon-src="keyIconRepeat" icon-alt="arrows in a circular pattern" input-type="password"
+              name="repeatpassword" placeholder="Enter password again" :required="true"
+              :warning-message="errorMessages.repeatPassword" />
           </fieldset>
-          <div class="form-buttons">
-            <Button class="form-button" text="LOG IN" type="submit" />
-            <div class="secondary-form-container">
-              <Button class=" form-button form-button-secondary" text="CREATE ACCOUNT" @click.prevent="changeForm" />
-            </div>
-          </div>
-        </form>
-      </section>
-    </section>
-
-    <section v-else class="registration-page">
-      <section class="registration-container">
-        <form class="form-registration" @submit.prevent="handlesRegistration">
-          <fieldset class="registration-fieldset">
-            <legend class="form-legend">Enter Your Credentials</legend>
-            <div class="form-field">
-              <label class="form-label" for="username"><img src="@/assets/img/usernameIcon.svg"
-                  alt="username icon"></label>
-              <input v-model="formValues.username" class="form-input" type="text" id="username" name="username"
-                placeholder="Enter username" required>
-            </div>
-            <p class="warning-message" v-if="errorMessages.username"> <code>{{ errorMessages.username }}</code></p>
-            <div class="form-field">
-              <label class="form-label" for="password"><img src="@/assets/img/keyIcon.svg" alt="key icon"></label>
-              <input v-model="formValues.password" class="form-input" type="text" id="password" name="password"
-                placeholder="Enter password" required>
-            </div>
-            <p class="warning-message" v-if="errorMessages.password"> <code> {{ errorMessages.password }} </code></p>
-            <div class="form-field">
-              <label class="form-label" for="password"><img src="@/assets/img/keyIconRepeat.svg"
-                  alt="two arrows icon circular pattern"></label>
-              <input v-model="formValues.repeatPassword" class="form-input" type="text" id="password" name="password"
-                placeholder="Repeat password" required>
-            </div>
-            <p class="warning-message" v-if="errorMessages.repeatPassword"> <code> {{
-              errorMessages.repeatPassword }} </code></p>
-          </fieldset>
-          <div class="form-buttons">
-            <Button class="form-button" text="CREATE ACCOUNT" type="submit" />
-            <div class="secondary-form-container">
-              <Button class="form-button form-button-secondary" text="GO BACK TO LOG IN" @click.prevent="changeForm" />
-            </div>
-          </div>
+          <FormButton :primary-button-text="isLogin ? 'LOG IN' : 'CREATE ACCOUNT'" primary-button-type="submit"
+            :secondary-button-text="isLogin ? 'CREATE ACCOUNT' : 'GO BACK TO LOG IN'"
+            :secondary-button-click="changeForm" />
         </form>
       </section>
     </section>
@@ -194,27 +161,23 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
   text-align: center;
 }
 
-.form-container,
-.registration-container {
+.form-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1rem auto;
+  margin: 2rem auto;
   flex-direction: column;
   border-radius: 2rem;
   background: var(--container-bg);
-  width: clamp(12.5rem, 100%, 28rem);
+  width: clamp(12.5rem, 90%, 28rem);
 
 }
 
-.login-page,
-.registration-page {
+.login-page {
   width: 100%;
-
 }
 
-.form-login,
-.form-registration {
+.form-login {
   width: 100%;
   margin: 1rem;
 }
@@ -227,67 +190,12 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
 
 }
 
-.form-field {
-  display: flex;
-  background: #aba3ab;
-  border-radius: 1rem;
-  margin: 1rem;
-  flex-direction: row;
-}
-
-.form-label {
-  margin-left: 1rem;
-  padding: 0.4rem;
-}
-
-.form-input {
-  background: #aba3ab;
-  border-radius: 1rem;
-  width: 75%;
-  border: none;
-  outline: none;
-  caret-color: #000000;
-  font-weight: bolder;
-}
-
-.warning-message {
-  text-align: center;
-  font-size: large;
-  text-wrap: balance;
-  color: var(--warning);
-  margin: 0.4rem auto;
-  width: 80%;
-}
-
-.form-buttons {
-  padding: 1rem;
-
-}
-
-.form-button {
-  width: 100%;
-  margin: 1rem auto;
-  font-size: larger;
-
-}
-
-.secondary-form-container {
-  border-top: 0.2rem double var(--border);
-}
-
-.form-button-secondary {
-  font-size: small;
-
-}
-
 @media screen and (min-width: 768px) {
 
 
-  .form-container,
-  .registration-container {
+  .form-container {
     width: clamp(20rem, 70%, 42rem);
     margin: 1rem auto;
-    border-radius: 2rem;
   }
 
 }
