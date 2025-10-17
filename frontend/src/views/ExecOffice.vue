@@ -33,6 +33,7 @@ function plant() {
   <PuzzleContainer nextRoute="/room/office">
     <!-- Desktop -->
     <template #puzzleIntro>
+      <div v-if="selected === null">
       <h1>Executive's Office</h1>
       <p>Uhh, it stinks in here. You look to the right - there's a dead cat on the floor. 
         That's disgusting, but there's no time to focus on that right now. You have to find the code to get into the hard drive. 
@@ -47,8 +48,27 @@ function plant() {
         <Button text="Painting of a woman" @click="painting()" />
         <Button text="Letter on the table" @click="letter()" />
         <Button text="Guini in the bookshelf" @click="guini()" />
-        <Button text="Plant on the floor" @click="plant()" />      </div>    
-    </template>
+        <Button text="Plant on the floor" @click="plant()" />      
+      </div> 
+      </div>
+      <div v-else-if="selected === 'trophy'">
+        <Trophy intro />
+      </div>
+      <div v-else-if="selected === 'painting'">
+        <Painting intro />
+      </div>
+      <div v-else-if="selected === 'letter'">
+        <Letter intro />
+      </div>
+      <div v-else-if="selected === 'guini'">
+        <Guini intro />
+      </div>
+      <div v-else-if="selected === 'plant'">
+        <Plant intro />
+      </div>
+
+  
+      </template>
 
     <template #puzzleImpl="{completed}">
       <div v-if="selected === null">
@@ -95,20 +115,4 @@ function plant() {
   justify-items: start;
 }
 
-.office-img-crop {
-  height: 700px;
-  overflow: hidden;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.office-img {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 20px;
-  object-fit: cover;
-  object-position: center;
-}
 </style>

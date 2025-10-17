@@ -1,13 +1,18 @@
 <script setup>
+const props = defineProps({
+  intro: Boolean
+})
 </script>
 
 <template>
-    <div class="center">
-        <div>
-        <div>
-            <h2>You look closer at the letter</h2>
-            <div>
-                <p>
+  <div>
+    <template v-if="props.intro">
+      <h1>You look closer to the letter</h1>
+      <p>There's several interesting topics in this letter...</p>
+    </template>
+    <template v-else>
+      <h1>Letter picture</h1>
+      <p>
                 Hi James. 
 
                 You missed our daughters 5th birthday. Gina waited for you to come see her yesterday, 
@@ -21,24 +26,11 @@
                 Please call Gina, she's really sad right now,
                 Your wife
                 Date: 06-22-2025
-            </p>
-            </div>
-        </div>
-        </div>
-    </div>
+      </p>
+    </template>
+  </div>
 </template>
 
+
 <style scoped>
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.main-img {
-  max-width: 100%;
-  height: auto;
-}
-
 </style>
