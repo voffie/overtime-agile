@@ -33,12 +33,23 @@ function addKey(key) {
     <p v-if="errorMessage" class="message"><strong>{{ errorMessage }}</strong></p>
   </section>
   <section class="input-wrapper">
-    <Button text="←" @click="addKey('←')" />
-    <Button text="↑" @click="addKey('↑')"/>
-    <Button text="→" @click="addKey('→')" />
-    <Button text="↓" @click="addKey('↓')" />
-    <Button text="A" @click="addKey('A')" />
-    <Button text="B" @click="addKey('B')"/>
+    <section class="controls">
+      <section class="arrows">
+        <div class="up">
+          <Button class="resize" text="↑" @click="addKey('↑')"/>
+        </div>
+        <div class="middle">
+          <Button class="resize" text="←" @click="addKey('←')" />
+          <Button class="resize" text="↓" @click="addKey('↓')" />
+          <Button class="resize" text="→" @click="addKey('→')" />
+        </div>
+      </section>
+
+      <aside class="actions">
+        <Button class="resize" text="A" @click="addKey('A')" />
+        <Button class="resize" text="B" @click="addKey('B')"/>
+      </aside>
+    </section>
   </section>
 </template>
 
@@ -48,6 +59,7 @@ function addKey(key) {
   border-radius: 6px;
   border: 1px solid var(--text);
   padding: 1rem;
+  margin: 2rem;
 }
 
 .message {
@@ -62,5 +74,54 @@ function addKey(key) {
 .cursor code::after {
   content: '█';
   animation: blink 1s steps(1) infinite;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  margin: 2rem;
+}
+
+.arrows {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.up {
+  display: flex;
+  justify-content: center;
+}
+
+.middle {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.resize {
+  width: 3rem;
+  height: 3rem;
+}
+
+@media screen and (min-width: 768px) {
+  .resize {
+    width: 4rem;
+    height: 4rem;
+  }
 }
 </style>

@@ -55,7 +55,9 @@ import ServerPuzzle from "@/components/puzzle/Server.vue"
       </section>
     </template>
     <template #puzzleImpl="{completed}">
-      <ServerPuzzle :solve="completed" />
+      <div class="fill">
+        <ServerPuzzle :solve="completed" />
+      </div>
     </template>
     <template #puzzleOutro>
       <section id="outro-wrapper">
@@ -65,7 +67,7 @@ import ServerPuzzle from "@/components/puzzle/Server.vue"
               <span class="success">> Sequence accepted.</span>
               <span class="information">> Decryption in progress…</span>
               <div class="decrypt-wrapper">
-                <span v-for="n in 10" :key="n">> Decrypting... ({{ n }}/24)</span>
+                <span v-for="n in 10" :key="n">> Decrypting... ({{ n }}/10)</span>
               </div>
               <span class="success">> Decryption complete.</span>
             </code>
@@ -135,5 +137,19 @@ kbd {
   display: flex;
   flex-direction: column;
   margin: 1rem 0;
+}
+
+.fill {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  border: 1px solid var(--border);
+}
+
+@media screen and (min-width: 768px) {
+  .fill {
+    height: 100%;
+    gap: 0;
+  }
 }
 </style>
