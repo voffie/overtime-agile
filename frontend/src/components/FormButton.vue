@@ -1,38 +1,39 @@
 <script setup>
-import { defineProps } from "vue"
-import Button from "@/components/Button.vue"
-
+import { defineProps } from 'vue'
+import Button from '@/components/Button.vue'
 
 const props = defineProps({
-
   primaryButtonText: {
     type: String,
-    default: "",
+    default: '',
   },
 
   primaryButtonType: {
     type: String,
-    default: "submit",
+    default: 'submit',
   },
 
   secondaryButtonText: {
     type: String,
-    default: "",
+    default: '',
   },
   secondaryButtonClick: {
     type: Function,
     required: true,
-  }
-
-});
+  },
+})
 </script>
 
 <template>
   <div class="form-buttons">
     <Button class="form-button" :text="primaryButtonText" :type="primaryButtonType" />
     <div class="secondary-form-container">
-      <Button type="button" class=" form-button form-button-secondary" :text="secondaryButtonText"
-        @click.prevent="secondaryButtonClick" />
+      <Button
+        type="button"
+        class="form-button form-button-secondary"
+        :text="secondaryButtonText"
+        @click.prevent="secondaryButtonClick"
+      />
     </div>
   </div>
 </template>
@@ -40,14 +41,12 @@ const props = defineProps({
 <style scoped>
 .form-buttons {
   padding: 1rem;
-
 }
 
 .form-button {
   width: 100%;
   margin: 1rem auto;
   font-size: larger;
-
 }
 
 .secondary-form-container {
@@ -56,6 +55,5 @@ const props = defineProps({
 
 .form-button-secondary {
   font-size: small;
-
 }
 </style>

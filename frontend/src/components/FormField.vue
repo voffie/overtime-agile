@@ -1,65 +1,70 @@
 <script setup>
-import { defineProps, defineEmits, computed } from "vue"
-
+import { defineProps, defineEmits, computed } from 'vue'
 
 const props = defineProps({
   labelFor: {
     type: String,
-    required: true
+    required: true,
   },
   iconSrc: {
     type: String,
-    required: true
+    required: true,
   },
   iconAlt: {
     type: String,
-    default: ""
+    default: '',
   },
   modelValue: {
     type: String,
-    default: ""
+    default: '',
   },
   inputType: {
     type: String,
-    default: "text"
+    default: 'text',
   },
   name: {
     type: String,
-    default: ""
+    default: '',
   },
   placeholder: {
     type: String,
-    default: ""
+    default: '',
   },
   required: {
     type: Boolean,
-    default: true
+    default: true,
   },
   warningMessage: {
     type: String,
-    default: ""
-  }
-});
+    default: '',
+  },
+})
 
-
-const emit = defineEmits(["update:model-value"]);
+const emit = defineEmits(['update:model-value'])
 
 const model = computed({
   get: () => props.modelValue,
-  set: (value) => emit("update:model-value", value),
+  set: (value) => emit('update:model-value', value),
 })
-
 </script>
 
 <template>
   <div class="form-field">
-    <label class="form-label" :for="labelFor"><img :src="iconSrc" :alt="iconAlt"></label>
-    <input v-model="model" class="form-input" :type="inputType" :id="labelFor" :name="name" :placeholder="placeholder"
-      :required="required">
+    <label class="form-label" :for="labelFor"><img :src="iconSrc" :alt="iconAlt" /></label>
+    <input
+      v-model="model"
+      class="form-input"
+      :type="inputType"
+      :id="labelFor"
+      :name="name"
+      :placeholder="placeholder"
+      :required="required"
+    />
   </div>
 
-  <p class="warning-message" v-if="warningMessage"> <code>{{ warningMessage }}</code></p>
-
+  <p class="warning-message" v-if="warningMessage">
+    <code>{{ warningMessage }}</code>
+  </p>
 </template>
 
 <style scoped>

@@ -2,12 +2,12 @@
 
 :root {
   --background: #000;
-  --text: #FFF;
+  --text: #fff;
   --container-bg: #5b5c75;
-  --button-bg: #F3CDBF;
+  --button-bg: #f3cdbf;
   --button-text: #000;
   --border: gray;
-  --warning: #FED400
+  --warning: #fed400
     /* Extra Figma colors (group needs to decide variable names if they are used)
   #5f4a36;
   #85634a;
@@ -18,7 +18,7 @@
   #afaca8;
   ##767676;
   #b58c8c
-*/
+*/;
 }
 
 *,
@@ -26,7 +26,7 @@ html {
   border: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   line-height: 200%;
@@ -34,7 +34,7 @@ html {
 
 pre,
 code {
-  font-family: "Share Tech Mono", monospace;
+  font-family: 'Share Tech Mono', monospace;
   line-height: 160%;
 }
 
