@@ -1,7 +1,10 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router"
 import { ref, reactive } from "vue"
 import Button from "@/components/Button.vue"
+import FormField from "@/components/FormField.vue"
+import usernameIcon from "@/assets/img/usernameIcon.svg"
+import keyIcon from "@/assets/img/keyIcon.svg"
 
 const isLogin = ref(true)
 const routeToNextPage = useRouter();
@@ -116,19 +119,18 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
         <form class="form-login" @submit.prevent="handlesLogin">
           <fieldset class="form-fieldset">
             <legend class="form-legend">Welcome</legend>
-            <div class="form-field">
-              <label class="form-label" for="username"><img src="@/assets/img/usernameIcon.svg"
-                  alt="username icon"></label>
-              <input v-model="formValues.username" class="form-input" type="text" id="username" name="username"
-                placeholder="Enter username" required>
-            </div>
-            <p class="warning-message" v-if="errorMessages.username"> <code>{{ errorMessages.username }}</code></p>
-            <div class="form-field">
-              <label class="form-label" for="password"><img src="@/assets/img/keyIcon.svg" alt="key icon"></label>
-              <input v-model="formValues.password" class="form-input" type="password" id="text" name="password"
-                placeholder="Enter password" required>
-            </div>
-            <p class="warning-message" v-if="errorMessages.password"> <code> {{ errorMessages.password }} </code></p>
+            <FormField v-model:model-value="formValues.username" labelFor="username" :iconSrc="usernameIcon"
+              iconAlt="username icon" inputType="text" name="username" placeholder="Enter username" :required="true"
+              :warningMessage="errorMessages.username" />
+            <!-- <div class="form-field"> -->
+            <!--   <label class="form-label" for="password"><img src="@/assets/img/keyIcon.svg" alt="key icon"></label> -->
+            <!--   <input v-model="formValues.password" class="form-input" type="password" id="text" name="password" -->
+            <!--     placeholder="Enter password" required> -->
+            <!-- </div> -->
+            <!-- <p class="warning-message" v-if="errorMessages.password"> <code> {{ errorMessages.password }} </code></p> -->
+            <FormField v-model:model-value="formValues.password" labelFor="password" :iconSrc="keyIcon"
+              iconAlt="key icon" inputType="password" name="password" placeholder="Enter password" :required="true"
+              :warningMessage="errorMessages.password" />
           </fieldset>
           <div class="form-buttons">
             <Button class="form-button" text="LOG IN" type="submit" />
