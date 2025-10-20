@@ -9,6 +9,7 @@ import keyIconRepeat from '@/assets/img/keyIconRepeat.svg'
 
 const isLogin = ref(true)
 const routeToNextPage = useRouter()
+const hasCreatedAccount = ref(false)
 
 const formValues = reactive({
   username: '',
@@ -61,7 +62,7 @@ const handlesLogin = () => {
 
 const handlesRegistration = () => {
   if (formValidator('register')) {
-    console.log('new register player')
+    hasCreatedAccount.value = true
   }
 }
 
@@ -76,6 +77,7 @@ const handlesSubmit = (isLogin) => {
 const changeForm = () => {
   console.log('Loads page')
   isLogin.value = !isLogin.value
+  hasCreatedAccount.value = false
 }
 
 const isValidUsername = (userNameEntered) => {
@@ -116,47 +118,23 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
         <form class="form-login" @submit.prevent="handlesSubmit(isLogin)">
           <fieldset class="form-fieldset">
             <legend class="form-legend">{{ isLogin ? 'Welcome' : 'New Account' }}</legend>
-            <FormField
-              v-model="formValues.username"
-              label-for="username"
-              :icon-src="usernameIcon"
-              icon-alt="username icon"
-              input-type="text"
-              name="username"
-              placeholder="Enter username"
-              :required="true"
-              :warning-message="errorMessages.username"
-            />
-            <FormField
-              v-model="formValues.password"
-              label-for="password"
-              :icon-src="keyIcon"
-              icon-alt="key icon"
-              input-type="password"
-              name="password"
-              placeholder="Enter password"
-              :required="true"
-              :warning-message="errorMessages.password"
-            />
-            <FormField
-              v-if="!isLogin"
-              v-model="formValues.repeatPassword"
-              label-for="repeatpassword"
-              :icon-src="keyIconRepeat"
-              icon-alt="arrows in a circular pattern"
-              input-type="password"
-              name="repeatpassword"
-              placeholder="Enter password again"
-              :required="true"
-              :warning-message="errorMessages.repeatPassword"
-            />
+            <FormField v-model="formValues.username" label-for="username" :icon-src="usernameIcon"
+              icon-alt="username icon" input-type="text" name="username" placeholder="Enter username" :required="true"
+              :warning-message="errorMessages.username" />
+            <FormField v-model="formValues.password" label-for="password" :icon-src="keyIcon" icon-alt="key icon"
+              input-type="password" name="password" placeholder="Enter password" :required="true"
+              :warning-message="errorMessages.password" />
+            <FormField v-if="!isLogin" v-model="formValues.repeatPassword" label-for="repeatpassword"
+              :icon-src="keyIconRepeat" icon-alt="arrows in a circular pattern" input-type="password"
+              name="repeatpassword" placeholder="Enter password again" :required="true"
+              :warning-message="errorMessages.repeatPassword" />
+
+            <p class="success-message" v-if="hasCreatedAccount">🎉 Account created successfully! 🎉</p>
+            <p class="cta-message" v-if="hasCreatedAccount">⇩ click on the go back to log in button below ⇩</p>
           </fieldset>
-          <FormButton
-            :primary-button-text="isLogin ? 'LOG IN' : 'CREATE ACCOUNT'"
-            primary-button-type="submit"
+          <FormButton :primary-button-text="isLogin ? 'LOG IN' : 'CREATE ACCOUNT'" primary-button-type="submit"
             :secondary-button-text="isLogin ? 'CREATE ACCOUNT' : 'GO BACK TO LOG IN'"
-            :secondary-button-click="changeForm"
-          />
+            :secondary-button-click="changeForm" />
         </form>
       </section>
     </section>
@@ -199,6 +177,28 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
   font-weight: 700;
   margin: 0.5rem auto;
   text-align: center;
+}
+
+.success-message {
+  text-align: center;
+  font-size: larger;
+  font-weight: bolder;
+  text-wrap: balance;
+  font-style: italic;
+  border: 0.5rem double var(--border);
+  padding: 1rem;
+  border-radius: 1rem;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.cta-message {
+  text-align: center;
+  font-size: normal;
+  font-weight: thin;
+  text-wrap: balance;
+  margin: 0.5rem auto;
+
 }
 
 @media screen and (min-width: 768px) {
