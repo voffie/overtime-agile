@@ -9,6 +9,7 @@ import Office from "@/components/executivesOffice/Office.vue"
 import Painting from "@/components/executivesOffice/Painting.vue"
 import Plant from "@/components/executivesOffice/Plant.vue"
 import Trophy from "@/components/executivesOffice/Trophy.vue"
+import Computer from "@/components/executivesOffice/Computer.vue"
 
 const selected = ref(null)
 
@@ -26,6 +27,9 @@ function guini() {
 }
 function plant() {
   selected.value = "plant"
+}
+function computer() {
+  selected.value = "computer"
 }
 </script>
 
@@ -50,6 +54,11 @@ function plant() {
         <Button text="Guini in the bookshelf" @click="guini()" />
         <Button text="Plant on the floor" @click="plant()" />      
       </div> 
+
+      <div class ="computer">
+        <Button text="Try logging into the computer" @click="computer()" />
+      </div>
+
       </div>
       <div v-else-if="selected === 'trophy'">
         <Trophy intro />
@@ -65,6 +74,9 @@ function plant() {
       </div>
       <div v-else-if="selected === 'plant'">
         <Plant intro />
+      </div>
+      <div v-if="selected === 'computer'">
+        <Computer intro />
       </div>
 
   
@@ -88,6 +100,9 @@ function plant() {
       </div>
       <div v-else-if="selected === 'plant'">
         <Plant/>
+      </div>
+      <div v-if="selected === 'computer'">
+        <Computer/>
       </div>
 
       <TemplateChild :solve="completed" />
@@ -114,5 +129,7 @@ function plant() {
   margin-top: 20px;
   justify-items: start;
 }
-
+.computer {
+  margin-top: 40px;
+}
 </style>
