@@ -3,12 +3,26 @@ import { ref, watch } from "vue";
 import Button from "@/components/Button.vue"
 import PuzzleContainer from "@/components/PuzzleContainer.vue"
 
-// Only use ref() when you want something to be reactive, aka. when the value can change and you want Vue to react to 
+/*
+1. Click button to start game
+2. Begin round by randomly seleqting new colors to add to the sequence
+2. Start countdown
+3. Show whole sequence
+4. Collect player sequence
+  4.1 Check every player choice to see if right or wrong - if wrong then game over
+  4.2 If player sequence is as long as correct sequence - end collect player sequence
+5. Check outcome
+  5.1 If game over, reset and start over
+  5.2 If last round = win, display outro and continue to next room
+*/
+
+// Only use ref() when you want something to be reactive (when the value can change and you want Vue to react to it) 
 const colors = ["red", "green", "pink", "purple", "grey", "orange", "blue", "yellow", "brown"]
 const sequence = ref([])
 const playerSequence = ref([])
 
 const currentSequenceColor = ref(null)
+const clickedSquareColor = ref(null)
 
 const countdownText = ref("")
 const puzzleStatus = ref("")
@@ -19,62 +33,43 @@ let activeSequence = ref(false)
 let activePlayerTurn = ref(false)
 let gameOver = ref(false)
 
-// Start Game
 async function startPuzzle(event) {
 
-  // Reset sequences
-  sequence.value = []
-  playerSequence.value = []
-
-  // Set puzzle to active
+  resetGameValues() // Reset sequence, playerSequence and gameOver values.
   activePuzzle.value = true
-
-  // Play 3 rounds
-  for(let round = 0; round < 3; round++){
-
-    // Setup the sequence area (countdown, sequence, status-text)
-    await setupSequence()
-    console.log("Correct sequence:")
-    console.log(sequence.value)
-
-    // Watch player sequence and evaluate if correct
-    await watchPlayerSequence()
-    console.log("Player sequence:")
-    console.log(playerSequence.value)
-
-    // Reset playerSequence for next round
-      playerSequence.value = []
-
-    if(gameOver.value) {
-      console.log("Game over! Wrong input!")
-      break
-    } else if(round < 2) {
-      console.log("Correct! Next round...") 
-    }
-  }
-
+  await playPuzzle(3) // Play 3 rounds
   activePuzzle.value = false
 
-  if(!gameOver.value) {
+  if(gameOver.value) {
+    // Restart game
+    console.log("Game over! Wrong input!")
+    console.log("Restart game")
+  } else {
     // Continue to next room
     console.log("Puzzle complete! You won 3 rounds!")
-  } else {
-    // Restart game
-    console.log("Restart game")
   }
 }
 
-async function setupSequence() {
-  // Add random color to sequence
-  addRandomColorsToSequence(2);
+async function playPuzzle(rounds){
 
-  // Play countdown 3, 2, 1..
-  await playCountdown(3);
+  for(let round = 1; round <= rounds; round++){
 
-  // Play the correct color sequence
-  await playSequence();
+    addRandomColorsToSequence(2) // Add random color to sequence
+    await showCountdown(3) // Play countdown 3, 2, 1..
+    await showSequence() // Play the correct color sequence
+    puzzleStatus.value = "GO!" // Inform the player of its turn
 
-  puzzleStatus.value = "GO!";
+    activePlayerTurn.value = true // Turn on player ability to click squares
+    await watchPlayerSequence() // Watch player sequence and evaluate if correct
+    activePlayerTurn.value = false // Turn off player ability to click squares
+    playerSequence.value = [] // Reset playerSequence for next round
+    
+    if(gameOver.value) {
+      break
+    } else if(round < rounds) {
+      console.log("Correct! Next round...") 
+    }
+  }
 }
 
 /* 
@@ -90,51 +85,48 @@ async function setupSequence() {
   always returns a stop function that lets you stop watching by calling it.
   */
 function watchPlayerSequence() {
-
   return new Promise( resolve => {
-    activePlayerTurn.value = true
-
     const stop = watch(
-      // source = watch playerSequence length
-      () => playerSequence.value.length,
-      // callback = every time playerSequence length change (every time player clicks a square when activePlayerTurn)
-      (newLength) => { 
+      () => playerSequence.value.length, // source = watch playerSequence length
+      (playerSequenceLength) => { // callback = check that player clicked the right square
 
-        // the watcher checks if the color of the square the player clicked 
-        // matches the sequence color at the same index
-        // if not, stop watching and game over.
-        const currentIndex = newLength-1
+        const currentIndex = playerSequenceLength-1
         const expectedColor = sequence.value[currentIndex]
         const actualColor = playerSequence.value[currentIndex]
 
+        // If player clicks wrong color, then game over
         if(actualColor !== expectedColor) {
           stop()
           gameOver.value = true
-          activePlayerTurn.value = false
-          sequence.value = []
-          resolve()
-          return
+          return resolve()
         }
 
-        // If the actualColor is equal to the expectedColor then continue until 
-        // the length of the playerSequence is the same as the correct sequence,
-        // stop watching and resolve the promise (letting the await continue).
-        if (newLength === sequence.value.length) {
+        // If correct sequence is done, return
+        if(playerSequenceLength === sequence.value.length) {
           stop()
-          activePlayerTurn.value = false
-          resolve()
+          return resolve()
         }
       }
     )
   })
 }
 
-function squareClicked(color) {
+async function squareClicked(color) {
   // Check if it is the players turn to click the sequence, if not return
   if(!activePlayerTurn.value) return
 
   // Adds the color of the square that the player clicks if it is a activePlayerTurn
   playerSequence.value.push(color)
+  // Flash the clicked square to indicate action to player
+  clickedSquareColor.value = color
+  await wait(300)
+  clickedSquareColor.value = null
+}
+
+function resetGameValues() {
+  gameOver.value = false
+  sequence.value = []
+  playerSequence.value = []
 }
 
 function wait(ms) {
@@ -149,44 +141,46 @@ function addRandomColorsToSequence(amount){
   }
 }
 
-async function playSequence(){
+async function showSequence(){
 
   activeSequence.value = true
 
   for(const color of sequence.value) {
     console.log(color)
 
-    // wait for 0.5 sec
+    // wait for ? sec
     // (the await pauses the execution of its surrounding async function until the promise is settled)
-    await wait(500)
+    await wait(400)
 
     // set the sequence-square to this color
     currentSequenceColor.value = color 
 
-    // wait for 1 sec
-    await wait(1000)
+    // wait for ? sec
+    await wait(800)
 
     // clear the sequence-square
     currentSequenceColor.value = null
   }
 
-  await wait(500)
+  await wait(400)
   activeSequence.value = false
 }
 
-async function playCountdown(from){
+async function showCountdown(from){
   activeCountdown.value = true
+
   for(let i = from; i > 0; i--){
     countdownText.value = i
-    await wait(800)
+    await wait(600)
   }
+
   countdownText.value = null
   activeCountdown.value = false
 }
 </script>
 
 <template>
-  <PuzzleContainer nextRoute="/room/archive">
+  <PuzzleContainer nextRoute="/game-intro">
 
     <!--INTRO-->
     <template #puzzleIntro>
@@ -229,10 +223,16 @@ async function playCountdown(from){
         </div>
 
         <div class="container-keypad">
-          <div v-for="color in colors" :key="color" class="square" :class="color" @click="squareClicked(color)"></div>
+          <div 
+          v-for="color in colors" 
+          :key="color" 
+          class="square" 
+          :class="['square', color, {hoverEffect: activePlayerTurn, flashEffect: clickedSquareColor === color}]"
+          @click="squareClicked(color)"
+          ></div>
         </div>
 
-        <!-- <Button text="Puzzle Complete" @click="completed()"/> -->
+        <Button text="Puzzle Complete" @click="completed()"/>
 
       </div>
     
@@ -295,7 +295,15 @@ async function playCountdown(from){
   width: 6rem;
   height: 6rem;
   border-radius: 8px;
+}
+
+.hoverEffect:hover {
+  transform: scale(1.1);
   cursor: pointer;
+}
+
+.flashEffect {
+  opacity: 0.5; 
 }
 
 /* Color classes */
