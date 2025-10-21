@@ -16,6 +16,14 @@ import PuzzleContainer from "@/components/PuzzleContainer.vue"
   5.2 If last round = win, display outro and continue to next room
 */
 
+// Variable and function to get access to the completed function, call when puzzle is completed:
+// completedFunction.value()
+let completedFunction = ref(null)
+
+function setCompleted(passedCompletedFunction) {
+  completedFunction.value = passedCompletedFunction
+}
+
 // Only use ref() when you want something to be reactive (when the value can change and you want Vue to react to it) 
 const colors = ["red", "green", "pink", "purple", "grey", "orange", "blue", "yellow", "brown"]
 const sequence = ref([])
@@ -32,6 +40,7 @@ let activeCountdown = ref(false)
 let activeSequence = ref(false)
 let activePlayerTurn = ref(false)
 let gameOver = ref(false)
+let gameSolved = ref(false)
 
 async function startPuzzle(event) {
 
@@ -47,6 +56,8 @@ async function startPuzzle(event) {
   } else {
     // Continue to next room
     console.log("Puzzle complete! You won 3 rounds!")
+    gameSolved.value = true
+    completedFunction.value()
   }
 }
 
@@ -189,6 +200,14 @@ async function showCountdown(from){
 
     <!--PUZZLE-->
     <template #puzzleImpl="{completed}">
+      <!--
+      Below template tag is to capture the "completed" function from the above template,
+      passed from PuzzleContainer.vue. We can now set the function completed to a variable in our script
+      and use that variable to trigger the completed function.
+      -->
+      <template v-once>{{ (setCompleted(completed), '') }}</template>
+      <!-- <TemplateChild :solve="completed" />
+      <Button text="Parent Button" @click="completed()" /> -->
 
       <div class="container-puzzle">
 
@@ -231,9 +250,6 @@ async function showCountdown(from){
           @click="squareClicked(color)"
           ></div>
         </div>
-
-        <Button text="Puzzle Complete" @click="completed()"/>
-
       </div>
     
     </template>
