@@ -76,7 +76,7 @@ function computer() {
         <Plant intro />
       </div>
       <div v-if="selected === 'computer'">
-        <Computer intro />
+      <Computer/>
       </div>
 
   
@@ -102,7 +102,7 @@ function computer() {
         <Plant/>
       </div>
       <div v-if="selected === 'computer'">
-        <Computer/>
+        <Computer intro @back="selected = null" />
       </div>
 
       <TemplateChild :solve="completed" />
