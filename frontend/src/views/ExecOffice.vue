@@ -61,22 +61,23 @@ function computer() {
 
       </div>
       <div v-else-if="selected === 'trophy'">
-        <Trophy intro />
+      <Trophy intro @back="selected = null" />
       </div>
       <div v-else-if="selected === 'painting'">
-        <Painting intro />
+      <Painting intro @back="selected = null" />
       </div>
       <div v-else-if="selected === 'letter'">
-        <Letter intro />
+      <Letter intro @back="selected = null" />
       </div>
       <div v-else-if="selected === 'guini'">
-        <Guini intro />
+      <Guini intro @back="selected = null" />
       </div>
       <div v-else-if="selected === 'plant'">
-        <Plant intro />
+      <Plant intro @back="selected = null" />
+
       </div>
       <div v-if="selected === 'computer'">
-      <Computer/>
+      <Computer intro @back="selected = null" />
       </div>
 
   
@@ -102,7 +103,7 @@ function computer() {
         <Plant/>
       </div>
       <div v-if="selected === 'computer'">
-        <Computer intro @back="selected = null" />
+        <Computer />
       </div>
 
       <TemplateChild :solve="completed" />

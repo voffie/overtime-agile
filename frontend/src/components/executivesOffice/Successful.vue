@@ -7,7 +7,6 @@ const props = defineProps({
 <template>
   <div>
     <template v-if="props.intro">
-      <h1>Success!!</h1>
     </template>
     <template v-else>
 <h1>Success!!</h1>

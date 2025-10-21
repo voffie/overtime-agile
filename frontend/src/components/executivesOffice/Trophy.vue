@@ -2,6 +2,10 @@
 const props = defineProps({
   intro: Boolean
 })
+
+import Button from '@/components/Button.vue'
+const emit = defineEmits(["back"])
+
 </script>
 
 <template>
@@ -11,6 +15,8 @@ const props = defineProps({
       <p>It says he's the winner of some manager award. 
         The price tag is still there. 30$ at Wallmart. 
         Did he buy this trophy himself? Pathetic.</p>
+    <Button text="Go back to the office" @click="emit('back')" style="margin-top: 20px;" />
+
     </template>
     <template v-else>
       <div class="trophy-img-crop">
