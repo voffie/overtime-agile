@@ -34,12 +34,16 @@ export async function getPlayerByUsername(req, res) {
 export async function createPlayer(req, res) {
   const { username, password } = req.body;
 
-  if (!username || typeof username !== "string" || username.trim() === "") {
+  if (!username || typeof username !== "string" || username.trim() === "" || username.length <= 4) {
     return res.status(400).json({ error: "Invalid username. Username is a required" })
   }
 
   if (!password || typeof password !== "string" || password.trim() === "") {
     return res.status(400).json({ error: "Invalid Password: Password is a required" })
+  }
+
+  if (!passwordHash.hashPasswordValidFormat(password)) {
+    return res.status(400).json({ error: "Invalid Password Format: Password must be 8-64 characters and contain only letters, numbers, and @!?_.- " })
   }
 
   // Reason to have this: Trying to early exit before hash and attempt to insert player in DB. Aware that it cost an extra question to db. 
