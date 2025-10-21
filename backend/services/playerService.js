@@ -9,3 +9,24 @@ export async function getAllPlayers() {
     return err;
   }
 }
+
+
+export async function getPlayerByUsername(username, columns = null, context = "default") {
+
+  const columnsMappedByContext = {
+    default: ["id", "username"],
+    auth: ["id", "username", "password_hash"],
+  }
+
+  const selectedColumns = columns || columnsMappedByContext[context] || columnsMappedByContext.default;
+  const fields = selectedColumns.join(", ")
+
+  try {
+    const [results] = await db.query(`SELECT ${fields} FROM player WHERE username = ?`, [username]);
+    return results[0] || null;
+  } catch { err } {
+    throw err;
+  }
+
+
+}
