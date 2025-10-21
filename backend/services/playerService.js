@@ -28,5 +28,15 @@ export async function getPlayerByUsername(username, columns = null, context = "d
     throw err;
   }
 
+}
+
+export async function createPlayer(username, password_hash) {
+  try {
+    const [results] = await db.query(`INSERT INTO player (username, password_hash) VALUES (?, ?)`, [username, password_hash]);
+    return { id: results.insertId, username };
+
+  } catch (err) {
+    throw err;
+  }
 
 }
