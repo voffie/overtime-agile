@@ -31,7 +31,7 @@ const drawers = ref([
 const userCode = ref("");     //User input
 const secretCode = "F";       // correct code
 const message = ref("");      // message text
-const messageType = ref("")   // "success" or "erroe"
+const messageType = ref("")   // "success" or "error"
 
 function onDrawerClick(d) {
   if (d.kind === "open") {
@@ -162,7 +162,7 @@ function tryUnlock() {
       </p>
       </div>
       <div>
-        <img src="../assets/img/Outro_archiveRoom.png" class="image_archiveRoom"></img>
+        <img src="../assets/img/Outro_archiveRoom.png" class="image_archiveRoom">
       </div>
     </div>
     </template>
@@ -215,15 +215,6 @@ function tryUnlock() {
   background-position: center;
 }
 
-.locked::after {
-  content: "LOCKED";
-  position: absolute;
-  right: 8px;
-  bottom: 6px;
-  font-size: 10px;
-  opacity: 0.7;
-}
-
 /* Shake animation for closed drawers */
 .shake { animation: shake 0.25s linear 1; }
 @keyframes shake {
@@ -232,15 +223,6 @@ function tryUnlock() {
   50%{ transform: translateX(4px); }
   75%{ transform: translateX(-3px); }
   100%{ transform: translateX(0); }
-}
-
-/* Optional: nicer opening feedback class (not strictly needed now) */
-.opening {
-  background-color: lightgreen !important;
-  color: #111 !important;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-  transition: all 0.25s ease;
 }
 
 .board {
@@ -289,7 +271,6 @@ function tryUnlock() {
   display: grid;
   grid-template-columns: repeat(4, 120px);
   grid-template-rows: repeat(5, 102px);
-  display: grid;
   gap: 10px;
   padding: 30px;
   padding-top: 40px;
