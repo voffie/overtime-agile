@@ -41,7 +41,7 @@ import ServerPuzzle from "@/components/puzzle/Server.vue"
         <div class="terminal">
           <pre>
             <code>
-              <span class="information">> Decryption sequence required.</span>
+              <span class="information">> [INFO] Decryption sequence required.</span>
             </code>
           </pre>
         </div>
@@ -64,12 +64,12 @@ import ServerPuzzle from "@/components/puzzle/Server.vue"
         <div class="terminal">
           <pre>
             <code class="outro-output">
-              <span class="success">> Sequence accepted.</span>
-              <span class="information">> Decryption in progress…</span>
+              <span class="success">> [SUCCESS] Sequence accepted.</span>
+              <span class="information">> [INFO] Decryption in progress…</span>
               <div class="decrypt-wrapper">
                 <span v-for="n in 10" :key="n">> Decrypting... ({{ n }}/10)</span>
               </div>
-              <span class="success">> Decryption complete.</span>
+              <span class="success">> [SUCCESS] Decryption complete.</span>
             </code>
           </pre>
         </div>
