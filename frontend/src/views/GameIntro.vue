@@ -5,7 +5,7 @@ import Button from '@/components/Button.vue'
 <template>
   <div class="center">
     <div>
-      <img class="main-img" src="@/assets/img/HeartcoreLogo-1.png" alt="Heartcore logo" />
+      <img class="main-img" src="@/assets/img/HeartCoreLogoGray.png" alt="Heartcore logo" />
     </div>
     <div>
       <div>
@@ -47,7 +47,7 @@ import Button from '@/components/Button.vue'
 }
 
 .main-img {
-  width: 200px;
+  width: 300px;
   height: auto;
   align-self: center;
 }
