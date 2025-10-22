@@ -26,7 +26,7 @@ const router = createRouter({
       name: 'office',
       component: () => import('@/views/ExecOffice.vue'),
       meta: { title: 'Executives Office' }
-    },
+      },
     {
       path: "/room/server",
       name: "server-room",
@@ -34,17 +34,17 @@ const router = createRouter({
       meta: { title: "Server Room" }
     },
     {
-      path: '/room/archive',
-      name: 'archive',
-      component: () => import('@/views/ArchiveRoom.vue'),
-      meta: { title: 'Archive Room' }
-    },
-    {
-      path: "/room/break",
-      name: "room-break",
-      component: () => import("@/views/BreakRoomView.vue"),
-      meta: { title: "Room 1 - Break Room" }
-    }
+    path: '/room/archive',
+    name: 'archive',
+    component: () => import('@/views/ArchiveRoom.vue'),
+    meta: { title: 'Archive Room' }
+  },
+  {
+      path: '/room/ending',
+      name: 'ending',
+      component: () => import('@/views/Ending.vue'),
+      meta: { title: 'Ending' }
+  }
   ],
 })
 
