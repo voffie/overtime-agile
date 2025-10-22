@@ -1,10 +1,10 @@
 <script setup>
-import { ref } from "vue"
-import { useRouter } from "vue-router"
-import Button from "@/components/Button.vue"
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import Button from '@/components/Button.vue'
 
-const props = defineProps(["nextRoute"])
-const state = ref("intro")
+const props = defineProps(['nextRoute'])
+const state = ref('intro')
 const router = useRouter()
 
 function updateState(newState) {
@@ -17,16 +17,16 @@ function redirect() {
 </script>
 
 <template>
-  <section class="room-wrapper" :class="{'outro-wrapper': state === 'outro' }">
+  <section class="room-wrapper" :class="{ 'outro-wrapper': state === 'outro' }">
     <!-- Desktop -->
     <section v-if="state !== 'solved' && state !== 'outro'" class="puzzle-text">
-      <slot name="puzzleIntro"/>
+      <slot name="puzzleIntro" />
     </section>
     <section v-if="state !== 'solved' && state !== 'outro'" class="puzzle-wrapper">
-      <slot name="puzzleImpl" :completed="() => updateState('outro')"/>
+      <slot name="puzzleImpl" :completed="() => updateState('outro')" />
     </section>
     <section v-if="state === 'outro'" class="outro">
-      <slot name="puzzleOutro"/>
+      <slot name="puzzleOutro" />
       <Button text="Continue" @click="redirect" />
     </section>
   </section>
@@ -34,12 +34,12 @@ function redirect() {
   <!-- Mobile -->
   <section class="mobile-view">
     <section v-if="state === 'intro'">
-      <slot name="puzzleIntro"/>
+      <slot name="puzzleIntro" />
       <Button @click="updateState('puzzle')" text="To Puzzle" />
     </section>
     <section v-if="state === 'puzzle'" id="mobile-puzzle">
       <Button @click="updateState('intro')" text="To Story" />
-      <slot name="puzzleImpl" :completed="() => updateState('outro')"/>
+      <slot name="puzzleImpl" :completed="() => updateState('outro')" />
     </section>
     <section v-if="state === 'outro'" class="outro">
       <slot name="puzzleOutro" />
@@ -80,7 +80,8 @@ function redirect() {
     grid-template-columns: 1fr 2.5fr;
   }
 
-  .puzzle-text, .outro {
+  .puzzle-text,
+  .outro {
     padding: 1.5rem;
     overflow-y: scroll;
     height: 100%;

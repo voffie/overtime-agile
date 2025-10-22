@@ -6,19 +6,20 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      meta: {title: "Overtime"}
+      meta: { title: 'Overtime' },
+      component: () => import('@/views/LoginView.vue'),
     },
     {
-      path: "/game-intro",
-      name: "game-intro",
-      component: () => import("@/views/GameIntro.vue"),
-      meta: {title: "Game Intro"}
+      path: '/game-intro',
+      name: 'game-intro',
+      component: () => import('@/views/GameIntro.vue'),
+      meta: { title: 'Game Intro' },
     },
     {
-      path: "/room/template",
-      name: "template-room",
-      component: () => import("@/views/TemplateRoom.vue"),
-      meta: {title: "Template Room"}
+      path: '/room/template',
+      name: 'template-room',
+      component: () => import('@/views/TemplateRoom.vue'),
+      meta: { title: 'Template Room' },
     },
     {
       path: '/room/office',

@@ -1,5 +1,5 @@
 <template>
-    <img src="@/assets/img/West_Logo.svg" alt="West logo">
+  <img src="@/assets/img/West_Logo.svg" alt="West logo" />
 </template>
 
 <style scoped>

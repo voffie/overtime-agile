@@ -1,6 +1,6 @@
 <script setup>
-import Button from "@/components/Button.vue"
-const props = defineProps(["solve"])
+import Button from '@/components/Button.vue'
+const props = defineProps(['solve'])
 
 function custom() {
   props.solve()
