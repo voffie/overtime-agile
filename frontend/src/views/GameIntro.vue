@@ -1,11 +1,20 @@
 <script setup>
+import { useRouter } from 'vue-router'
 import Button from '@/components/Button.vue'
+
+
+const router = useRouter()
+
+function goToNextRoom() {
+  router.push("/room/break")
+}
 </script>
+
 
 <template>
   <div class="center">
     <div>
-      <img class="main-img" src="@/assets/img/HeartCoreLogoGray.png" alt="Heartcore logo" />
+      <img class="main-img" src="@/assets/img/HeartCoreLogoGray.png" alt="Heartcore logo gray" />
     </div>
     <div>
       <div>
@@ -36,7 +45,7 @@ import Button from '@/components/Button.vue'
         </div>
       </div>
     </div>
-    <Button text="Continue" />
+    <Button text="Continue" @click="goToNextRoom" />
   </div>
 </template>
 
