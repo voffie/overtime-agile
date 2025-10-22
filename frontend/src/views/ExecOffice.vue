@@ -34,7 +34,7 @@ function computer() {
 </script>
 
 <template>
-  <PuzzleContainer nextRoute="/room/office">
+  <PuzzleContainer nextRoute="/room/ending">
     <!-- Desktop -->
     <template #puzzleIntro>
       <div v-if="selected === null">
