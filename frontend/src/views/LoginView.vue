@@ -118,23 +118,54 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
         <form class="form-login" @submit.prevent="handlesSubmit(isLogin)">
           <fieldset class="form-fieldset">
             <legend class="form-legend">{{ isLogin ? 'Welcome' : 'New Account' }}</legend>
-            <FormField v-model="formValues.username" label-for="username" :icon-src="usernameIcon"
-              icon-alt="username icon" input-type="text" name="username" placeholder="Enter username" :required="true"
-              :warning-message="errorMessages.username" />
-            <FormField v-model="formValues.password" label-for="password" :icon-src="keyIcon" icon-alt="key icon"
-              input-type="password" name="password" placeholder="Enter password" :required="true"
-              :warning-message="errorMessages.password" />
-            <FormField v-if="!isLogin" v-model="formValues.repeatPassword" label-for="repeatpassword"
-              :icon-src="keyIconRepeat" icon-alt="arrows in a circular pattern" input-type="password"
-              name="repeatpassword" placeholder="Enter password again" :required="true"
-              :warning-message="errorMessages.repeatPassword" />
+            <FormField
+              v-model="formValues.username"
+              label-for="username"
+              :icon-src="usernameIcon"
+              icon-alt="username icon"
+              input-type="text"
+              name="username"
+              placeholder="Enter username"
+              :required="true"
+              :warning-message="errorMessages.username"
+            />
+            <FormField
+              v-model="formValues.password"
+              label-for="password"
+              :icon-src="keyIcon"
+              icon-alt="key icon"
+              input-type="password"
+              name="password"
+              placeholder="Enter password"
+              :required="true"
+              :warning-message="errorMessages.password"
+            />
+            <FormField
+              v-if="!isLogin"
+              v-model="formValues.repeatPassword"
+              label-for="repeatpassword"
+              :icon-src="keyIconRepeat"
+              icon-alt="arrows in a circular pattern"
+              input-type="password"
+              name="repeatpassword"
+              placeholder="Enter password again"
+              :required="true"
+              :warning-message="errorMessages.repeatPassword"
+            />
 
-            <p class="success-message" v-if="hasCreatedAccount">🎉 Account created successfully! 🎉</p>
-            <p class="cta-message" v-if="hasCreatedAccount">⇩ click on the go back to log in button below ⇩</p>
+            <p class="success-message" v-if="hasCreatedAccount">
+              🎉 Account created successfully! 🎉
+            </p>
+            <p class="cta-message" v-if="hasCreatedAccount">
+              ⇩ click on the go back to log in button below ⇩
+            </p>
           </fieldset>
-          <FormButton :primary-button-text="isLogin ? 'LOG IN' : 'CREATE ACCOUNT'" primary-button-type="submit"
+          <FormButton
+            :primary-button-text="isLogin ? 'LOG IN' : 'CREATE ACCOUNT'"
+            primary-button-type="submit"
             :secondary-button-text="isLogin ? 'CREATE ACCOUNT' : 'GO BACK TO LOG IN'"
-            :secondary-button-click="changeForm" />
+            :secondary-button-click="changeForm"
+          />
         </form>
       </section>
     </section>
@@ -198,7 +229,6 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
   font-weight: thin;
   text-wrap: balance;
   margin: 0.5rem auto;
-
 }
 
 @media screen and (min-width: 768px) {
