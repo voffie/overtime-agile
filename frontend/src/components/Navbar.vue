@@ -1,10 +1,10 @@
 <script setup>
-import { RouterLink, useRoute} from 'vue-router'
-import { computed } from "vue"
-import Button from "@/components/Button.vue"
+import { RouterLink, useRoute } from 'vue-router'
+import { computed } from 'vue'
+import Button from '@/components/Button.vue'
 
-const route = useRoute();
-const title = computed(() => route.meta.title || "Overtime")
+const route = useRoute()
+const title = computed(() => route.meta.title || 'Overtime')
 </script>
 
 <template>
