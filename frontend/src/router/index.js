@@ -31,14 +31,20 @@ const router = createRouter({
       path: "/room/server",
       name: "server-room",
       component: () => import("@/views/ServerRoom.vue"),
-      meta: {title: "Server Room"}
+      meta: { title: "Server Room" }
     },
     {
-    path: '/room/archive',
-    name: 'archive',
-    component: () => import('@/views/ArchiveRoom.vue'),
-    meta: { title: 'Archive Room' }
-  },
+      path: '/room/archive',
+      name: 'archive',
+      component: () => import('@/views/ArchiveRoom.vue'),
+      meta: { title: 'Archive Room' }
+    },
+    {
+      path: "/room/break",
+      name: "room-break",
+      component: () => import("@/views/BreakRoomView.vue"),
+      meta: { title: "Room 1 - Break Room" }
+    }
   ],
 })
 
