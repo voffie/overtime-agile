@@ -57,7 +57,10 @@ async function startPuzzle(event) {
     // Continue to next room
     console.log("Puzzle complete! You won 3 rounds!")
     gameSolved.value = true
-    completedFunction.value()
+    
+    if (completedFunction.value) {
+      completedFunction.value()
+    }
   }
 }
 
@@ -78,7 +81,7 @@ async function playPuzzle(rounds){
     if(gameOver.value) {
       break
     } else if(round < rounds) {
-      console.log("Correct! Next round...") 
+      console.log("Correct! Next round...")
     }
   }
 }
