@@ -225,10 +225,11 @@ function tryUnlock() {
 }
 
 .board {
-  display: flex;
+  display: block;
+  align-items: center;
   margin-top: 1rem;
   width: 300px;
-  height: 450px;
+  height: 350px;
   padding: 10px;
   border: 2px solid #444;
   border-radius: 8px;
@@ -278,6 +279,7 @@ function tryUnlock() {
 }
 
 .board {
+  display: block;
   margin-top: 5rem;
   width: 350px;
   height: 450px;
@@ -291,7 +293,7 @@ function tryUnlock() {
 .open.active {
   transform: translateY(-3px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  background-image: url("../assets/img/cabinet_illustration_drawer_cutout_120.png");
+  background-image: url("../assets/img/archiveRoom/cabinet_illustration_drawer_cutout_120.png");
   color: #111;
 }
 
@@ -303,7 +305,7 @@ function tryUnlock() {
   margin-right: 10px;
   border: 10px solid #4a4e52;
   border-radius: 4px;
-  background-image: url("../assets/img/digiBoard.png");
+  background-image: url("../assets/img/archiveRoom/digiBoard.png");
 }
 
 
