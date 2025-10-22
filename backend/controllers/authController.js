@@ -21,7 +21,7 @@ export async function loginUser(req, res) {
 
   }
 
-  const token = signToken({ id: player.id, username: player.username, iat: Math.floor(Date.now() / 1000) - 30 }, "api");
+  const token = signToken({ id: player.id, username: player.username }, "api");
   return res.status(200).json({ token });
 
 }
