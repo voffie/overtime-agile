@@ -40,9 +40,9 @@ function computer() {
       <div v-if="selected === null">
       <h1>Executive's Office</h1>
       <p>Uhh, it stinks in here. You look to the right - there's a dead cat on the floor. 
-        That's disgusting, but there's no time to focus on that right now. You have to find the code to get into the hard drive. 
-        There's a laptop on the desk, the code must be in there somewhere. 
-        Of course there's a password to the computer. Maybe there's a clue in the room somewhere? Something personal?
+        That's disgusting, but there's no time to focus on that right now. You need more information. 
+        There's a laptop on the desk, something must be in there somewhere. 
+        Of course there's a password to the computer. A code with 4 digits. Maybe there's a clue in the room somewhere? Something personal?
       </p>
       <br>
       <p>Look closer at these items:</p>
