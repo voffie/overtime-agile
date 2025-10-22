@@ -62,7 +62,6 @@ function tryUnlock() {
     const locked = drawers.value.find(d => d.kind === "close")
     if (locked) {
       locked.kind = "open"
-      locked.text = "UNLOCKED!"
       message.value = "✅ You unlocked a drawer!"
       messageType.value = "success"
     }
