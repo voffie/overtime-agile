@@ -79,7 +79,7 @@ function tryUnlock() {
 </script>
 
 <template>
-  <PuzzleContainer nextRoute="/">
+  <PuzzleContainer nextRoute="/room/design">
     <!-- Intro stays the same -->
     <template #puzzleIntro>
       <p>
@@ -161,7 +161,7 @@ function tryUnlock() {
       </p>
       </div>
       <div>
-        <img src="../assets/img/Outro_archiveRoom.png" class="image_archiveRoom">
+        <img src="../assets/img/archiveRoom/Outro_archiveRoom.png" class="image_archiveRoom">
       </div>
     </div>
     </template>
@@ -177,7 +177,7 @@ function tryUnlock() {
 }
 
 .container {
-  background-image: url("../assets/img/cabinet_drawer_alt2_520.png");
+  background-image: url("../assets/img/archiveRoom/cabinet_drawer_alt2_520.png");
   display: grid;
   grid-template-columns: repeat(4, 71px);
   grid-template-rows: repeat(5, 60px);
@@ -208,7 +208,7 @@ function tryUnlock() {
 .open.active {
   transform: translateY(-3px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  background-image: url("../assets/img/cabinet_illustration_drawer_cutout_120.png");
+  background-image: url("../assets/img/archiveRoom/cabinet_illustration_drawer_cutout_120.png");
   color: #111;
   background-size: cover; /* or cover */
   background-position: center;
@@ -244,7 +244,7 @@ function tryUnlock() {
   margin-right: 10px;
   border: 10px solid #4a4e52;
   border-radius: 4px;
-  background-image: url("../assets/img/digiBoard.png");
+  background-image: url("../assets/img/archiveRoom/digiBoard.png");
 }
 
 .image_archiveRoom {
@@ -265,7 +265,7 @@ function tryUnlock() {
 }
 
 .container {
-  background-image: url("../assets/img/cabinet_drawer_alt2_520.png");
+  background-image: url("../assets/img/archiveRoom/cabinet_drawer_alt2_520.png");
   width: 580px;
   display: grid;
   grid-template-columns: repeat(4, 120px);
