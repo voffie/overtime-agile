@@ -205,8 +205,8 @@ async function showCountdown(from){
       <p>*sigh* they always move the off button on every new release…</p>
       <br>
       <p>You head to the archive room to find the schematics for the new prototype.</p>
-      <p>Beside the locked archive door there is a keypad with a 3x3 grid with light-buttons on it.</p> 
-      <p>It seems like you have to repeat the blinking light sequence to unlock the door..</p>
+      <p>Beside the locked archive door there is a keypad,</p> 
+      <p>it seems like you have to repeat the color sequence to unlock the door..</p>
     </template>
 
     <!--PUZZLE-->
