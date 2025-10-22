@@ -191,11 +191,22 @@ async function showCountdown(from){
 </script>
 
 <template>
-  <PuzzleContainer nextRoute="/game-intro">
+  <PuzzleContainer nextRoute="/room/archive">
 
     <!--INTRO-->
     <template #puzzleIntro>
-      <p>Intro Text</p>
+      <h2>Break Room</h2>
+      <br>
+      <p>As you walk into the breakroom, you see the new Guini prototype standing on the corner table.</p>
+      <p>It must have been left there by somebody from the New Development Division.</p>
+      <br>
+      <p>As you reach for your frozen dinner from the freezer, the prototype starts to make a strange static noise.</p>
+      <p>Annoyed and still hungry, you walk over to the table and pick it up to turn it off, but you can’t seem to find the off button.</p>
+      <p>*sigh* they always move the off button on every new release…</p>
+      <br>
+      <p>You head to the archive room to find the schematics for the new prototype.</p>
+      <p>Beside the locked archive door there is a keypad with a 3x3 grid with light-buttons on it.</p> 
+      <p>It seems like you have to repeat the blinking light sequence to unlock the door..</p>
     </template>
 
     <!--PUZZLE-->
@@ -256,7 +267,7 @@ async function showCountdown(from){
 
     <!--OUTRO-->
     <template #puzzleOutro>
-      <p>Outro Text</p>
+      <p>Outro Text - YOU DID IT! Go to archive room.</p>
     </template>
 
   </PuzzleContainer>
@@ -265,7 +276,6 @@ async function showCountdown(from){
 <style scoped>
 
 .container-puzzle {
-  border: 1px solid yellow;
   height: 100%;
   display: flex;
   flex-direction: column;
