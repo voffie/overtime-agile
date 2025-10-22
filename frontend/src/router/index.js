@@ -26,6 +26,12 @@ const router = createRouter({
     component: () => import('@/views/ExecOffice.vue'),
     meta: { title: 'Executives Office' }
   },
+      {
+    path: '/room/archive',
+    name: 'archive',
+    component: () => import('@/views/ArchiveRoom.vue'),
+    meta: { title: 'Archive Room' }
+  },
   ],
 })
 
