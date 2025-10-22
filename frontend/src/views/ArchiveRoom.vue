@@ -52,7 +52,6 @@ function onDrawerClick(d) {
     // re-trigger animation
     requestAnimationFrame(() => (d.shake = true,  d.text = "closed!"))
     setTimeout(() => (d.shake = false, d.text = "X"), 600)
-    
   }
 }
 
@@ -307,10 +306,5 @@ function tryUnlock() {
   border-radius: 4px;
   background-image: url("../assets/img/archiveRoom/digiBoard.png");
 }
-
-
 }
-
-
-
 </style>
