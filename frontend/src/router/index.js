@@ -32,7 +32,13 @@ const router = createRouter({
       name: "server-room",
       component: () => import("@/views/ServerRoom.vue"),
       meta: {title: "Server Room"}
-    }
+    },
+    {
+    path: '/room/archive',
+    name: 'archive',
+    component: () => import('@/views/ArchiveRoom.vue'),
+    meta: { title: 'Archive Room' }
+  },
   ],
 })
 
