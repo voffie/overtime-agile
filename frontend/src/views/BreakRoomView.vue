@@ -271,13 +271,13 @@ async function showCountdown(from){
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 0.6rem;
 }
 
 .container-sequence {
   position: relative;
-  width: 6rem;
-  height: 6rem;
+  width: 4rem;
+  height: 4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -286,7 +286,7 @@ async function showCountdown(from){
 
 .container-keypad {
   background: rgb(38, 45, 45);
-  border: 4px solid black;
+  border: 0.5rem solid black;
   padding: 1rem;
   display: grid;
   grid: repeat(3, 1fr) / repeat(3, 1fr);
@@ -303,14 +303,14 @@ async function showCountdown(from){
   align-items: center;
   justify-content: center;
   color: lightgrey;
-  font-size: 3rem;
+  font-size: 1.5rem;
 }
 
 .square {
   border: 2px solid lightgrey;
-  width: 6rem;
-  height: 6rem;
-  border-radius: 8px;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.5rem;
 }
 
 .hoverEffect:hover {
