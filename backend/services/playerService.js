@@ -66,3 +66,12 @@ export async function deletePlayer(username) {
 
   }
 }
+
+export async function updatePlayer(username, newHash) {
+  const [results] = await db.query(`UPDATE player SET password_hash = ? WHERE username = ?`, [newHash, username])
+  return {
+    affectedRows: results.affectedRows,
+    message: results.affectedRows > 0 ? "Password updated" : "No user found",
+  };
+
+}

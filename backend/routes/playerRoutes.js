@@ -11,5 +11,6 @@ PlayerRouter.get("/api/players/:username", PlayerController.getPlayerByUsername)
 
 
 PlayerRouter.delete("/api/players/:username", requireAuth, verifySelf, PlayerController.deletePlayer)
+PlayerRouter.put("/api/players/:username", requireAuth, verifySelf, PlayerController.updatePlayer)
 
 
