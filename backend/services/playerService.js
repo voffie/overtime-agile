@@ -13,16 +13,17 @@ export async function getAllPlayers() {
 
 export async function getPlayerByUsername(username, columns = null, context = "default") {
 
-  const columnsMappedByContext = {
-    default: ["id", "username"],
-    auth: ["id", "username", "password_hash"],
+  let sql;
+  let params = [username];
+
+  if (context === "auth") {
+    sql = `SELECT id, username, password_hash FROM player WHERE username = ? LIMIT 1`;
+  } else {
+    sql = `SELECT id, username FROM player WHERE username = ? LIMIT 1`;
   }
 
-  const selectedColumns = columns || columnsMappedByContext[context] || columnsMappedByContext.default;
-  const fields = selectedColumns.join(", ")
-
   try {
-    const [results] = await db.query(`SELECT ${fields} FROM player WHERE username = ?`, [username]);
+    const [results] = await db.query(sql, params);
     return results[0] || null;
   } catch { err } {
     throw err;
