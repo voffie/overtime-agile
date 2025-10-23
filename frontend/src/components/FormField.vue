@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits, computed } from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps({
   labelFor: {
@@ -51,15 +51,8 @@ const model = computed({
 <template>
   <div class="form-field">
     <label class="form-label" :for="labelFor"><img :src="iconSrc" :alt="iconAlt" /></label>
-    <input
-      v-model="model"
-      class="form-input"
-      :type="inputType"
-      :id="labelFor"
-      :name="name"
-      :placeholder="placeholder"
-      :required="required"
-    />
+    <input v-model="model" class="form-input" :type="inputType" :id="labelFor" :name="name" :placeholder="placeholder"
+      :required="required" />
   </div>
 
   <p class="warning-message" v-if="warningMessage">
