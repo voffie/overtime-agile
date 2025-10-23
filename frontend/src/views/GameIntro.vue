@@ -2,14 +2,12 @@
 import { useRouter } from 'vue-router'
 import Button from '@/components/Button.vue'
 
-
 const router = useRouter()
 
 function goToNextRoom() {
   router.push("/room/break")
 }
 </script>
-
 
 <template>
   <div class="center">
@@ -40,7 +38,7 @@ function goToNextRoom() {
       </div>
     </div>
    
-    <Button text="Continue" @click="goToNextRoom" />
+    <Button text="Go to a breakroom" @click="goToNextRoom" />
  </div>
 </template>
 
@@ -48,6 +46,7 @@ function goToNextRoom() {
 .center {
   padding: 30px;
   text-align: justify;
+  padding-top: 0;
 }
 
 .logo-img {
@@ -57,7 +56,7 @@ function goToNextRoom() {
 }
 
 h2 {
-  font-size: 1.2rem;
+  font-size: 20px;
   padding-bottom: 1.5rem;
 }
 
@@ -67,4 +66,41 @@ h2 {
   align-self: center;
 }
 
+
+/* DESKTOP */
+
+@media screen and (min-width: 1000px) {
+
+.center {
+  padding: 100px;
+  padding-top: 20px;
+}
+
+.logo-img {
+  width: 400px;
+  height: auto;
+  align-self: center;
+}
+
+.flexContainer {
+  display:flex;
+  gap: 100px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 24px;
+  padding-bottom: 1.5rem;
+}
+
+.container {
+  width: 800px;
+}
+
+.main-img {
+  width: 500px;
+  height: auto;
+  align-self: center;
+}
+}
 </style>
