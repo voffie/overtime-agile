@@ -94,7 +94,7 @@ h2 {
 }
 
 .container {
-  width: 800px;
+  max-width: 800px;
 }
 
 .main-img {
