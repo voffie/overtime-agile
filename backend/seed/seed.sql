@@ -12,7 +12,7 @@ CREATE TABLE game (
   time_taken INT DEFAULT 0, -- time taken in seconds
   current_room INT NOT NULL DEFAULT 0,
   status ENUM('completed', 'in-progress') NOT NULL DEFAULT 'in-progress',
-  FOREIGN KEY (playerid) REFERENCES player(id)
+  FOREIGN KEY (playerid) REFERENCES player(id) ON DELETE CASCADE
 );
 
 INSERT INTO player (username, password_hash)

@@ -12,7 +12,6 @@ export async function getAllPlayers() {
 
 
 export async function getPlayerByUsername(username, columns = null, context = "default") {
-
   let sql;
   let params = [username];
 
@@ -39,5 +38,31 @@ export async function createPlayer(username, password_hash) {
   } catch (err) {
     throw err;
   }
+}
 
+export async function deletePlayer(username) {
+
+  try {
+    const [results] = await db.query(`DELETE FROM player WHERE username = ? LIMIT 1`, [username]);
+
+    if (results.affectedRows === 0) {
+      return {
+        success: false,
+        message: `No player found with username: ${username}`,
+        affectedRows: 0
+
+      };
+    }
+
+    return {
+      success: true,
+      message: `Deleted player with username: ${username}`,
+      affectedRows: 1
+
+    };
+
+  } catch (err) {
+    throw err;
+
+  }
 }

@@ -71,3 +71,21 @@ export async function createPlayer(req, res) {
 
 
 }
+
+
+export async function deletePlayer(req, res) {
+
+
+  try {
+    const username = req.params.username;
+    const result = await PlayerService.deletePlayer(username);
+    return res.status(200).json({ result });
+
+
+  } catch (error) {
+    return res.status(500).json({ result });
+
+  }
+
+
+}
