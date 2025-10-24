@@ -10,7 +10,6 @@ import keyIconRepeat from '@/assets/img/keyIconRepeat.svg'
 const isLogin = ref(true)
 const routeToNextPage = useRouter()
 const hasCreatedAccount = ref(false)
-const token = ref(null);
 
 const formValues = reactive({
   username: '',
@@ -57,9 +56,38 @@ const formValidator = (mode = 'login') => {
   return validForm
 }
 
-const handlesLogin = () => {
+const handlesLogin = async () => {
   if (formValidator('login')) {
-    routeToNextPage.push({ name: 'game-intro' })
+
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: formValues.username,
+          password: formValues.password,
+          token_context: "client",
+        })
+      });
+
+      const token = await (res.json());
+
+      if (!res.ok) {
+        throw new Error(token.error || "Fail to validate credentials")
+
+      }
+
+      formValues.username = "";
+      formValues.password = "";
+      localStorage.setItem("token", token.token);
+      routeToNextPage.push({ name: 'game-intro' })
+
+
+    } catch (error) {
+      hasCreatedAccount.value = false;
+      errorMessages.message = error.message;
+
+    }
   }
 }
 

@@ -43,7 +43,7 @@ export function verifyMyToken(req, res) {
     return res.status(200).json({ myVerifiedToken, status: true });
 
   } catch (error) {
-    return res.status(403).json({ error: "Invalid or exipered token refresh", status: false });
+    return res.status(403).json({ error: "Invalid or expired token refresh", status: false });
 
   }
 
