@@ -10,6 +10,7 @@ import keyIconRepeat from '@/assets/img/keyIconRepeat.svg'
 const isLogin = ref(true)
 const routeToNextPage = useRouter()
 const hasCreatedAccount = ref(false)
+const token = ref(null);
 
 const formValues = reactive({
   username: '',
@@ -21,6 +22,7 @@ const errorMessages = reactive({
   username: '',
   password: '',
   repeatPassword: '',
+  message: '',
 })
 
 const formValidator = (mode = 'login') => {
@@ -31,6 +33,7 @@ const formValidator = (mode = 'login') => {
   errorMessages.username = ''
   errorMessages.password = ''
   errorMessages.repeatPassword = ''
+  errorMessages.message = ''
 
   if (!usernameValidator) {
     errorMessages.username =
@@ -60,10 +63,35 @@ const handlesLogin = () => {
   }
 }
 
-const handlesRegistration = () => {
+const handlesRegistration = async () => {
   if (formValidator('register')) {
-    hasCreatedAccount.value = true
+    try {
+      const res = await fetch("http://localhost:3000/api/players", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: formValues.username,
+          password: formValues.password,
+
+        }),
+      });
+      const data = await (res.json());
+
+      if (!res.ok) {
+        throw new Error(data.error || "Fail to register");
+      }
+      formValues.username = ''
+      formValues.password = ''
+      formValues.repeatPassword = ''
+      hasCreatedAccount.value = true
+
+    } catch (error) {
+      hasCreatedAccount.value = false;
+      errorMessages.message = error.message;
+
+    }
   }
+
 }
 
 const handlesSubmit = (isLogin) => {
@@ -128,6 +156,8 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
               :icon-src="keyIconRepeat" icon-alt="arrows in a circular pattern" input-type="password"
               name="repeatpassword" placeholder="Enter password again" :required="true"
               :warning-message="errorMessages.repeatPassword" />
+
+            <p v-if="!hasCreatedAccount && errorMessages.message" class="cta-message"> {{ errorMessages.message }}</p>
 
             <p class="success-message" v-if="hasCreatedAccount">
               🎉 Account created successfully! 🎉
