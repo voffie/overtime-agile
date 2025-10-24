@@ -7,7 +7,7 @@ export async function loginUser(req, res) {
   const { username, password, token_context } = req.body;
   const context = token_context === "client" ? "client" : "api";
 
-  const player = await getPlayerByUsername(username, null, "auth")
+  const player = await getPlayerByUsername(username, "auth")
   if (!player) {
     return res.status(401).json({ error: "Invalid credentials" });
 

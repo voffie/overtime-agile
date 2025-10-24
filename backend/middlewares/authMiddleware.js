@@ -14,7 +14,6 @@ export function requireAuth(req, res, next) {
   try {
     const decoded = verifyToken(token);
     req.user = decoded;
-    console.log(req.user);
     next();
 
   } catch (error) {

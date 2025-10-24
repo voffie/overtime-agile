@@ -97,7 +97,7 @@ export async function updatePlayer(req, res) {
 
   }
 
-  const player = await PlayerService.getPlayerByUsername(username, null, "auth");
+  const player = await PlayerService.getPlayerByUsername(username, "auth");
   if (!player) {
     return res.status(404).json({ error: "No user record found" });
 

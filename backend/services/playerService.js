@@ -11,7 +11,7 @@ export async function getAllPlayers() {
 }
 
 
-export async function getPlayerByUsername(username, columns = null, context = "default") {
+export async function getPlayerByUsername(username, context = "default") {
   let sql;
   let params = [username];
 
