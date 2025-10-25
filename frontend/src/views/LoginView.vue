@@ -29,10 +29,7 @@ const formValidator = (mode = 'login') => {
   const passwordValidator = isValidPasswordFormat(formValues.password)
   const passwordsValueValidator = isTheSamePassword(formValues.password, formValues.repeatPassword)
   let validForm = true
-  errorMessages.username = ''
-  errorMessages.password = ''
-  errorMessages.repeatPassword = ''
-  errorMessages.message = ''
+  clearValues(errorMessages);
 
   if (!usernameValidator) {
     errorMessages.username =
@@ -77,8 +74,7 @@ const handlesLogin = async () => {
 
       }
 
-      formValues.username = "";
-      formValues.password = "";
+      clearValues(formValues);
       localStorage.setItem("token", token.token);
       routeToNextPage.push({ name: 'game-intro' })
 
@@ -108,9 +104,7 @@ const handlesRegistration = async () => {
       if (!res.ok) {
         throw new Error(data.error || "Fail to register");
       }
-      formValues.username = ''
-      formValues.password = ''
-      formValues.repeatPassword = ''
+      clearValues(formValues);
       hasCreatedAccount.value = true
 
     } catch (error) {
@@ -130,10 +124,18 @@ const handlesSubmit = (isLogin) => {
   }
 }
 
+const clearValues = (data) => {
+  for (const key in data) {
+    data[key] = "";
+  }
+
+}
+
 const changeForm = () => {
-  console.log('Loads page')
   isLogin.value = !isLogin.value
   hasCreatedAccount.value = false
+  clearValues(errorMessages);
+  clearValues(formValues);
 }
 
 const isValidUsername = (userNameEntered) => {
@@ -185,7 +187,9 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
               name="repeatpassword" placeholder="Enter password again" :required="true"
               :warning-message="errorMessages.repeatPassword" />
 
-            <p v-if="!hasCreatedAccount && errorMessages.message" class="cta-message"> {{ errorMessages.message }}</p>
+            <p class="cta-warning-message" :class="{ visible: errorMessages.message }">
+              {{ errorMessages.message }}
+            </p>
 
             <p class="success-message" v-if="hasCreatedAccount">
               🎉 Account created successfully! 🎉
@@ -259,6 +263,23 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
   font-weight: thin;
   text-wrap: balance;
   margin: 0.5rem auto;
+}
+
+.cta-warning-message {
+  text-align: center;
+  font-size: larger;
+  text-wrap: balance;
+  color: var(--warning);
+  margin: 0 auto;
+  width: 80%;
+  min-height: 2.5rem;
+  transition: opacity 0.6s ease-in-out;
+  visibility: hidden;
+}
+
+.cta-warning-message.visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 @media screen and (min-width: 768px) {

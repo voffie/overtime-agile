@@ -54,8 +54,7 @@ const model = computed({
     <input v-model="model" class="form-input" :type="inputType" :id="labelFor" :name="name" :placeholder="placeholder"
       :required="required" />
   </div>
-
-  <p class="warning-message" v-if="warningMessage">
+  <p class="warning-message" v-show="warningMessage">
     <code>{{ warningMessage }}</code>
   </p>
 </template>

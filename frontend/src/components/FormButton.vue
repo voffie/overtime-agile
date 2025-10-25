@@ -35,7 +35,7 @@ const props = defineProps({
 
 <style scoped>
 .form-buttons {
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .form-button {
