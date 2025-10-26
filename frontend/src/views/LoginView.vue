@@ -53,66 +53,71 @@ const formValidator = (mode = 'login') => {
   return validForm
 }
 
-const handlesLogin = async () => {
-  if (formValidator('login')) {
 
-    try {
-      const res = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: formValues.username,
-          password: formValues.password,
-          token_context: "client",
-        })
-      });
+const handleRequest = async ({
+  endpoint,
+  body,
+  requestType,
+  onSuccess,
 
-      const token = await (res.json());
+}) => {
+  if (!formValidator(requestType)) return;
+  try {
+    const res = await fetch(`http://localhost:3000/api/${endpoint}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
 
-      if (!res.ok) {
-        throw new Error(token.error || "Fail to validate credentials")
+    const data = await res.json();
 
-      }
-
-      clearValues(formValues);
-      localStorage.setItem("token", token.token);
-      routeToNextPage.push({ name: 'game-intro' })
-
-
-    } catch (error) {
-      hasCreatedAccount.value = false;
-      errorMessages.message = error.message;
-
+    if (!res.ok) {
+      throw new Error(data.error || `Failed to ${requestType}`);
     }
+
+    clearValues(formValues);
+    onSuccess?.(data);
+
+  } catch (error) {
+    hasCreatedAccount.value = false;
+    errorMessages.message = error.message;
+
   }
+
+};
+
+const handlesLogin = async () => {
+  await handleRequest({
+    endpoint: "auth/login",
+    body: {
+      username: formValues.username,
+      password: formValues.password,
+      token_context: "client"
+    },
+    requestType: "login",
+    onSuccess: (token) => {
+      localStorage.setItem("token", token.token);
+      routeToNextPage.push({ name: "game-intro" })
+    }
+
+  })
 }
 
 const handlesRegistration = async () => {
-  if (formValidator('register')) {
-    try {
-      const res = await fetch("http://localhost:3000/api/players", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: formValues.username,
-          password: formValues.password,
 
-        }),
-      });
-      const data = await (res.json());
+  await handleRequest({
+    endpoint: "players",
+    body: {
+      username: formValues.username,
+      password: formValues.password
 
-      if (!res.ok) {
-        throw new Error(data.error || "Fail to register");
-      }
-      clearValues(formValues);
-      hasCreatedAccount.value = true
-
-    } catch (error) {
-      hasCreatedAccount.value = false;
-      errorMessages.message = error.message;
+    },
+    requestType: "register",
+    onSuccess: () => {
+      hasCreatedAccount.value = true;
 
     }
-  }
+  })
 
 }
 
@@ -259,8 +264,8 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
 
 .cta-message {
   text-align: center;
-  font-size: normal;
-  font-weight: thin;
+  font-size: medium;
+  font-weight: lighter;
   text-wrap: balance;
   margin: 0.5rem auto;
 }
