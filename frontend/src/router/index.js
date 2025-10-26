@@ -49,48 +49,41 @@ const router = createRouter({
   ],
 })
 
-
 router.beforeEach(async (to, from, next) => {
-
   if (!to.meta.requiredAuth) {
-    return next();
+    return next()
   }
 
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token')
 
   if (!token) {
-    return next({ name: "login" });
+    return next({ name: 'login' })
   }
 
-
   try {
-    const decodedToken = jwtDecode(token);
-    const now = Date.now() / 1000;
-
+    const decodedToken = jwtDecode(token)
+    const now = Date.now() / 1000
 
     if (decodedToken.exp && decodedToken.exp < now) {
-      localStorage.removeItem("token");
-      return next({ name: "login" });
-
+      localStorage.removeItem('token')
+      return next({ name: 'login' })
     }
-
   } catch (error) {
-    localStorage.removeItem("token");
-    return next({ name: "login" });
-
+    localStorage.removeItem('token')
+    return next({ name: 'login' })
   }
   try {
     const res = await fetch('http://localhost:3000/api/auth/verify', {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    const data = await res.json();
-    if (data.status) return next();
-  } catch (err) { console.error('Token verification failed:', err); }
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    const data = await res.json()
+    if (data.status) return next()
+  } catch (err) {
+    console.error('Token verification failed:', err)
+  }
 
-  localStorage.removeItem("token");
-  return next({ name: "login" });
-
-
+  localStorage.removeItem('token')
+  return next({ name: 'login' })
 })
 
 export default router

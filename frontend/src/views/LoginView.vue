@@ -29,7 +29,7 @@ const formValidator = (mode = 'login') => {
   const passwordValidator = isValidPasswordFormat(formValues.password)
   const passwordsValueValidator = isTheSamePassword(formValues.password, formValues.repeatPassword)
   let validForm = true
-  clearValues(errorMessages);
+  clearValues(errorMessages)
 
   if (!usernameValidator) {
     errorMessages.username =
@@ -53,72 +53,57 @@ const formValidator = (mode = 'login') => {
   return validForm
 }
 
-
-const handleRequest = async ({
-  endpoint,
-  body,
-  requestType,
-  onSuccess,
-
-}) => {
-  if (!formValidator(requestType)) return;
+const handleRequest = async ({ endpoint, body, requestType, onSuccess }) => {
+  if (!formValidator(requestType)) return
   try {
     const res = await fetch(`http://localhost:3000/api/${endpoint}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body)
-    });
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
 
-    const data = await res.json();
+    const data = await res.json()
 
     if (!res.ok) {
-      throw new Error(data.error || `Failed to ${requestType}`);
+      throw new Error(data.error || `Failed to ${requestType}`)
     }
 
-    clearValues(formValues);
-    onSuccess?.(data);
-
+    clearValues(formValues)
+    onSuccess?.(data)
   } catch (error) {
-    hasCreatedAccount.value = false;
-    errorMessages.message = error.message;
-
+    hasCreatedAccount.value = false
+    errorMessages.message = error.message
   }
-
-};
+}
 
 const handlesLogin = async () => {
   await handleRequest({
-    endpoint: "auth/login",
+    endpoint: 'auth/login',
     body: {
       username: formValues.username,
       password: formValues.password,
-      token_context: "client"
+      token_context: 'client',
     },
-    requestType: "login",
+    requestType: 'login',
     onSuccess: (token) => {
-      localStorage.setItem("token", token.token);
-      routeToNextPage.push({ name: "game-intro" })
-    }
-
+      localStorage.setItem('token', token.token)
+      routeToNextPage.push({ name: 'game-intro' })
+    },
   })
 }
 
 const handlesRegistration = async () => {
-
   await handleRequest({
-    endpoint: "players",
+    endpoint: 'players',
     body: {
       username: formValues.username,
-      password: formValues.password
-
+      password: formValues.password,
     },
-    requestType: "register",
+    requestType: 'register',
     onSuccess: () => {
-      hasCreatedAccount.value = true;
-
-    }
+      hasCreatedAccount.value = true
+    },
   })
-
 }
 
 const handlesSubmit = (isLogin) => {
@@ -131,16 +116,15 @@ const handlesSubmit = (isLogin) => {
 
 const clearValues = (data) => {
   for (const key in data) {
-    data[key] = "";
+    data[key] = ''
   }
-
 }
 
 const changeForm = () => {
   isLogin.value = !isLogin.value
   hasCreatedAccount.value = false
-  clearValues(errorMessages);
-  clearValues(formValues);
+  clearValues(errorMessages)
+  clearValues(formValues)
 }
 
 const isValidUsername = (userNameEntered) => {
@@ -181,16 +165,40 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
         <form class="form-login" @submit.prevent="handlesSubmit(isLogin)">
           <fieldset class="form-fieldset">
             <legend class="form-legend">{{ isLogin ? 'Welcome' : 'New Account' }}</legend>
-            <FormField v-model="formValues.username" label-for="username" :icon-src="usernameIcon"
-              icon-alt="username icon" input-type="text" name="username" placeholder="Enter username" :required="true"
-              :warning-message="errorMessages.username" />
-            <FormField v-model="formValues.password" label-for="password" :icon-src="keyIcon" icon-alt="key icon"
-              input-type="password" name="password" placeholder="Enter password" :required="true"
-              :warning-message="errorMessages.password" />
-            <FormField v-if="!isLogin" v-model="formValues.repeatPassword" label-for="repeatpassword"
-              :icon-src="keyIconRepeat" icon-alt="arrows in a circular pattern" input-type="password"
-              name="repeatpassword" placeholder="Enter password again" :required="true"
-              :warning-message="errorMessages.repeatPassword" />
+            <FormField
+              v-model="formValues.username"
+              label-for="username"
+              :icon-src="usernameIcon"
+              icon-alt="username icon"
+              input-type="text"
+              name="username"
+              placeholder="Enter username"
+              :required="true"
+              :warning-message="errorMessages.username"
+            />
+            <FormField
+              v-model="formValues.password"
+              label-for="password"
+              :icon-src="keyIcon"
+              icon-alt="key icon"
+              input-type="password"
+              name="password"
+              placeholder="Enter password"
+              :required="true"
+              :warning-message="errorMessages.password"
+            />
+            <FormField
+              v-if="!isLogin"
+              v-model="formValues.repeatPassword"
+              label-for="repeatpassword"
+              :icon-src="keyIconRepeat"
+              icon-alt="arrows in a circular pattern"
+              input-type="password"
+              name="repeatpassword"
+              placeholder="Enter password again"
+              :required="true"
+              :warning-message="errorMessages.repeatPassword"
+            />
 
             <p class="cta-warning-message" :class="{ visible: errorMessages.message }">
               {{ errorMessages.message }}
@@ -203,9 +211,12 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
               ⇩ click on the go back to log in button below ⇩
             </p>
           </fieldset>
-          <FormButton :primary-button-text="isLogin ? 'LOG IN' : 'CREATE ACCOUNT'" primary-button-type="submit"
+          <FormButton
+            :primary-button-text="isLogin ? 'LOG IN' : 'CREATE ACCOUNT'"
+            primary-button-type="submit"
             :secondary-button-text="isLogin ? 'CREATE ACCOUNT' : 'GO BACK TO LOG IN'"
-            :secondary-button-click="changeForm" />
+            :secondary-button-click="changeForm"
+          />
         </form>
       </section>
     </section>
