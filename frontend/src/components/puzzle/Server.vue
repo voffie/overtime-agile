@@ -1,27 +1,27 @@
 <script setup>
-import { ref } from "vue"
-import Button from "@/components/Button.vue"
+import { ref } from 'vue'
+import Button from '@/components/Button.vue'
 
-const props = defineProps(["solve"])
+const props = defineProps(['solve'])
 
-const konamiCode = ["↑", "↑", "↓", "↓", "←", "→", "←", "→", "B", "A"]
+const konamiCode = ['↑', '↑', '↓', '↓', '←', '→', '←', '→', 'B', 'A']
 const currentSequence = ref([])
-const errorMessage = ref("")
+const errorMessage = ref('')
 
 function arraysEqual(a, b) {
   return a.length === b.length && a.every((val, i) => val === b[i])
 }
 
 function addKey(key) {
-  errorMessage.value = ""
+  errorMessage.value = ''
   currentSequence.value.push(key)
 
-  if (currentSequence.value.length !== konamiCode.length) return;
+  if (currentSequence.value.length !== konamiCode.length) return
 
   if (arraysEqual(currentSequence.value, konamiCode)) {
     props.solve()
   } else {
-    errorMessage.value = "> Incorrect sequence"
+    errorMessage.value = '> Incorrect sequence'
     currentSequence.value = []
   }
 }
@@ -30,13 +30,15 @@ function addKey(key) {
 <template>
   <section class="terminal cursor">
     <pre><code><strong>Enter Sequence:</strong> {{ currentSequence.join(", ") }}</code></pre>
-    <p v-if="errorMessage" class="message"><strong>{{ errorMessage }}</strong></p>
+    <p v-if="errorMessage" class="message">
+      <strong>{{ errorMessage }}</strong>
+    </p>
   </section>
   <section class="input-wrapper">
     <section class="controls">
       <section class="arrows">
         <div class="up">
-          <Button class="resize" text="↑" @click="addKey('↑')"/>
+          <Button class="resize" text="↑" @click="addKey('↑')" />
         </div>
         <div class="middle">
           <Button class="resize" text="←" @click="addKey('←')" />
@@ -47,7 +49,7 @@ function addKey(key) {
 
       <aside class="actions">
         <Button class="resize" text="A" @click="addKey('A')" />
-        <Button class="resize" text="B" @click="addKey('B')"/>
+        <Button class="resize" text="B" @click="addKey('B')" />
       </aside>
     </section>
   </section>
@@ -68,7 +70,9 @@ function addKey(key) {
 }
 
 @keyframes blink {
-  50% { opacity: 0; }
+  50% {
+    opacity: 0;
+  }
 }
 
 .cursor code::after {

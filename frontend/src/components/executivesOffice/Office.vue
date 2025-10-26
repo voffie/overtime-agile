@@ -4,7 +4,6 @@
   </div>
 </template>
 
-
 <style scoped>
 .office-img-crop {
   height: 700px;
@@ -22,5 +21,4 @@
   object-fit: cover;
   object-position: center;
 }
-
 </style>

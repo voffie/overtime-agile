@@ -1,10 +1,10 @@
 <script setup>
 const props = defineProps({
-  intro: Boolean
+  intro: Boolean,
 })
 
 import Button from '@/components/Button.vue'
-const emit = defineEmits(["back"])
+const emit = defineEmits(['back'])
 </script>
 
 <template>
@@ -12,17 +12,15 @@ const emit = defineEmits(["back"])
     <template v-if="props.intro">
       <h1>You look closer to the letter</h1>
       <p>There's several interesting topics in this letter...</p>
-    <Button text="Go back to the office" @click="emit('back')" style="margin-top: 20px;" />
-
+      <Button text="Go back to the office" @click="emit('back')" style="margin-top: 20px" />
     </template>
     <template v-else>
-  <div class="letter-img-crop">
-    <img class="letter-img" src="@/assets/img/execOffice/letter.png" alt="letter" />
-  </div>
+      <div class="letter-img-crop">
+        <img class="letter-img" src="@/assets/img/execOffice/letter.png" alt="letter" />
+      </div>
     </template>
   </div>
 </template>
-
 
 <style scoped>
 .letter-img-crop {
@@ -41,5 +39,4 @@ const emit = defineEmits(["back"])
   object-fit: cover;
   object-position: center;
 }
-
 </style>

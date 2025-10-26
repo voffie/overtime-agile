@@ -26,26 +26,26 @@ const router = createRouter({
       path: '/room/office',
       name: 'office',
       component: () => import('@/views/ExecOffice.vue'),
-      meta: { title: 'Executives Office' }
+      meta: { title: 'Executives Office', requiredAuth: true },
     },
     {
-      path: "/room/server",
-      name: "server-room",
-      component: () => import("@/views/ServerRoom.vue"),
-      meta: { title: "Server Room" }
+      path: '/room/server',
+      name: 'server-room',
+      component: () => import('@/views/ServerRoom.vue'),
+      meta: { title: 'Server Room', requiredAuth: true },
     },
     {
       path: '/room/archive',
       name: 'archive',
       component: () => import('@/views/ArchiveRoom.vue'),
-      meta: { title: 'Archive Room' }
+      meta: { title: 'Archive Room', requiredAuth: true },
     },
     {
-      path: "/room/break",
-      name: "room-break",
-      component: () => import("@/views/BreakRoomView.vue"),
-      meta: { title: "Room 1 - Break Room" }
-    }
+      path: '/room/break',
+      name: 'room-break',
+      component: () => import('@/views/BreakRoomView.vue'),
+      meta: { title: 'Room 1 - Break Room', requiredAuth: true },
+    },
   ],
 })
 

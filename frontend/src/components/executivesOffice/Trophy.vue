@@ -1,22 +1,21 @@
 <script setup>
 const props = defineProps({
-  intro: Boolean
+  intro: Boolean,
 })
 
 import Button from '@/components/Button.vue'
-const emit = defineEmits(["back"])
-
+const emit = defineEmits(['back'])
 </script>
 
 <template>
   <div>
     <template v-if="props.intro">
       <h1>You look closer to the trophy</h1>
-      <p>It says he's the winner of some manager award. 
-        The price tag is still there. 30$ at Wallmart. 
-        Did he buy this trophy himself? Pathetic.</p>
-    <Button text="Go back to the office" @click="emit('back')" style="margin-top: 20px;" />
-
+      <p>
+        It says he's the winner of some manager award. The price tag is still there. 30$ at
+        Wallmart. Did he buy this trophy himself? Pathetic.
+      </p>
+      <Button text="Go back to the office" @click="emit('back')" style="margin-top: 20px" />
     </template>
     <template v-else>
       <div class="trophy-img-crop">
@@ -43,5 +42,4 @@ const emit = defineEmits(["back"])
   object-fit: cover;
   object-position: center;
 }
-
 </style>
