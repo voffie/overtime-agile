@@ -82,9 +82,15 @@ function goTo(route) {
   border-radius: 0.2rem;
 }
 
+.container-buttons .btn-meny {
+  border: 2px solid #E69138;
+  background-color: transparent;
+  color: white;
+}
+
 .container-buttons .btn-meny:hover {
   transform: scale(1.1);
-  border: 5px solid white;
+  border: 4px dashed white;
 }
 
 .container-buttons .btn-start {
