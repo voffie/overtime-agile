@@ -247,13 +247,23 @@ async function showSequence(){
 
     <!--OUTRO-->
     <template #puzzleOutro>
-      <p>A buzzing sound comes from the lock and you hurry to swing the door open.</p>
-      <p>Why did they install a lock to the archive room?</p>
-      <p>You try to shake it off but a feeling of unease creeps up on you.</p>
-      <br>
-      <p>Once inside, </p>
-      <p>the archive room feels different from the rest of the office,</p>
-      <p>quieter, tidier, almost too perfect...</p>
+
+      <div class="outro-container">
+        <div class="outro-container-text">
+          <p>
+            The lock buzzes and you push the door open. 
+            <br> Since when does the archive need a lock? 
+            <br> You try to shake it off, but a feeling of unease lingers.
+          </p>
+          <br>
+          <p>
+            Once inside,
+            <br> the archive room feels different from the rest of the office,
+            <br> quieter, tidier, almost too perfect...
+          </p>
+        </div>
+      </div>
+      
     </template>
 
   </PuzzleContainer>
@@ -433,4 +443,15 @@ async function showSequence(){
 .yellow-gradient { background: linear-gradient(to right bottom, #fff200, #fff200, #1a1a1a);}
 .white { background: white;}
 .white-gradient { background: linear-gradient(to right bottom, white, white, #1a1a1a);}
+
+/* OUTRO STYLE */
+.outro-container {
+  height: 100%;
+  display: flex;
+}
+
+.outro-container-text {
+  flex: 1;
+}
+
 </style>
