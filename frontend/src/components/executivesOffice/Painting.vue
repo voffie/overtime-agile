@@ -42,13 +42,15 @@ const emit = defineEmits(["back", "toggleBackside"])
       </div>
 
       <div>
-        <Button
-          :text="props.showBackside ? 'Show front' : 'Flip the painting'"
-          @click="emit('toggleBackside')"
-          style="margin: 50px;"/>
-        <br></br>
-        <Button class="go-back-button button" text="Go back to the office" @click="emit('back')" />
-      </div>
+        <button
+          class="button"
+          @click="emit('toggleBackside')">
+          {{ props.showBackside ? 'Show front' : 'Flip the painting' }}
+        </button>
+      <button class="button" @click="emit('back')">
+        Go back to the office
+      </button>      
+    </div>
     </div>
   </div>
 </template>

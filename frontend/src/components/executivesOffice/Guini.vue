@@ -18,7 +18,9 @@ const emit = defineEmits(["back"])
       <p>Wait a minute... there is a lamp blinking in the eye! Is it recording? How long have I been watched? 
         I must get out of here before someone catches me sneaking around!</p>
       
-      <Button text="Go back to the office" @click="emit('back')" style="margin-top: 20px;" />
+      <button class="button" @click="emit('back')">
+        Go back to the office
+      </button>
 
     </template>
     <template v-else>

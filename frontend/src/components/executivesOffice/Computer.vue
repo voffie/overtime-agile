@@ -37,8 +37,9 @@ function checkPassword() {
       <br> </br>
       <Button v-text="'Sign In'" @click="checkPassword" />
       <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-      <Button text="Go back to the office" @click="emit('back')" style="margin-top: 20px;" />
-
+      <button class="button" @click="emit('back')">
+        Go back to the office
+      </button>
       </div>
       <div v-else>
         <Successful />

@@ -16,8 +16,9 @@ const emit = defineEmits(["back"])
       <p>It says he's the winner of some manager award. 
         The price tag is still there. 30$ at Wallmart. 
         Did he buy this trophy himself? Pathetic.</p>
-    <Button text="Go back to the office" @click="emit('back')" style="margin-top: 20px;" />
-
+    <button class="button" @click="emit('back')">
+        Go back to the office
+    </button>
     </template>
     <template v-else>
       <div class="trophy-img-crop">
