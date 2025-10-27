@@ -44,6 +44,12 @@ const router = createRouter({
       name: "room-break",
       component: () => import("@/views/BreakRoomView.vue"),
       meta: { title: "Room 1 - Break Room" }
+    },
+    {
+      path: '/room/ending',
+      name: 'ending',
+      component: () => import('@/views/Ending.vue'),
+      meta: { title: 'Ending' }
     }
   ],
 })

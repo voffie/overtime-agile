@@ -1,0 +1,23 @@
+
+.img-crop {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-crop--fixed {
+  height: 700px;
+  width: 83%;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.button {
+  background-color: sienna;
+}

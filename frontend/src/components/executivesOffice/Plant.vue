@@ -1,9 +1,10 @@
 <script setup>
+import Button from '@/components/Button.vue'
+import "@/assets/css/office-styles.css"
+
 const props = defineProps({
   intro: Boolean
 })
-
-import Button from '@/components/Button.vue'
 const emit = defineEmits(["back"])
 </script>
 
@@ -17,27 +18,8 @@ const emit = defineEmits(["back"])
     </template>
     <template v-else>
   <div class="plant-img-crop">
-    <img class="plant-img" src="@/assets/img/execOffice/plantinvestation.gif" alt="plant" />
+    <img class="plant-img img" src="@/assets/img/execOffice/plantinvestation.gif" alt="plant" />
   </div>
     </template>
   </div>
 </template>
-
-<style scoped>
-.plant-img-crop {
-  height: 700px;
-  overflow: hidden;
-  width: 83%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.plant-img {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 20px;
-  object-fit: cover;
-  object-position: center;
-}
-</style>
