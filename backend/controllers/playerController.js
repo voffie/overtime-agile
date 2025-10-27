@@ -23,7 +23,7 @@ export async function getPlayerByUsername(req, res) {
     return res.json({ player });
   } catch (error) {
     return res.status(500).json({
-      error
+      error: error.message || "Internal Server error"
     })
 
   }
@@ -38,7 +38,7 @@ export async function createPlayer(req, res) {
     return res.status(400).json({ error: "Invalid username. Username must be 5+ characters and is a required" })
   }
 
-  if (!password || typeof password !== "string" || password.trim() === "") {
+  if (!password || typeof password !== "string" || password.trim() === "" || password.length <= 7) {
     return res.status(400).json({ error: "Invalid Password: Password must be 8+ characters and is a required" })
   }
 
