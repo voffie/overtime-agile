@@ -1,16 +1,22 @@
 <script setup>
+import { useRouter } from 'vue-router'
 import Button from '@/components/Button.vue'
+
+const router = useRouter()
+
+function goToNextRoom() {
+  router.push("/room/break")
+}
 </script>
 
 <template>
   <div class="center">
     <div>
-      <img class="main-img" src="@/assets/img/HeartcoreLogo-1.png" alt="Heartcore logo" />
+      <img class="logo-img" src="@/assets/img/HeartCoreLogoGray.png" alt="Heartcore logo gray" />
     </div>
-    <div>
-      <div>
-        <h2>19:07 - Heartcore HQ, Floor 18</h2>
-        <div>
+    <div class="flexContainer">
+      <div class="container">
+        <h2>19:07 - Heartcore HQ, Floor 18</h2> 
           <p>
             Another late night. The office is quiet—just the low hum of machines and the soft tick
             of a digital wall clock. Everyone else left hours ago. You're still here, catching up on
@@ -26,35 +32,75 @@ import Button from '@/components/Button.vue'
             you to leave. Your stomach growls in agreement. You decide to head to the breakroom to
             grab something to keep you going…
           </p>
-        </div>
-        <div>
-          <img
-            class="main-img"
-            src="@/assets/img/overtimeprojectimage2.png"
-            alt="picture of Guini"
-          />
-        </div>
+      </div>
+      <div>
+        <img class="main-img" src="@/assets/img/overtimeprojectimage2.png" alt="picture of Guini"/>
       </div>
     </div>
-    <Button text="Continue" />
-  </div>
+   
+    <Button text="Go to a breakroom" @click="goToNextRoom" />
+ </div>
 </template>
 
 <style scoped>
 .center {
-  padding: 40px;
+  padding: 30px;
   text-align: justify;
+  padding-top: 0;
 }
 
-.main-img {
-  width: 200px;
+.logo-img {
+  width: 300px;
   height: auto;
   align-self: center;
 }
 
-@media screen and (min-width: 768px) {
-  .main-img {
-    width: 400px;
-  }
+h2 {
+  font-size: 20px;
+  padding-bottom: 1.5rem;
+}
+
+.main-img {
+  width: 315px;
+  height: auto;
+  align-self: center;
+}
+
+
+/* DESKTOP */
+
+@media screen and (min-width: 1000px) {
+
+.center {
+  padding: 100px;
+  padding-top: 20px;
+}
+
+.logo-img {
+  width: 400px;
+  height: auto;
+  align-self: center;
+}
+
+.flexContainer {
+  display:flex;
+  gap: 100px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 24px;
+  padding-bottom: 1.5rem;
+}
+
+.container {
+  max-width: 800px;
+}
+
+.main-img {
+  width: 500px;
+  height: auto;
+  align-self: center;
+}
 }
 </style>

@@ -1,6 +1,5 @@
 <script setup>
 import { ref, watch } from "vue";
-import Button from "@/components/Button.vue"
 import PuzzleContainer from "@/components/PuzzleContainer.vue"
 
 /*
@@ -25,39 +24,33 @@ function setCompleted(passedCompletedFunction) {
 }
 
 // Only use ref() when you want something to be reactive (when the value can change and you want Vue to react to it) 
-const colors = ["red", "green", "pink", "purple", "grey", "orange", "blue", "yellow", "brown"]
+const colors = ["red", "green", "pink", "purple", "brown", "orange", "blue", "yellow", "white"]
 const sequence = ref([])
 const playerSequence = ref([])
 
 const currentSequenceColor = ref(null)
 const clickedSquareColor = ref(null)
 
-const countdownText = ref("")
-const puzzleStatus = ref("")
+const screenText = ref("LOCKED!")
 
 let activePuzzle = ref(false)
-let activeCountdown = ref(false)
 let activeSequence = ref(false)
 let activePlayerTurn = ref(false)
 let gameOver = ref(false)
-let gameSolved = ref(false)
 
-async function startPuzzle(event) {
+async function startPuzzle() {
 
   resetGameValues() // Reset sequence, playerSequence and gameOver values.
   activePuzzle.value = true
   await playPuzzle(3) // Play 3 rounds
-  activePuzzle.value = false
 
   if(gameOver.value) {
-    // Restart game
-    console.log("Game over! Wrong input!")
-    console.log("Restart game")
+    screenText.value = "LOCKED!"
+    activePuzzle.value = false
   } else {
-    // Continue to next room
-    console.log("Puzzle complete! You won 3 rounds!")
-    gameSolved.value = true
-    
+    screenText.value = "UNLOCKED!"
+    await wait(2000)
+    activePuzzle.value = false
     if (completedFunction.value) {
       completedFunction.value()
     }
@@ -68,20 +61,29 @@ async function playPuzzle(rounds){
 
   for(let round = 1; round <= rounds; round++){
 
+    if(round === 1) {
+      screenText.value = "Remember the sequence..."
+      await wait(1500)
+    }
+
+    screenText.value = ""
+
     addRandomColorsToSequence(2) // Add random color to sequence
-    await showCountdown(3) // Play countdown 3, 2, 1..
     await showSequence() // Play the correct color sequence
-    puzzleStatus.value = "GO!" // Inform the player of its turn
 
     activePlayerTurn.value = true // Turn on player ability to click squares
+    screenText.value = "Enter sequence..." // Inform the player of its turn
     await watchPlayerSequence() // Watch player sequence and evaluate if correct
     activePlayerTurn.value = false // Turn off player ability to click squares
     playerSequence.value = [] // Reset playerSequence for next round
     
     if(gameOver.value) {
+      screenText.value = "Error!"
+      await wait(1500)
       break
     } else if(round < rounds) {
-      console.log("Correct! Next round...")
+      screenText.value = "Correct!"
+      await wait(1000)
     }
   }
 }
@@ -141,6 +143,7 @@ function resetGameValues() {
   gameOver.value = false
   sequence.value = []
   playerSequence.value = []
+  screenText.value = "Press START..."
 }
 
 function wait(ms) {
@@ -160,36 +163,14 @@ async function showSequence(){
   activeSequence.value = true
 
   for(const color of sequence.value) {
-    console.log(color)
-
-    // wait for ? sec
-    // (the await pauses the execution of its surrounding async function until the promise is settled)
-    await wait(400)
-
-    // set the sequence-square to this color
-    currentSequenceColor.value = color 
-
-    // wait for ? sec
-    await wait(800)
-
-    // clear the sequence-square
-    currentSequenceColor.value = null
+    currentSequenceColor.value = color // set the sequence-square to this color
+    await wait(800) // hold and show color
+    currentSequenceColor.value = null;
+    await wait(250) // hold between colors
   }
 
-  await wait(400)
+  currentSequenceColor.value = null;
   activeSequence.value = false
-}
-
-async function showCountdown(from){
-  activeCountdown.value = true
-
-  for(let i = from; i > 0; i--){
-    countdownText.value = i
-    await wait(600)
-  }
-
-  countdownText.value = null
-  activeCountdown.value = false
 }
 </script>
 
@@ -198,18 +179,19 @@ async function showCountdown(from){
 
     <!--INTRO-->
     <template #puzzleIntro>
-      <h2>Break Room</h2>
+      <p>The new Guini prototype is standing on the corner table in the break room.</p>
       <br>
-      <p>As you walk into the breakroom, you see the new Guini prototype standing on the corner table.</p>
-      <p>It must have been left there by somebody from the New Development Division.</p>
+      <p>As you reach for your frozen dinner,</p>
+      <p>the prototype starts making a strange static noise.</p>
+      <p>You walk over to turn it off,</p>
+      <p>but you can’t seem to find the off button.</p>
       <br>
-      <p>As you reach for your frozen dinner from the freezer, the prototype starts to make a strange static noise.</p>
-      <p>Annoyed and still hungry, you walk over to the table and pick it up to turn it off, but you can’t seem to find the off button.</p>
-      <p>*sigh* they always move the off button on every new release…</p>
+      <p>*sigh*</p>
       <br>
-      <p>You head to the archive room to find the schematics for the new prototype.</p>
-      <p>Beside the locked archive door there is a keypad,</p> 
-      <p>it seems like you have to repeat the color sequence to unlock the door..</p>
+      <p>Annoyed, and still hungry,</p>
+      <p>you head over to the archive room to get the new Guini schematics.</p>
+      <br>
+      <p>But when you get there, the archive room is locked...</p>
     </template>
 
     <!--PUZZLE-->
@@ -224,53 +206,62 @@ async function showCountdown(from){
       <Button text="Parent Button" @click="completed()" /> -->
 
       <div class="container-puzzle">
-
-        <div class="container-sequence">
-
-          <button @click="startPuzzle" v-if="!activePuzzle">START</button>
-
-          <!--
-          Vue only applies transitions when an element enters or leaves the DOM.
-          :key="countdownText" tells Vue to treat each new number as a different element (removes old and add new).
-          :key is how you force Vue to treat each change as a new element
-
-          <Transition> wraps this replacement and adds CSS classes
-          (e.g. fade-enter-active, fade-leave-active) to animate the fade effect.
-          Without :key, you're just changing text — no fade
-          -->
-          <Transition name="fade">
-            <div class="square countdown-text" :key="countdownText" v-if="activeCountdown">
-              {{ countdownText }}
-            </div>
-          </Transition>
-
-          <Transition name="fade">
-            <div class="square sequence" :class="currentSequenceColor" :key="currentSequenceColor" v-if="activeSequence"></div>
-          </Transition>
-          
-          <Transition name="fade">
-            <div class="square status-text" :key="puzzleStatus" v-if="activePlayerTurn">
-                {{ puzzleStatus }}
-            </div>
-          </Transition>
-        </div>
-
         <div class="container-keypad">
-          <div 
-          v-for="color in colors" 
-          :key="color" 
-          class="square" 
-          :class="['square', color, {hoverEffect: activePlayerTurn, flashEffect: clickedSquareColor === color}]"
-          @click="squareClicked(color)"
-          ></div>
+          <div class="container-keypad-inside">
+
+            <div class="container-keypad-top">
+              <div class="container-screen">
+
+                <div class="screen-left">
+                  <p class="screen-text">{{ screenText }}</p>
+                </div>
+                
+                <div class="screen-right">
+                  <div class="container-sequence">
+                    <div class="sequence" :class="currentSequenceColor"></div>
+                    <button v-if="!activePuzzle" class="btn-start" @click="startPuzzle">START</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="container-keypad-bottom">
+              <div class="keypad-bottom-grid">
+                  <button 
+                  v-for="color in colors" 
+                  :key="color"
+                  :class="['keypad-grid-btn', `${color}-gradient`, {hoverEffect: activePlayerTurn, pressedEffect: activePlayerTurn}]"
+                  :aria-label="`${color} button`"
+                  @click="squareClicked(color)"
+                  ></button>
+              </div>
+            </div>
+
+          </div>  
         </div>
       </div>
-    
     </template>
 
     <!--OUTRO-->
     <template #puzzleOutro>
-      <p>Outro Text - YOU DID IT! Go to archive room.</p>
+
+      <div class="outro-container">
+        <div class="outro-container-text">
+          <p>
+            The lock buzzes and you push the door open. 
+            <br> Since when does the archive need a lock? 
+            <br> You try to shake it off, but a feeling of unease lingers.
+          </p>
+          <br>
+          <p>
+            Once inside,
+            <br> the archive room feels different from the rest of the office,
+            <br> quieter, tidier, almost too perfect...
+          </p>
+        </div>
+      </div>
+      
     </template>
 
   </PuzzleContainer>
@@ -281,79 +272,184 @@ async function showCountdown(from){
 .container-puzzle {
   height: 100%;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, #333 0%, #111111 100%);
+}
+
+.container-keypad {
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  box-shadow:
+    inset 2px 2px 4px rgba(255,255,255,0.05),
+    inset -3px -3px 6px rgba(0,0,0,0.8),
+    0 8px 16px rgba(0,0,0,0.6);
+  border-radius: 16px;
+  width: 15rem;
+  height: 22rem;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 0.6rem;
+  gap: 1rem;
+}
+
+.container-keypad-inside {
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container-keypad-top {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.container-screen {
+  height: 5rem;
+  width: 100%;
+  background: linear-gradient(to bottom, #333, #111);
+  border: 2px solid #555;
+
+  box-shadow:
+    inset 3px 3px 6px rgba(0, 0, 0, 0.8),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.screen-left {
+  width: 65%;
+  padding: 0.8rem;
+}
+
+.screen-text {
+  height: 100%;
+  color: #0f0;
+  text-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
+  font-size: 0.8rem;
+}
+
+.screen-right {
+  width: 40%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
 }
 
 .container-sequence {
   position: relative;
-  width: 4rem;
-  height: 4rem;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 0.2rem;
+  
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.container-keypad {
-  background: rgb(38, 45, 45);
-  border: 0.5rem solid black;
-  padding: 1rem;
-  display: grid;
-  grid: repeat(3, 1fr) / repeat(3, 1fr);
-  gap: 1rem;
-}
-
-.countdown-text, 
-.status-text,
-.sequence  {
+.btn-start {
   position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: lightgrey;
-  font-size: 1.5rem;
-}
+  width: 100%;
+  height: 100%;
 
-.square {
-  border: 2px solid lightgrey;
-  width: 4rem;
-  height: 4rem;
-  border-radius: 0.5rem;
-}
+  background: transparent;
+  border: 1px solid #0f0;
+  border-radius: 8px;
 
-.hoverEffect:hover {
-  transform: scale(1.1);
+  font-size: 0.7rem;
+  letter-spacing: 0.05rem;
+  color: #0f0;
+  text-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
+
   cursor: pointer;
 }
 
-.flashEffect {
-  opacity: 0.5; 
+.sequence {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: background 0.5s ease;
+}
+
+.container-keypad-bottom {
+  box-shadow:
+    inset 2px 2px 2px rgba(255,255,255,0.05),
+    inset -3px -3px 3px rgba(0,0,0,0.8),
+    0 8px 8px rgba(0,0,0,0.6);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.keypad-bottom-grid {
+  display: grid;
+  grid: repeat(3, 1fr) / repeat(3, 1fr);
+  gap: 0.8rem;
+}
+
+.keypad-grid-btn {
+  border: 0.5px solid black;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 0.2rem;
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.25),
+    0 4px 12px rgba(0,0,0,0.2);
+  transition: all 0.1s ease;
+}
+
+.hoverEffect:hover {
+  filter: brightness(1.2);
+  cursor: pointer;
+}
+
+.pressedEffect:active {
+  transform: translateY(2px); /* moves the button down visually */
+  box-shadow:
+    inset 2px 2px 4px rgba(0,0,0,0.8),   /* inner shadow (dark) */
+    inset -2px -2px 4px rgba(255,255,255,0.1); /* inner highlight */
+  filter: brightness(0.85); /* slightly darker to reinforce pressed look */
 }
 
 /* Color classes */
-.red { background-color: #FF0000; }
-.grey { background-color: #5f5f5f; }
-.green { background-color: #0faf35; }
-.pink { background-color: #ff0095; }
-.purple { background-color: #58359b; }
-.orange { background-color: #fd5e14; }
-.blue { background-color: #007bff; }
-.yellow { background-color: #fff200; }
-.brown { background-color: #4e342c; }
+.red { background: #FF0000; }
+.red-gradient { background: linear-gradient(to right bottom, #FF0000, #FF0000, #1a1a1a);}
+.green { background: #0faf35;}
+.green-gradient { background: linear-gradient(to right bottom, #0faf35, #0faf35, #1a1a1a);}
+.pink { background: #ff0095;}
+.pink-gradient { background: linear-gradient(to right bottom, #ff0095, #ff0095, #1a1a1a);}
+.purple { background: #58359b;}
+.purple-gradient { background: linear-gradient(to right bottom, #58359b, #58359b, #1a1a1a);}
+.brown { background: #5C4033;}
+.brown-gradient { background: linear-gradient(to right bottom, #5C4033, #5C4033, #1a1a1a);}
+.orange { background: #fd5e14;}
+.orange-gradient { background: linear-gradient(to right bottom, #fd5e14, #fd5e14, #1a1a1a);}
+.blue { background: #007bff;}
+.blue-gradient { background: linear-gradient(to right bottom, #007bff, #007bff, #1a1a1a);}
+.yellow { background: #fff200;}
+.yellow-gradient { background: linear-gradient(to right bottom, #fff200, #fff200, #1a1a1a);}
+.white { background: white;}
+.white-gradient { background: linear-gradient(to right bottom, white, white, #1a1a1a);}
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
+/* OUTRO STYLE */
+.outro-container {
+  height: 100%;
+  display: flex;
 }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+.outro-container-text {
+  flex: 1;
 }
 
 </style>
