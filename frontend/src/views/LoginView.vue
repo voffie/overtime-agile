@@ -7,6 +7,8 @@ import usernameIcon from '@/assets/img/usernameIcon.svg'
 import keyIcon from '@/assets/img/keyIcon.svg'
 import keyIconRepeat from '@/assets/img/keyIconRepeat.svg'
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
 const isLogin = ref(true)
 const routeToNextPage = useRouter()
 const hasCreatedAccount = ref(false)
@@ -21,6 +23,7 @@ const errorMessages = reactive({
   username: '',
   password: '',
   repeatPassword: '',
+  message: '',
 })
 
 const formValidator = (mode = 'login') => {
@@ -28,9 +31,7 @@ const formValidator = (mode = 'login') => {
   const passwordValidator = isValidPasswordFormat(formValues.password)
   const passwordsValueValidator = isTheSamePassword(formValues.password, formValues.repeatPassword)
   let validForm = true
-  errorMessages.username = ''
-  errorMessages.password = ''
-  errorMessages.repeatPassword = ''
+  clearValues(errorMessages)
 
   if (!usernameValidator) {
     errorMessages.username =
@@ -54,16 +55,57 @@ const formValidator = (mode = 'login') => {
   return validForm
 }
 
-const handlesLogin = () => {
-  if (formValidator('login')) {
-    routeToNextPage.push({ name: 'game-intro' })
+const handleRequest = async ({ endpoint, body, requestType, onSuccess }) => {
+  if (!formValidator(requestType)) return
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/${endpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      throw new Error(data.error || `Failed to ${requestType}`)
+    }
+
+    clearValues(formValues)
+    onSuccess?.(data)
+  } catch (error) {
+    hasCreatedAccount.value = false
+    errorMessages.message = error.message
   }
 }
 
-const handlesRegistration = () => {
-  if (formValidator('register')) {
-    hasCreatedAccount.value = true
-  }
+const handlesLogin = async () => {
+  await handleRequest({
+    endpoint: 'auth/login',
+    body: {
+      username: formValues.username,
+      password: formValues.password,
+      token_context: 'client',
+    },
+    requestType: 'login',
+    onSuccess: (token) => {
+      localStorage.setItem('token', token.token)
+      routeToNextPage.push({ name: 'game-intro' })
+    },
+  })
+}
+
+const handlesRegistration = async () => {
+  await handleRequest({
+    endpoint: 'players',
+    body: {
+      username: formValues.username,
+      password: formValues.password,
+    },
+    requestType: 'register',
+    onSuccess: () => {
+      hasCreatedAccount.value = true
+    },
+  })
 }
 
 const handlesSubmit = (isLogin) => {
@@ -74,10 +116,17 @@ const handlesSubmit = (isLogin) => {
   }
 }
 
+const clearValues = (data) => {
+  for (const key in data) {
+    data[key] = ''
+  }
+}
+
 const changeForm = () => {
-  console.log('Loads page')
   isLogin.value = !isLogin.value
   hasCreatedAccount.value = false
+  clearValues(errorMessages)
+  clearValues(formValues)
 }
 
 const isValidUsername = (userNameEntered) => {
@@ -129,8 +178,16 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
               name="repeatpassword" placeholder="Enter password again" :required="true"
               :warning-message="errorMessages.repeatPassword" />
 
-            <p class="success-message" v-if="hasCreatedAccount">🎉 Account created successfully! 🎉</p>
-            <p class="cta-message" v-if="hasCreatedAccount">⇩ click on the go back to log in button below ⇩</p>
+            <p class="cta-warning-message" :class="{ visible: errorMessages.message }">
+              {{ errorMessages.message }}
+            </p>
+
+            <p class="success-message" v-if="hasCreatedAccount">
+              🎉 Account created successfully! 🎉
+            </p>
+            <p class="cta-message" v-if="hasCreatedAccount">
+              ⇩ click on the go back to log in button below ⇩
+            </p>
           </fieldset>
           <FormButton :primary-button-text="isLogin ? 'LOG IN' : 'CREATE ACCOUNT'" primary-button-type="submit"
             :secondary-button-text="isLogin ? 'CREATE ACCOUNT' : 'GO BACK TO LOG IN'"
@@ -145,7 +202,6 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
 .home-page {
   height: 100%;
   padding: 1rem;
-  overflow-y: scroll;
 }
 
 .login-header {
@@ -194,11 +250,27 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
 
 .cta-message {
   text-align: center;
-  font-size: normal;
-  font-weight: thin;
+  font-size: medium;
+  font-weight: lighter;
   text-wrap: balance;
   margin: 0.5rem auto;
+}
 
+.cta-warning-message {
+  text-align: center;
+  font-size: larger;
+  text-wrap: balance;
+  color: var(--warning);
+  margin: 0 auto;
+  width: 80%;
+  min-height: 2.5rem;
+  transition: opacity 0.6s ease-in-out;
+  visibility: hidden;
+}
+
+.cta-warning-message.visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 @media screen and (min-width: 768px) {
