@@ -15,10 +15,10 @@ function goTo(route) {
     <div class="container-left">
       <div class="container-meny">
         <div class="container-buttons">
-          <Button text="Start Game" @click="goTo('/game-intro')" />
-          <Button text="Profile" @click="goTo('/profile')" />
-          <Button text="Leaderboard" @click="goTo('/leaderboard')" />
-          <Button text="Logout" @click="goTo('/')" />
+          <Button class="btn-meny btn-start" text="Start Game" @click="goTo('/game-intro')" />
+          <Button class="btn-meny" text="Profile" @click="goTo('/profile')" />
+          <Button class="btn-meny" text="Leaderboard" @click="goTo('/leaderboard')" />
+          <Button class="btn-meny" text="Logout" @click="goTo('/')" />
         </div>
       </div>
     </div>
@@ -26,12 +26,8 @@ function goTo(route) {
 
     <div class="container-right">
       <div class="container-text">
-
-      <img class="west-logo" src="@/assets/img/West_Logo.svg" alt="West logo" />
-
-      <p>presents</p>
-      
-      <img class="overtime-logo" src="@/assets/img/home/overtime-logo-white.svg" alt="Overtime logo" />
+        <img class="overtime-logo" src="@/assets/img/home/overtime-logo-v1-orange.svg" alt="Overtime logo" />
+        <p class="overtime-slogan">a mystery puzzle game</p>
     </div>
 
     </div>
@@ -51,7 +47,6 @@ function goTo(route) {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
 }
 
 .container-left {
@@ -64,12 +59,13 @@ function goTo(route) {
 
 .container-meny {
   width: 80%;
-  background: var(--container-bg);
+  background: transparent;
+  border: 2px solid #E69138;
   border-radius: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 3rem;
 }
 
 .container-buttons {
@@ -86,43 +82,58 @@ function goTo(route) {
   border-radius: 0.2rem;
 }
 
+.container-buttons .btn-meny:hover {
+  transform: scale(1.1);
+  border: 5px solid white;
+}
+
+.container-buttons .btn-start {
+  background: #E69138;
+  color: white;
+  height: 5rem;
+  font-size: 2rem;
+}
+
 .container-text {
   width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
-}
-
-.west-logo {
-  width: 50%;
+  gap: 1.5rem;
 }
 
 .overtime-logo {
   width: 100%;
 }
 
+.overtime-slogan {
+  font-size: 1.5rem;
+  color: #E69138;
+}
+
 @media screen and (max-width: 768px) {
 
   .container-main {
     flex-direction: column-reverse;
-    overflow: scroll;
-  }
-
-  .container-text {
-    gap: 0.5rem;
-  }
-
-  .container-left,
-  .container-right {
-    padding: 0.5rem;
   }
 
   .container-left {
     padding-bottom: 3rem;
   }
 
+  .container-text {
+    gap: 1rem;
+  }
+
+  .overtime-slogan {
+    font-size: 1rem;
+  }
+
+  .container-buttons .btn-start {
+    height: 4rem;
+    font-size: 1.6rem;
+  }
 }
 
 </style>
