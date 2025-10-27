@@ -37,7 +37,6 @@ let activePuzzle = ref(false)
 let activeSequence = ref(false)
 let activePlayerTurn = ref(false)
 let gameOver = ref(false)
-let puzzleFinished = ref(false)
 
 async function startPuzzle() {
 
@@ -164,8 +163,6 @@ async function showSequence(){
   activeSequence.value = true
 
   for(const color of sequence.value) {
-    console.log(color)
-
     currentSequenceColor.value = color // set the sequence-square to this color
     await wait(800) // hold and show color
     currentSequenceColor.value = null;
@@ -235,6 +232,7 @@ async function showSequence(){
                   v-for="color in colors" 
                   :key="color"
                   :class="['keypad-grid-btn', `${color}-gradient`, {hoverEffect: activePlayerTurn, pressedEffect: activePlayerTurn}]"
+                  :aria-label="`${color} button`"
                   @click="squareClicked(color)"
                   ></button>
               </div>
