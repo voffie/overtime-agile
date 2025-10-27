@@ -75,7 +75,9 @@ router.beforeEach(async (to, from, next) => {
       headers: { Authorization: `Bearer ${token}` },
     })
     const data = await res.json()
-    if (data.status) return next()
+    if (res.ok && data?.status) {
+      return next()
+    }
   } catch (err) {
     console.error('Token verification failed:', err)
     localStorage.removeItem('token')

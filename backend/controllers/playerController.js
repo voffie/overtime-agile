@@ -43,7 +43,7 @@ export async function createPlayer(req, res) {
   }
 
   if (!passwordHash.hashPasswordValidFormat(password)) {
-    return res.status(400).json({ error: "Invalid Password Format: Password must be 8-64 characters and contain only letters, numbers, and @!?_.- " })
+    return res.status(400).json({ error: "Invalid Password Format: Password must be 8-64 characters and contain only spaces letters, numbers, and @!?_.- " })
   }
 
   // Reason to have this: Trying to early exit before hash and attempt to insert player in DB. Aware that it cost an extra question to db. 
@@ -91,27 +91,27 @@ export async function deletePlayer(req, res) {
 export async function updatePlayer(req, res) {
   const username = req.user.username;
   const { currentPassword, newPassword } = req.body;
-
-  if (!currentPassword || !newPassword || currentPassword.trim() === "" || newPassword.trim() === "" || !passwordHash.hashPasswordValidFormat(newPassword)) {
-    return res.status(400).json({ error: "Invalid credentials: must follow format and fields are required" });
-
-  }
-
-  const player = await PlayerService.getPlayerByUsername(username, "auth");
-  if (!player) {
-    return res.status(404).json({ error: "No user record found" });
-
-  }
-
-  const isMatch = await passwordHash.comparePassword(currentPassword, player.password_hash);
-  if (!isMatch) {
-    return res.status(401).json({ error: "Invalid credentials" });
-
-  }
-
-  const newHash = await passwordHash.hashPassword(newPassword);
-
   try {
+
+    if (!currentPassword || !newPassword || currentPassword.trim() === "" || newPassword.trim() === "" || !passwordHash.hashPasswordValidFormat(newPassword)) {
+      return res.status(400).json({ error: "Invalid credentials: must follow format and fields are required" });
+
+    }
+
+    const player = await PlayerService.getPlayerByUsername(username, "auth");
+    if (!player) {
+      return res.status(404).json({ error: "No user record found" });
+
+    }
+
+    const isMatch = await passwordHash.comparePassword(currentPassword, player.password_hash);
+    if (!isMatch) {
+      return res.status(401).json({ error: "Invalid credentials" });
+
+    }
+
+    const newHash = await passwordHash.hashPassword(newPassword);
+
     const updatedPlayer = await PlayerService.updatePlayer(username, newHash);
     return res.status(200).json({ updatedPlayer });
 
