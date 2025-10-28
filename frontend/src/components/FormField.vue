@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits, computed } from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps({
   labelFor: {
@@ -61,8 +61,7 @@ const model = computed({
       :required="required"
     />
   </div>
-
-  <p class="warning-message" v-if="warningMessage">
+  <p class="warning-message" v-show="warningMessage">
     <code>{{ warningMessage }}</code>
   </p>
 </template>
