@@ -82,10 +82,10 @@ function tryUnlock() {
     <!-- Intro stays the same -->
     <template #puzzleIntro>
       <p>
-        The Archive Room feels different from the rest of the office — quieter, tidier, almost too perfect.<br><br>
+        <!-- The Archive Room feels different from the rest of the office — quieter, tidier, almost too perfect.<br><br>  -->
         Rows of sleek metal cabinets line the wall, each labeled neatly with engraved metal tags:<br>
         GUINI INTERNAL / VERSIONS / ARCHIVE STORAGE<br><br>
-        The air smells faintly of disinfectant and new plastic.<br>
+        <!-- The air smells faintly of disinfectant and new plastic.<br> -->
         You can almost hear your own footsteps against the polished floor.<br>
         Heartcore always took pride in order. Every document, every wire, every byte — exactly where it should be.<br><br>
         You approach the main archive cabinet — the one used for physical backups before everything moved to the cloud.<br><br>
@@ -201,6 +201,7 @@ function tryUnlock() {
   opacity: 0.5;
   color: white;
   position: relative;
+  mask-image: url("../assets/img/lock_black.png");
 }
 
 /* When an openable drawer is active/open */
@@ -212,6 +213,7 @@ function tryUnlock() {
   background-size: cover; /* or cover */
   background-position: center;
 }
+
 
 /* Shake animation for closed drawers */
 .shake { animation: shake 0.25s linear 1; }
