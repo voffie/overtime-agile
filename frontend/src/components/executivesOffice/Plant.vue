@@ -1,5 +1,4 @@
 <script setup>
-import Button from '@/components/Button.vue'
 import "@/assets/css/office-styles.css"
 
 const props = defineProps({
@@ -13,6 +12,7 @@ const emit = defineEmits(["back"])
     <template v-if="props.intro">
       <h1>You look closer to the plant</h1>
       <p>This plant got pests</p>
+      <br></br>
       <button class="button" @click="emit('back')">
         Go back to the office
       </button>

@@ -1,8 +1,6 @@
 <script setup>
 import { ref } from "vue"
-import Button from "@/components/Button.vue"
 import PuzzleContainer from "@/components/PuzzleContainer.vue"
-import TemplateChild from "@/components/template/TemplateChild.vue"
 import Guini from "@/components/executivesOffice/Guini.vue"
 import Letter from "@/components/executivesOffice/Letter.vue"
 import Office from "@/components/executivesOffice/Office.vue"
@@ -36,7 +34,6 @@ function computer() {
 
 <template>
   <PuzzleContainer nextRoute="/room/ending">
-    <!-- INTRO PHASE -->
     <template #puzzleIntro>
       <div v-if="selected === null">
         <h1>Executive's Office</h1>
@@ -52,15 +49,15 @@ function computer() {
         <p>Look closer at these items:</p>
 
         <div class="choices">
-          <Button text="Trophy in the bookshelf" @click="trophy()" />
-          <Button text="Painting of a woman" @click="painting()" />
-          <Button text="Letter on the table" @click="letter()" />
-          <Button text="Guini in the bookshelf" @click="guini()" />
-          <Button text="Plant on the floor" @click="plant()" />
+          <button class="button" @click="trophy()">Look closer on the trophy</button>
+          <button class="button" @click="painting()">Look closer on the painting</button>
+          <button class="button" @click="letter()">Look closer on the letter</button>
+          <button class="button" @click="plant()">Look closer on the plant</button>
+          <button class="button" @click="guini()">Look closer on the Guini</button>
         </div>
 
         <div class="computer">
-          <Button text="Try logging into the computer" @click="computer()" />
+          <button class="button" @click="computer()" style="background-color:#365134">Try to sign in to the computer</button>
         </div>
       </div>
 
@@ -94,7 +91,6 @@ function computer() {
       </div>
     </template>
 
-    <!-- MAIN PUZZLE IMPLEMENTATION -->
     <template #puzzleImpl="{ completed }">
       <div v-if="selected === null">
         <Office />
@@ -121,25 +117,10 @@ function computer() {
       </div>
 
       <div v-else-if="selected === 'computer'">
-        <Computer />
+      <Computer @solved="markPuzzleSolved('executive-office')" />
       </div>
-
-      <TemplateChild :solve="completed" />
-      <Button text="Parent Button" @click="completed()" />
     </template>
 
-    <!-- OUTRO -->
-    <template #puzzleOutro>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat mollis erat. Nullam
-        fringilla nisl ac sapien tempor, nec interdum nunc blandit. Fusce sodales sagittis dolor,
-        pharetra elementum orci vehicula vitae. Sed enim odio, viverra sit amet risus in, semper
-        suscipit erat. Integer vulputate ultricies urna, ac molestie augue convallis ac. Sed
-        porttitor magna in orci tempus faucibus a vitae turpis. Etiam tincidunt dolor commodo,
-        volutpat purus vitae, gravida justo. Integer at ex lorem. Proin diam lacus, ultrices vitae
-        pellentesque et, tincidunt ac sem. Proin.
-      </p>
-    </template>
   </PuzzleContainer>
 </template>
 

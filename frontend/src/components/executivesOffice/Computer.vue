@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue"
-import Button from '@/components/Button.vue'
 import Successful from "./Successful.vue"
 
 const props = defineProps({
@@ -20,7 +19,6 @@ function checkPassword() {
   else {
     isSuccess.value = false
     errorMessage.value = "Wrong password. Look closer to the items in the room for clues!"
-
   }
 }
 
@@ -35,14 +33,14 @@ function checkPassword() {
       placeholder="Password"
       v-model="password" />
       <br> </br>
-      <Button v-text="'Sign In'" @click="checkPassword" />
+      <button class="button" v-text="'Sign In'" @click="checkPassword"></button>
       <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
       <button class="button" @click="emit('back')">
         Go back to the office
       </button>
       </div>
       <div v-else>
-        <Successful />
+        <Successful @solved="emit('solved')" />
       </div>
     </template>
     <template v-else>
@@ -65,7 +63,6 @@ input[type="text"] {
   width: 200px;
   margin-top: 30px;
   border-radius: 10px;
-
 }
 
 Button {

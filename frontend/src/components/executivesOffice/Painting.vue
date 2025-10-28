@@ -1,5 +1,4 @@
 <script setup>
-import Button from "@/components/Button.vue"
 import "@/assets/css/office-styles.css"
 
 const props = defineProps({
@@ -42,6 +41,7 @@ const emit = defineEmits(["back", "toggleBackside"])
       </div>
 
       <div>
+        <br></br>
         <button
           class="button"
           @click="emit('toggleBackside')">

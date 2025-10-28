@@ -5,7 +5,6 @@ const props = defineProps({
   intro: Boolean
 })
 
-import Button from '@/components/Button.vue'
 const emit = defineEmits(["back"])
 </script>
 
@@ -17,7 +16,7 @@ const emit = defineEmits(["back"])
         <br></br> 
       <p>Wait a minute... there is a lamp blinking in the eye! Is it recording? How long have I been watched? 
         I must get out of here before someone catches me sneaking around!</p>
-      
+      <br></br>
       <button class="button" @click="emit('back')">
         Go back to the office
       </button>

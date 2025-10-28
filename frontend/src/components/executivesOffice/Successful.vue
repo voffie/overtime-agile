@@ -1,21 +1,18 @@
 <script setup>
-const props = defineProps({
-  intro: Boolean
-})
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function leaveOffice() {
+  router.push('/room/ending')
+}
 </script>
 
 <template>
   <div>
-    <template v-if="props.intro">
-    </template>
-    <template v-else>
-<h1>Success!!</h1>
-<p>You successfully logged into the computer!</p>
-    </template>
+    <h1>Success!!</h1>
+    <p>You successfully logged into the computer!</p>
+    <br />
+    <button class="button" @click="leaveOffice">Leave the office</button>
   </div>
 </template>
-
-<style scoped>
-
-
-</style>
