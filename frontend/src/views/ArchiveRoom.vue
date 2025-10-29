@@ -51,7 +51,7 @@ function onDrawerClick(d) {
    
     // re-trigger animation
     requestAnimationFrame(() => (d.shake = true,  d.text = "closed!"))
-    setTimeout(() => (d.shake = false, d.text = "X"), 600)
+    setTimeout(() => (d.shake = false, d.text = "lock"), 600)
   }
 }
 
@@ -89,7 +89,7 @@ function tryUnlock() {
         You can almost hear your own footsteps against the polished floor.<br>
         Heartcore always took pride in order. Every document, every wire, every byte — exactly where it should be.<br><br>
         You approach the main archive cabinet — the one used for physical backups before everything moved to the cloud.<br><br>
-        You start to open the drawers. Some are unlocked, some refuse to budge… <strong>Does it mean something?</strong><br><br><br>
+        You start to open the drawers. Some are unlocked, some refuse to budge… <br><strong>Does it mean something?</strong><br><br><br>
         Beside the cabinet, a small digital keypad blinks softly.<br>
         It seems you’ll need a code to access the rest.
       </p>
@@ -97,28 +97,41 @@ function tryUnlock() {
 
     <template #puzzleImpl="{ completed }">
       <TemplateChild :solve="completed" />
-      
+      <p>
+        Some drawers seems to be unlocked, some refuse to open…<br>
+        <strong>Does it mean something?</strong><br>
+      </p>
+
       <!-- GAME  -->
     <div class="flexContainer">
       <div class="container">
-        <div
-          v-for="d in drawers"
-          :key="d.id"
-          :class="[
-            d.kind === 'open' ? 'open' : 'close',
-            d.active ? 'active' : '',
-            d.shake ? 'shake' : ''
-          ]"
-          @click="onDrawerClick(d)"
-        >
-          {{ d.text }}
-        </div>
+<div
+  v-for="d in drawers"
+  :key="d.id"
+  :class="[
+    d.kind === 'open' ? 'open' : 'close',
+    d.active ? 'active' : '',
+    d.shake ? 'shake' : ''
+  ]"
+  @click="onDrawerClick(d)"
+>
+  <!-- Show text messages like 'closed!' -->
+  <span v-if="d.text && d.text !== 'lock'">{{ d.text }}</span>
+
+  <!-- Show lock icon only if d.text is 'lock' -->
+  <img
+    v-else-if="d.text === 'lock'"
+    src="../assets/img/lock_black.png"
+    alt="Locked"
+    class="lock-icon"
+  />
+</div>
       </div>
 
       <div class="board">
         <p>
-          Some drawers seems to be unlocked, some refuse to open…<br>
-          <strong>Does it mean something?</strong><br>
+          Beside the cabinet is a small digital keypad.<br>
+          It seems you’ll need a code to access the rest.<br>
           Can you figure out the secret symbol? <br><br>
         </p>
 
@@ -169,6 +182,8 @@ function tryUnlock() {
 
 <style scoped>
 
+/* MOBILE */
+
 .flexContainer {
   display: block;
   margin: 0;
@@ -187,44 +202,6 @@ function tryUnlock() {
   background-position: center;
 }
 
-/* OPENABLE drawers */
-.open {
-  background-color: rgb(82, 82, 189);
-  opacity: 0.5;
-  color: white;
-  transition: all 0.5s ease;
-}
-
-/* NON-OPENABLE drawers */
-.close {
-  background-color: rgb(82, 82, 189);
-  opacity: 0.5;
-  color: white;
-  position: relative;
-  mask-image: url("../assets/img/lock_black.png");
-}
-
-/* When an openable drawer is active/open */
-.open.active {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  background-image: url("../assets/img/archiveRoom/cabinet_illustration_drawer_cutout_120.png");
-  color: #111;
-  background-size: cover; /* or cover */
-  background-position: center;
-}
-
-
-/* Shake animation for closed drawers */
-.shake { animation: shake 0.25s linear 1; }
-@keyframes shake {
-  0%{ transform: translateX(0); }
-  25%{ transform: translateX(-4px); }
-  50%{ transform: translateX(4px); }
-  75%{ transform: translateX(-3px); }
-  100%{ transform: translateX(0); }
-}
-
 .board {
   display: block;
   align-items: center;
@@ -238,6 +215,49 @@ function tryUnlock() {
   font-size: 14px ;  
 }
 
+/* OPENABLE drawers */
+.open {
+  color: white;
+  transition: all 0.5s ease;
+}
+
+/* NON-OPENABLE drawers */
+.close {
+  color: rgb(216, 17, 17);
+  position: relative;
+  mask-image: url("../assets/img/lock_black.png");
+}
+
+/* When an openable drawer is active/open */
+.open.active {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background-image: url("../assets/img/archiveRoom/cabinet_illustration_drawer_cutout_120.png");
+  color: #111;
+  background-size: cover;
+  background-position: center;
+}
+
+.lock-icon {
+  position: absolute;
+  left: 10%;
+  width: 20px;
+  height: 20px;
+  opacity: 0.15;
+}
+
+/* Shake animation for closed drawers */
+.shake { animation: shake 0.25s linear 1; }
+@keyframes shake {
+  0%{ transform: translateX(0); }
+  25%{ transform: translateX(-4px); }
+  50%{ transform: translateX(4px); }
+  75%{ transform: translateX(-3px); }
+  100%{ transform: translateX(0); }
+}
+
+
+
 .code-input {
   width: 100px;
   height: 150px;
@@ -250,8 +270,12 @@ function tryUnlock() {
 }
 
 .image_archiveRoom {
-  width: 350px;
+  width: 315px;
+  height: auto;
+  align-self: center;
 }
+
+
 
 
 /* DESKTOP */
