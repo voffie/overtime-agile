@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue"
-import Button from '@/components/Button.vue'
 import Successful from "./Successful.vue"
+import "@/assets/css/office-styles.css"
 
 const props = defineProps({
   intro: Boolean
@@ -20,7 +20,6 @@ function checkPassword() {
   else {
     isSuccess.value = false
     errorMessage.value = "Wrong password. Look closer to the items in the room for clues!"
-
   }
 }
 
@@ -34,18 +33,18 @@ function checkPassword() {
       <input type="text" 
       placeholder="Password"
       v-model="password" />
-      <br> </br>
-      <Button v-text="'Sign In'" @click="checkPassword" />
+      <button class="button" v-text="'Sign In'" @click="checkPassword"></button>
       <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-      <Button text="Go back to the office" @click="emit('back')" style="margin-top: 20px;" />
-
+      <button class="button" @click="emit('back')">
+        Go back to the office
+      </button>
       </div>
       <div v-else>
-        <Successful />
+        <Successful @solved="emit('solved')" />
       </div>
     </template>
     <template v-else>
-      <p>Computer picture and story</p>
+      <img class="computer-img img" src="@/assets/img/execOffice/computer.png" alt="Computer" />
     </template>
   </div>
 </template>
@@ -64,15 +63,7 @@ input[type="text"] {
   width: 200px;
   margin-top: 30px;
   border-radius: 10px;
-
 }
-
-Button {
-  margin-top: 10px;
-  padding: 0px 30px;
-  font-size: 16px;
-}
-
 .error-message {
   margin-top: 30px;
   text-align: center;
