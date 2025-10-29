@@ -48,6 +48,12 @@ const router = createRouter({
       component: () => import('@/views/BreakRoomView.vue'),
       meta: { title: 'Room 1 - Break Room', requiredAuth: true },
     },
+    {
+      path: '/room/ending',
+      name: 'room-ending',
+      component: () => import('@/views/Ending.vue'),
+      meta: { title: 'End-room', requiredAuth: true },
+    },
   ],
 })
 

@@ -1,0 +1,32 @@
+
+.img-crop {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-crop--fixed {
+  max-height: 80vh;
+  width: 83%;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  object-fit: contain;
+}
+
+.button {
+  background-color: sienna;
+  padding: 5px 15px;
+  color:black;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 20px;
+
+  display: block;
+  margin: 7px auto;
+  text-align: center;
+}
