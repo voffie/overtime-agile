@@ -7,6 +7,11 @@ const router = useRouter()
 function goTo(route) {
   router.push(route)
 }
+
+function handleLogout() {
+  localStorage.removeItem('token')
+  router.push('/')
+}
 </script>
 
 <template>
@@ -18,7 +23,7 @@ function goTo(route) {
           <button class="btn-meny btn-start" @click="goTo('/game-intro')">Start Game</button>
           <button class="btn-meny" @click="goTo('/profile')">Profile</button>
           <button class="btn-meny" @click="goTo('/leaderboard')">Leaderboard</button>
-          <button class="btn-meny" @click="goTo('/')">Logout</button>
+          <button class="btn-meny" @click="handleLogout">Logout</button>
         </div>
       </div>
     </div>
