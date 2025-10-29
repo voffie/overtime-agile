@@ -461,7 +461,12 @@ async function showSequence(){
     background-image: none;
     background: radial-gradient(circle at center, #656565 0%, #323232 100%);
     padding: 4rem;
+    display: flex;
     justify-content: center;
+  }
+
+  .container-keypad {
+    grid-column: unset;
   }
 }
 
