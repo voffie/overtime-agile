@@ -15,7 +15,7 @@ const emit = defineEmits(["back"])
       <p>It says he's the winner of some manager award. 
         The price tag is still there. 30$ at Wallmart. 
         Did he buy this trophy himself? Pathetic.</p>
-              <br></br>
+              <br>
 
     <button class="button" @click="emit('back')">
         Go back to the office

@@ -6,7 +6,7 @@ const props = defineProps({
   showBackside: Boolean
 })
 
-const emit = defineEmits(["back", "toggleBackside"])
+const emit = defineEmits(["back", "toggle-backside"])
 </script>
 
 <template>
@@ -35,7 +35,7 @@ const emit = defineEmits(["back", "toggleBackside"])
 
       <div v-if="props.showBackside">
         <p>
-          <br></br>
+          <br>
           Who is this? Another woman with the CEO? What a jerk!
         </p>
       </div>
@@ -44,7 +44,7 @@ const emit = defineEmits(["back", "toggleBackside"])
         <br></br>
         <button
           class="button"
-          @click="emit('toggleBackside')">
+          @click="emit('toggle-backside')">
           {{ props.showBackside ? 'Show front' : 'Flip the painting' }}
         </button>
       <button class="button" @click="emit('back')">

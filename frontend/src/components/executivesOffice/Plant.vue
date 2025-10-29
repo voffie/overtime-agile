@@ -12,7 +12,7 @@ const emit = defineEmits(["back"])
     <template v-if="props.intro">
       <h1>You look closer to the plant</h1>
       <p>This plant got pests</p>
-      <br></br>
+      <br>
       <button class="button" @click="emit('back')">
         Go back to the office
       </button>

@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue"
 import Successful from "./Successful.vue"
+import "@/assets/css/office-styles.css"
 
 const props = defineProps({
   intro: Boolean
@@ -32,7 +33,6 @@ function checkPassword() {
       <input type="text" 
       placeholder="Password"
       v-model="password" />
-      <br> </br>
       <button class="button" v-text="'Sign In'" @click="checkPassword"></button>
       <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
       <button class="button" @click="emit('back')">
@@ -44,7 +44,7 @@ function checkPassword() {
       </div>
     </template>
     <template v-else>
-      <p>Computer picture and story</p>
+      <img class="computer-img img" src="@/assets/img/execOffice/computer.png" alt="Computer" />
     </template>
   </div>
 </template>
@@ -64,13 +64,6 @@ input[type="text"] {
   margin-top: 30px;
   border-radius: 10px;
 }
-
-Button {
-  margin-top: 10px;
-  padding: 0px 30px;
-  font-size: 16px;
-}
-
 .error-message {
   margin-top: 30px;
   text-align: center;
