@@ -270,14 +270,18 @@ async function showSequence(){
 <style scoped>
 
 .container-puzzle {
+  background-image: url("@/assets/img/breakRoom/breakroom-door.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   height: 100%;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   align-items: center;
-  background: radial-gradient(circle at center, #333 0%, #111111 100%);
 }
 
 .container-keypad {
+  grid-column: 2;
   background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
   box-shadow:
     inset 2px 2px 4px rgba(255,255,255,0.05),
@@ -450,6 +454,20 @@ async function showSequence(){
 
 .outro-container-text {
   flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .container-puzzle {
+    background-image: none;
+    background: radial-gradient(circle at center, #656565 0%, #323232 100%);
+    padding: 4rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .container-keypad {
+    grid-column: unset;
+  }
 }
 
 </style>
