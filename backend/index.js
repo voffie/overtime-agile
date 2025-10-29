@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 
 import { PlayerRouter } from "./routes/playerRoutes.js";
+import { AuthRouter } from "./routes/authRoutes.js";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use(PlayerRouter);
+app.use(AuthRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

@@ -27,15 +27,19 @@ const props = defineProps({
   <div class="form-buttons">
     <Button class="form-button" :text="primaryButtonText" :type="primaryButtonType" />
     <div class="secondary-form-container">
-      <Button type="button" class="form-button form-button-secondary" :text="secondaryButtonText"
-        @click.prevent="secondaryButtonClick" />
+      <Button
+        type="button"
+        class="form-button form-button-secondary"
+        :text="secondaryButtonText"
+        @click.prevent="secondaryButtonClick"
+      />
     </div>
   </div>
 </template>
 
 <style scoped>
 .form-buttons {
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .form-button {
