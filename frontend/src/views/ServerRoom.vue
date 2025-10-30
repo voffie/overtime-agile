@@ -8,50 +8,23 @@ import ServerPuzzle from "@/components/puzzle/Server.vue"
     <!-- Desktop -->
     <template #puzzleIntro>
       <section id="intro-wrapper">
-        <p> As you enter the server room, you’re greeted by rows of humming server racks — the kind
-          you’ve walked past a thousand times without a second thought. But ever since learning the
-          dark truth behind the Bunny, you can’t help but wonder what these machines are really
-          doing.
-        </p>
+        <p> You enter the server room and are greeted by rows of humming server racks. You walk to
+          the far end of the room and find a workstation that has the cable you were looking for</p>
 
+        <p>You log in, connect the prototype's drive. <strong>Total size: 40 GB</strong> Inside:
+          hundreds of text files, each named <strong>[name]-[date]</strong></p>
 
-        <p>At the far end of the room, the workstation terminal glows faintly. You sign in using your
-          employee ID and start searching for the specific cable you came here for. When you connect
-          the hard drive from the Bunny prototype, the system immediately detects it. You check the
-          contents — and your stomach drops.
-        </p>
-
-
-       <p><strong>Total size: 40GB.</strong> That can’t be right. The prototype has only been active
-          for a few months. There’s no way it could have collected that much data in so little
-          time.
-       </p>
-
-
-        <p>You open the main folder. Every file follows the same pattern: <strong>[name]-[date in
-          the format year-month/day].txt</strong>, all text files.
-          As you scroll through the long list, you recognize a few names — including your own.
-        </p>
-
-
-        <p>Your pulse quickens. You double-click one of the files, but instead of video, a prompt
-          appears on-screen:
-        </p>
+        <p> You open it.</p>
 
         <div class="terminal">
-          <pre>
-            <code>
-              <span class="information">> [INFO] Decryption sequence required.</span>
-            </code>
-          </pre>
+          <section class="terminal-text">
+            <code class="information">> [INFO] Sequence required.</code>
+            <code class="information">> [INFO] Length: 10</code>
+          </section>
         </div>
 
-
-        <p>You start scanning the workstation for clues. Nothing obvious — until your eyes fall on the keyboard.
-            It’s old and dusty, the kind that’s been used far too long.
-            The arrow keys are shiny from wear — the Up and Down arrows especially.
-          Left and Right are scuffed too, and the letters <kbd>B</kbd> and <kbd>A</kbd> are almost completely faded.
-        </p>
+        <p>Then you notice the keyboard - old, scarred. The arrow keys gleam from use; <kbd>B</kbd>
+          and <kbd>A</kbd> are almost erased. A small sticker on the side reads Konami Systems, 2003.</p>
       </section>
     </template>
     <template #puzzleImpl="{completed}">
@@ -62,16 +35,12 @@ import ServerPuzzle from "@/components/puzzle/Server.vue"
     <template #puzzleOutro>
       <section id="outro-wrapper">
         <div class="terminal">
-          <pre>
-            <code class="outro-output">
-              <span class="success">> [SUCCESS] Sequence accepted.</span>
-              <span class="information">> [INFO] Decryption in progress…</span>
-              <div class="decrypt-wrapper">
-                <span v-for="n in 10" :key="n">> Decrypting... ({{ n }}/10)</span>
-              </div>
-              <span class="success">> [SUCCESS] Decryption complete.</span>
-            </code>
-          </pre>
+          <section class="terminal-text">
+            <code class="success">> [SUCCESS] Sequence accepted.</code>
+            <code class="information">> [INFO] Decryption in progress…</code>
+            <code class="decrypt">> [INFO] Decrypting...</code>
+            <code class="success">> [SUCCESS] Decryption complete.</code>
+          </section>
         </div>
 
 
@@ -115,11 +84,6 @@ kbd {
   color: var(--button-text);
 }
 
-.terminal pre {
-  white-space: normal;
-  text-indent: 1rem;
-}
-
 .success {
   color: #44FF37;
 }
@@ -128,14 +92,13 @@ kbd {
   color: #FFD037;
 }
 
-.outro-output {
+.terminal-text {
   display: flex;
   flex-direction: column;
+  margin: .5rem;
 }
 
-.decrypt-wrapper {
-  display: flex;
-  flex-direction: column;
+.decrypt {
   margin: 1rem 0;
 }
 
