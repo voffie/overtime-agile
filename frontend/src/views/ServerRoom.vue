@@ -43,16 +43,13 @@ import ServerPuzzle from "@/components/puzzle/Server.vue"
           </section>
         </div>
 
-
         <p>The computer whirs to life, and lines of encrypted data begin to unravel before your eyes.
           You open one of the files — and freeze.
         </p>
 
-
         <p>You didn’t want to believe it when you first found the prototype in the break room, but now there’s no denying it.
           What you’re seeing confirms your worst fears.
         </p>
-
 
         <p>If you’re going to get any real answers, there’s only one place left to go — the executive
           office.
