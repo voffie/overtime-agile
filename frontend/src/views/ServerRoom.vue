@@ -9,9 +9,9 @@ import ServerPuzzle from "@/components/puzzle/Server.vue"
     <template #puzzleIntro>
       <section id="intro-wrapper">
         <p> You enter the server room and are greeted by rows of humming server racks. You walk to
-          the far end of the room and find a workstation that has the cable you were looking for</p>
+          the far end of the room and find a workstation that has the cable you were looking for.</p>
 
-        <p>You log in, connect the prototype's drive. <strong>Total size: 40 GB</strong> Inside:
+        <p>You log in, connect the prototype's drive. <strong>Total size: 40 GB.</strong> Inside:
           hundreds of text files, each named <strong>[name]-[date]</strong></p>
 
         <p> You open it.</p>
