@@ -35,6 +35,11 @@ function checkPassword() {
       v-model="password" />
       <button class="button" v-text="'Sign In'" @click="checkPassword"></button>
       <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+        <div class="mobile-picture">
+      <img class="computer-img img" src="@/assets/img/execOffice/computer.png" alt="Computer" />
+        </div>
+
       <button class="button" @click="emit('back')">
         Go back to the office
       </button>
@@ -67,6 +72,19 @@ input[type="text"] {
 .error-message {
   margin-top: 30px;
   text-align: center;
+}
+
+.mobile-picture {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+.mobile-picture {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 }
 
 </style>

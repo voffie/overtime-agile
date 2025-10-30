@@ -17,3 +17,18 @@ function leaveOffice() {
     <button class="button" @click="leaveOffice">Leave the office</button>
   </div>
 </template>
+
+<style scoped>
+.mobile-picture {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+.mobile-picture {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+}
+</style>
