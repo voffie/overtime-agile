@@ -1,3 +1,4 @@
+
 <template>
   <div class="office-img-crop">
     <img class="office-img" src="@/assets/img/execOffice/office.png" alt="Office" />
@@ -23,4 +24,13 @@
   object-position: center;
 }
 
+@media screen and (max-width: 767px) {
+  .office-img-crop {
+    height: auto;
+  }
+
+.button{
+  font-size: 5px;
+}
+}
 </style>

@@ -11,6 +11,8 @@ import Computer from "@/components/executivesOffice/Computer.vue"
 
 const selected = ref(null)
 const showPaintingBackside = ref(false)
+const hideMobileToPuzzle = ref(true)
+
 
 function trophy() {
   selected.value = "trophy"
@@ -45,7 +47,10 @@ function computer() {
           Maybe there's a clue in the room somewhere? Something personal?
         </p>
 
-        <br />
+        <div class="mobile-picture">
+        <Office />
+        </div>
+
         <p>Look closer at these items:</p>
 
         <div class="choices">
@@ -54,11 +59,11 @@ function computer() {
           <button class="button" @click="letter()">Look closer on the letter</button>
           <button class="button" @click="plant()">Look closer on the plant</button>
           <button class="button" @click="guini()">Look closer on the Guini</button>
-        </div>
+          <button class="button computer-btn" @click="computer()">Try to sign in to the computer</button>
 
-        <div class="computer">
-          <button class="button" @click="computer()" style="background-color:#365134">Try to sign in to the computer</button>
         </div>
+            <Button v-if="!hideMobileToPuzzle" @click="updateState('puzzle')" text="To Puzzle" />
+
       </div>
 
       <div v-else-if="selected === 'trophy'">
@@ -134,5 +139,37 @@ function computer() {
 }
 .computer {
   margin-top: 40px;
+}
+
+.mobile-picture {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .mobile-picture {
+    display: block;
+    margin: 0px auto;
+  }
+
+  .choices {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px; 
+    justify-items: center;
+    margin-top: 10px;
+  }
+
+  .choices button {
+    font-size: 14px;
+    width: 90%;
+    margin: 0;
+    padding: 8px 0;
+    text-align: center;
+  }
+
+  .choices .computer-btn {
+    grid-column: span 2;
+    background-color: #365134;
+  }
 }
 </style>
