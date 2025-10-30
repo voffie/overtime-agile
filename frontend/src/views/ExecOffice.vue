@@ -11,8 +11,6 @@ import Computer from "@/components/executivesOffice/Computer.vue"
 
 const selected = ref(null)
 const showPaintingBackside = ref(false)
-const hideMobileToPuzzle = ref(true)
-
 
 function trophy() {
   selected.value = "trophy"
@@ -62,8 +60,6 @@ function computer() {
           <button class="button computer-btn" @click="computer()">Try to sign in to the computer</button>
 
         </div>
-            <Button v-if="!hideMobileToPuzzle" @click="updateState('puzzle')" text="To Puzzle" />
-
       </div>
 
       <div v-else-if="selected === 'trophy'">
@@ -145,6 +141,10 @@ function computer() {
   display: none;
 }
 
+.to-puzzle-button-mobile {
+  display: none !important;
+}
+
 @media screen and (max-width: 767px) {
   .mobile-picture {
     display: block;
@@ -169,7 +169,7 @@ function computer() {
 
   .choices .computer-btn {
     grid-column: span 2;
-    background-color: #365134;
+    background-color:#365134;
   }
 }
 </style>

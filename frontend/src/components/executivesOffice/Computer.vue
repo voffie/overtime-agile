@@ -19,7 +19,7 @@ function checkPassword() {
   }
   else {
     isSuccess.value = false
-    errorMessage.value = "Wrong password. Look closer to the items in the room for clues!"
+    errorMessage.value = "Wrong password. Maybe the password is something meaningful to the CEO. Like a birthdate?"
   }
 }
 
