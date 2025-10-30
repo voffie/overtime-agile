@@ -35,7 +35,7 @@ function redirect() {
   <section class="mobile-view">
     <section v-if="state === 'intro'">
       <slot name="puzzleIntro" />
-      <Button @click="updateState('puzzle')" text="To Puzzle" />
+      <Button class="to-puzzle-button-mobile" @click="updateState('puzzle')" text="To Puzzle" />
     </section>
     <section v-if="state === 'puzzle'" id="mobile-puzzle">
       <Button @click="updateState('intro')" text="To Story" />
