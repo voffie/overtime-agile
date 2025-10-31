@@ -141,10 +141,6 @@ function computer() {
   display: none;
 }
 
-.to-puzzle-button-mobile {
-  display: none !important;
-}
-
 @media screen and (max-width: 767px) {
   .mobile-picture {
     display: block;
@@ -171,5 +167,11 @@ function computer() {
     grid-column: span 2;
     background-color:#365134;
   }
+}
+</style>
+
+<style>
+.to-puzzle-button-mobile {
+  display: none !important;
 }
 </style>
