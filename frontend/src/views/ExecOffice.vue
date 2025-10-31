@@ -52,11 +52,11 @@ function computer() {
         <p>Look closer at these items:</p>
 
         <div class="choices">
-          <button class="button" @click="trophy()">Look closer on the trophy</button>
-          <button class="button" @click="painting()">Look closer on the painting</button>
-          <button class="button" @click="letter()">Look closer on the letter</button>
-          <button class="button" @click="plant()">Look closer on the plant</button>
-          <button class="button" @click="guini()">Look closer on the Guini</button>
+          <button class="button" @click="trophy()">Trophy</button>
+          <button class="button" @click="painting()">Painting</button>
+          <button class="button" @click="letter()">Letter</button>
+          <button class="button" @click="plant()">Plant</button>
+          <button class="button" @click="guini()">Guini</button>
           <button class="button computer-btn" @click="computer()">Try to sign in to the computer</button>
 
         </div>
@@ -141,6 +141,17 @@ function computer() {
   display: none;
 }
 
+.button{
+  width: 200px;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.choices .computer-btn {
+  background-color:#365134;
+}
+
 @media screen and (max-width: 767px) {
   .mobile-picture {
     display: block;
@@ -164,8 +175,7 @@ function computer() {
   }
 
   .choices .computer-btn {
-    grid-column: span 2;
-    background-color:#365134;
+    grid-column: span 2;  
   }
 }
 </style>
