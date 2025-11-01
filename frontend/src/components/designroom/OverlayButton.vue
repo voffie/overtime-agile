@@ -3,6 +3,7 @@ import { ref, onUnmounted, onMounted } from "vue"
 import Button from "../Button.vue"
 
 const showOverlay = ref(false)
+let fadeIntervall = null
 
 const props = defineProps({
   img: { type: String, required: true },
@@ -14,6 +15,8 @@ const props = defineProps({
 })
 const audio = ref(null)
 
+const emit = defineEmits(["entered"])
+
 function showContent() {
   if (props.sound) {
 
@@ -24,28 +27,42 @@ function showContent() {
     audio.value.loop = true
     audio.value.volume = 0
     audio.value.play()
-    fadeIn(audio)
+    fadeIn()
 
   }
   showOverlay.value = true
 }
 
 function closeContent() {
-  audio.value.loop = false
+  if (fadeIntervall) {
+    clearInterval(fadeIntervall)
+    fadeIntervall = null
+
+  }
+  if (props.sound) {
+    if (audio.value) {
+      audio.value.loop = false
+      fadeOut()
+    }
+
+  }
   showOverlay.value = false
-  fadeOut(audio)
+  emit("entered")
 }
 
-function fadeOut(audio) {
-  const steps = 50
-  const decrement = audio.value.volume / steps
+function fadeOut() {
+  if (!audio.value) { return }
+
+  const steps = 30
+  const decrement = 1 / steps
   const duration = 70
 
-  const intervallID = setInterval(() => {
+  fadeIntervall = setInterval(() => {
     if (audio.value.volume - decrement < 0) {
       audio.value.volume = 0
       audio.value.pause()
-      clearInterval(intervallID)
+      clearInterval(fadeIntervall)
+      fadeIntervall = null
     } else {
       audio.value.volume -= decrement
 
@@ -63,16 +80,18 @@ function handleKeydown(event) {
   }
 }
 
-function fadeIn(audio) {
+function fadeIn() {
   const steps = 50
   const increment = 1 / steps
   const duration = 50
 
+  if (!audio.value) { return }
 
-  const intervallID = setInterval(() => {
+  fadeIntervall = setInterval(() => {
     if (audio.value.volume + increment > 1) {
       audio.value.volume = 1
-      clearInterval(intervallID)
+      clearInterval(fadeIntervall)
+      fadeIntervall = null
     } else {
       audio.value.volume += increment
 
@@ -80,12 +99,25 @@ function fadeIn(audio) {
 
   }, duration);
 }
+
+function stopAudioImmediately() {
+  if (fadeIntervall) {
+    clearInterval(fadeIntervall)
+    fadeIntervall = null
+  }
+  if (audio.value) {
+    audio.value.pause()
+    audio.value.currentTime = 0
+  }
+}
+
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeydown)
+  stopAudioImmediately()
 })
 
 </script>
@@ -119,6 +151,7 @@ onUnmounted(() => {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  pointer-events: all;
 
 }
 
