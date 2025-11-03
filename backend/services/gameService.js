@@ -26,7 +26,7 @@ export async function createGame(playerId) {
 
     try {
 
-        const inProgressGame = await getGameInProgressByPlayer(playerId);
+        const inProgressGame = await getCurrentGameByPlayerId(playerId);
 
         if (inProgressGame) {
             throw new Error("There is already a game in-progress for this player.");
@@ -52,15 +52,14 @@ export async function getGameById(id) {
         WHERE id = ?
         `, [id]);
 
-        // return the game object if it exists (only ever 1 game 'in-progress'), else null
         return results[0] || null;
 
     } catch (error) {
-        throw new Error(`Failed to SELECT game from database with id: ${id}. ${error.message}`)
+        throw new Error(`Failed to SELECT game from database with id: ${id}. ${error.message}`);
     }
 }
 
-export async function getCurrentGameByPlayer(playerId) {
+export async function getCurrentGameByPlayerId(playerId) {
 
     try {
 
@@ -70,16 +69,17 @@ export async function getCurrentGameByPlayer(playerId) {
         AND is_completed = FALSE
         `, [playerId]);
 
-        // return the game object if it exists (only ever 1 game 'in-progress'), else null
         return results[0] || null;
 
     } catch (error) {
-        throw new Error(`Failed to SELECT game from database with playerId: ${playerId}. ${error.message}`)
+        throw new Error(`Failed to SELECT game from database with playerId: ${playerId}. ${error.message}`);
     }
 }
 
 export async function updateGame(id, updatedGame) {
+
     try {
+
         const [results] = await db.query(`
         UPDATE game
         SET ?
@@ -87,13 +87,12 @@ export async function updateGame(id, updatedGame) {
         `, [updatedGame, id]);
 
         if (results.affectedRows === 0) {
-            console.error(`Could not update game with id ${id}.`)
-            return false
+            throw new Error(`No rows affected by update.`);
         }
 
-        return true
+        return true;
 
     } catch (error) {
-        throw new Error(`Failed to UPDATE game in database with id: ${id}. ${error.message}`)
+        throw new Error(`Failed to UPDATE game in database with id: ${id}. ${error.message}`);
     }
 }
