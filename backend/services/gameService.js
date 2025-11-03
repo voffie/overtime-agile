@@ -43,20 +43,57 @@ export async function createGame(playerId) {
     }
 }
 
-export async function getGameInProgressByPlayer(playerId) {
+export async function getGameById(id) {
+
+    try {
+
+        const [results] = await db.query(`
+        SELECT * FROM game 
+        WHERE id = ?
+        `, [id]);
+
+        // return the game object if it exists (only ever 1 game 'in-progress'), else null
+        return results[0] || null;
+
+    } catch (error) {
+        throw new Error(`Failed to SELECT game from database with id: ${id}. ${error.message}`)
+    }
+}
+
+export async function getCurrentGameByPlayer(playerId) {
 
     try {
 
         const [results] = await db.query(`
         SELECT * FROM game 
         WHERE playerid = ? 
-        AND status = 'in-progress'
+        AND is_completed = FALSE
         `, [playerId]);
 
         // return the game object if it exists (only ever 1 game 'in-progress'), else null
         return results[0] || null;
 
     } catch (error) {
-        throw new Error(`Failed to SELECT the 'in-progress' game from database with playerId: ${playerId}. ${error.message}`)
+        throw new Error(`Failed to SELECT game from database with playerId: ${playerId}. ${error.message}`)
+    }
+}
+
+export async function updateGame(id, updatedGame) {
+    try {
+        const [results] = await db.query(`
+        UPDATE game
+        SET ?
+        WHERE id = ?
+        `, [updatedGame, id]);
+
+        if (results.affectedRows === 0) {
+            console.error(`Could not update game with id ${id}.`)
+            return false
+        }
+
+        return true
+
+    } catch (error) {
+        throw new Error(`Failed to UPDATE game in database with id: ${id}. ${error.message}`)
     }
 }
