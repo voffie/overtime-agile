@@ -33,12 +33,17 @@ function showContent() {
   showOverlay.value = true
 }
 
-function closeContent() {
+function clearFadeIntervall() {
   if (fadeIntervall) {
     clearInterval(fadeIntervall)
     fadeIntervall = null
-
   }
+
+}
+
+function closeContent() {
+  clearFadeIntervall()
+
   if (props.sound) {
     if (audio.value) {
       audio.value.loop = false
@@ -51,6 +56,8 @@ function closeContent() {
 }
 
 function fadeOut() {
+  clearFadeIntervall()
+
   if (!audio.value) { return }
 
   const steps = 30
@@ -85,6 +92,9 @@ function fadeIn() {
   const increment = 1 / steps
   const duration = 50
 
+  clearFadeIntervall()
+
+
   if (!audio.value) { return }
 
   fadeIntervall = setInterval(() => {
@@ -101,10 +111,7 @@ function fadeIn() {
 }
 
 function stopAudioImmediately() {
-  if (fadeIntervall) {
-    clearInterval(fadeIntervall)
-    fadeIntervall = null
-  }
+  clearFadeIntervall()
   if (audio.value) {
     audio.value.pause()
     audio.value.currentTime = 0

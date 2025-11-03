@@ -39,9 +39,6 @@ function nextPage() {
   const index = allStories.value.indexOf(title.value)
   const indexNew = (index + 1) % allStories.value.length
   title.value = allStories.value[indexNew]
-
-
-
 }
 
 function previousPage() {
@@ -81,7 +78,6 @@ function previousPage() {
 
       <template #puzzleImpl="{ completed }" v-if="showButton">
         <DesignRoomPuzzle :solve="completed" />
-        <!-- <Button text="Parent Button" @click="completed()" /> -->
       </template>
       <template #puzzleOutro>
         <p>
@@ -115,7 +111,7 @@ function previousPage() {
 .navigation-button {
   min-width: 2rem;
   min-height: 2rem;
-  padding: 0.75 auto;
+  padding: 0.75rem auto;
   font-weight: bold;
   margin: 0.5rem 0;
 

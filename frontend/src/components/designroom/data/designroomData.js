@@ -1,3 +1,10 @@
+import corridorImg from "@/assets/img/design-room/img/corridor2.png"
+import walkingSound from "@/assets/sound/design-room/Walking.m4a"
+import deskImg from "@/assets/img/design-room/img/fm-desk-bg-white.png"
+import postitImg from "@/assets/img/design-room/img/post-it.svg"
+import schematicImg from "@/assets/img/design-room/img/schematic.svg"
+import projectorSound from "@/assets/sound/design-room/DVD-trim.m4a"
+
 export const storyMap = {
 
   "Design Room Intro": {
@@ -16,11 +23,11 @@ export const storyMap = {
     ctaButtonText: "Continue down the stairs",
     hasOverlaySlot: true,
     overlay: {
-      imgPath: "/src/assets/img/design-room/img/corridor2.png",
+      imgPath: corridorImg,
       imgAlt: "A dark corridor that leads to some stairs",
       title: "The corridor",
       buttonTitle: "See corridor",
-      soundPath: "/src/assets/sound/design-room/Walking.m4a",
+      soundPath: walkingSound,
 
     },
 
@@ -45,11 +52,11 @@ Curiosity got the better of you, and you pick up the post-it note`,
     ctaButtonText: "Mhh.. the note?",
     hasOverlaySlot: true,
     overlay: {
-      imgPath: "/src/assets/img/design-room/img/fm-desk-bg-white.png",
+      imgPath: deskImg,
       imgAlt: "Frank Millers desk with a bunch of stuff: projector,open drawer with colored slides, old prototype, coffee mug, and poster with colors and circles",
       title: "The Desk of a Manager",
       buttonTitle: "See Desk",
-      soundPath: "",
+      soundPath: null,
 
     },
 
@@ -61,11 +68,11 @@ Curiosity got the better of you, and you pick up the post-it note`,
     ctaButtonText: "Start the projector",
     hasOverlaySlot: true,
     overlay: {
-      imgPath: "/src/assets/img/design-room/img/post-it.svg",
+      imgPath: postitImg,
       imgAlt: "Post-it note with message and riddle",
       title: "The Post-it",
       buttonTitle: "See Post-it",
-      soundPath: "",
+      soundPath: null,
 
     },
 
@@ -77,11 +84,11 @@ Curiosity got the better of you, and you pick up the post-it note`,
     ctaButtonText: "Eww a.. bunny head?",
     hasOverlaySlot: true,
     overlay: {
-      imgPath: "/src/assets/img/design-room/img/schematic.svg",
+      imgPath: schematicImg,
       imgAlt: "Elaborate schematics of bunny prototype where different colored slides can be inserted called QISR",
       title: "The failed project",
       buttonTitle: "See Slide projection",
-      soundPath: "/src/assets/sound/design-room/DVD-trim.m4a",
+      soundPath: projectorSound,
 
     },
 

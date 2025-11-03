@@ -9,6 +9,7 @@
   --border: gray;
   --warning: #fed400;
   --orange: #E69138;
+
   /* Extra Figma colors (group needs to decide variable names if they are used)
   #5f4a36;
   #85634a;
@@ -20,7 +21,6 @@
   ##767676;
   #b58c8c
 */
-  ;
 }
 
 *,
