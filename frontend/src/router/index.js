@@ -46,7 +46,7 @@ const router = createRouter({
       path: '/room/break',
       name: 'room-break',
       component: () => import('@/views/BreakRoomView.vue'),
-      meta: { title: 'Room 1 - Break Room', requiredAuth: true },
+      meta: { title: 'Break Room', requiredAuth: true },
     },
     {
       path: '/room/ending',
@@ -54,7 +54,13 @@ const router = createRouter({
       component: () => import('@/views/Ending.vue'),
       meta: { title: 'End-room', requiredAuth: true },
     },
-  ],
+    {
+      path: '/home',
+      name: 'home',
+      component: () => import('@/views/HomeView.vue'),
+      meta: { title: ' ', requiredAuth: true }
+    }
+  ]
 })
 
 router.beforeEach(async (to, from, next) => {
