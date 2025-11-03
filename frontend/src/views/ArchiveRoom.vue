@@ -33,6 +33,12 @@ const secretCode = "F";       // correct code
 const message = ref("");      // message text
 const messageType = ref("")   // "success" or "error"
 
+let completedFunction = ref(null)
+
+function setCompleted(fn) {
+  completedFunction.value = fn
+}
+
 function onDrawerClick(d) {
   if (d.kind === "open") {
     // ignore if already open
@@ -63,6 +69,11 @@ function tryUnlock() {
       locked.kind = "open"
       message.value = "✅ You unlocked a drawer!"
       messageType.value = "success"
+      setTimeout(() => {
+        if (completedFunction.value) {
+          completedFunction.value() // moves to next room
+          }
+      },4000)
     }
   } else {
     message.value = "⚠️ Wrong code! Try again."
@@ -72,18 +83,18 @@ function tryUnlock() {
   // clear message after a few seconds
   setTimeout(() => {
     message.value = ""
-  }, 3000)
+  }, 4000)
 }
-
 </script>
 
 <template>
   <PuzzleContainer nextRoute="/room/design">
-    <!-- Intro stays the same -->
+    
+    <!-- INTRO -->
     <template #puzzleIntro>
       <div class="center">
         <p>
-          <!-- The Archive Room feels different from the rest of the office — quieter, tidier, almost too perfect.<br><br>  -->
+          The Archive Room is quieter, tidier, almost too perfect...<br><br>
           Rows of sleek metal cabinets line the wall, each labeled neatly with engraved metal tags:<br>
           GUINI INTERNAL / VERSIONS / ARCHIVE STORAGE<br><br>
           <!-- The air smells faintly of disinfectant and new plastic.<br> -->
@@ -97,11 +108,14 @@ function tryUnlock() {
       </div>
     </template>
 
+    <!--PUZZLE-->
     <template #puzzleImpl="{ completed }">
+     
       <TemplateChild :solve="completed" />
       <p>
-        Some drawers seems to be unlocked, some refuse to open…<br>
-        <strong>Does it mean something?</strong><br>
+          You start to open the drawers. Some are unlocked, some refuse to budge… <br><strong>Does it mean something?</strong><br><br><br>
+          Beside the cabinet, a small digital keypad blinks softly.<br>
+          It seems you’ll need a code to access the rest.
       </p>
 
       <!-- GAME  -->
@@ -150,7 +164,8 @@ function tryUnlock() {
       </div>
     </div>
 
-      <Button text="Parent Button" @click="completed()" />
+     <!-- <Button text="Parent Button" @click="completed()" />-->
+      <template v-once>{{ (setCompleted(completed), '') }}</template>
     </template>
 
     <!-- Outro stays the same -->
