@@ -2,6 +2,7 @@
 import { ref } from "vue"
 import Button from '@/components/Button.vue'
 import Notes from "@/components/designroom/Notes.vue"
+import notesIcon from "@/assets/img/design-room/img/notes-icon.svg"
 
 const props = defineProps(['solve'])
 const puzzleCompleted = ref(false)
@@ -33,7 +34,7 @@ function isShowModal() {
   <header class="puzzle-header">
     <h2 class="notes-header">Notes</h2>
     <button class="notes-button" @click="isShowModal">
-      <img class="button-img" src="/src/assets/img/design-room/img/notes-icon.svg" alt="notepad icon black" />
+      <img class="button-img" :src="notesIcon" alt="notepad icon black" />
     </button>
   </header>
 
@@ -54,7 +55,7 @@ function isShowModal() {
   grid-template-columns: 1fr auto;
   align-items: center;
   justify-content: space-between;
-  gap: 0.2;
+  gap: 0.2rem;
   padding: 0.5rem;
 
 }

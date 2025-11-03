@@ -19,7 +19,6 @@ const props = defineProps({
 
 })
 
-const hasOverlaySlot = computed(() => props.hasOverlaySlot ?? false)
 
 
 
@@ -69,7 +68,7 @@ watch(() => props.title, () => {
   <p class="story-section"> {{ props.endStory }} </p>
 
   <Button class="ctaButton" :text="props.ctaButtonText" @click="ctaButtonClick"
-    v-if="!hasOverlaySlot || overlayEntered" />
+    v-if="!props.hasOverlaySlot || overlayEntered" />
 
 
 </template>
@@ -77,14 +76,12 @@ watch(() => props.title, () => {
 
 <style scoped>
 .story-title {
-
   background-color: var(--border);
   text-align: center;
   border-radius: 2rem;
-  padding: 0.5rem, auto;
+  padding: 0.5rem auto;
   line-height: 1.4;
   text-wrap: balance;
-
 }
 
 .story-section {

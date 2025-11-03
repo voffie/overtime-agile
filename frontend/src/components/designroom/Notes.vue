@@ -10,7 +10,7 @@ const props = defineProps({
   },
 })
 
-const selectedNote = ref(false)
+const selectedNote = ref(null)
 
 const emit = defineEmits(["close"]);
 
@@ -20,11 +20,10 @@ function closeModal() {
 
 function isSelectedNote(key) {
   selectedNote.value = noteData[key]
-  console.log(selectedNote.value.imgPath)
 }
 
 function closeSelectedNote() {
-  selectedNote.value = false
+  selectedNote.value = null
 
 }
 
