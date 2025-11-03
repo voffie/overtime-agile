@@ -67,23 +67,23 @@ function tryUnlock() {
     const locked = drawers.value.find(d => d.kind === "close")
     if (locked) {
       locked.kind = "open"
-      message.value = "✅ You unlocked a drawer!"
+      message.value = "✅ The lock clicks. You entered a correct code and the remaining drawers slide open automatically..."
       messageType.value = "success"
       setTimeout(() => {
         if (completedFunction.value) {
           completedFunction.value() // moves to next room
           }
-      },4000)
+      },5000)
     }
   } else {
-    message.value = "⚠️ Wrong code! Try again."
+    message.value = "⚠️ Wrong code! Try again..."
     messageType.value = "error"
   }
 
   // clear message after a few seconds
   setTimeout(() => {
     message.value = ""
-  }, 4000)
+  }, 5000)
 }
 </script>
 
@@ -97,23 +97,17 @@ function tryUnlock() {
           The Archive Room is quieter, tidier, almost too perfect...<br><br>
           Rows of sleek metal cabinets line the wall, each labeled neatly with engraved metal tags:<br>
           GUINI INTERNAL / VERSIONS / ARCHIVE STORAGE<br><br>
-          <!-- The air smells faintly of disinfectant and new plastic.<br> -->
           You can almost hear your own footsteps against the polished floor.<br>
           Heartcore always took pride in order. Every document, every wire, every byte — exactly where it should be.<br><br>
           You approach the main archive cabinet — the one used for physical backups before everything moved to the cloud.<br><br>
-          You start to open the drawers. Some are unlocked, some refuse to budge… <br><strong>Does it mean something?</strong><br><br><br>
-          Beside the cabinet, a small digital keypad blinks softly.<br>
-          It seems you’ll need a code to access the rest.
         </p>
       </div>
     </template>
 
     <!--PUZZLE-->
     <template #puzzleImpl="{ completed }">
-     
-      <TemplateChild :solve="completed" />
       <p>
-          You start to open the drawers. Some are unlocked, some refuse to budge… <br><strong>Does it mean something?</strong><br><br><br>
+          You start to open the drawers. Some are unlocked, some refuse to budge… <br><strong>Does it mean something?</strong><br><br>
           Beside the cabinet, a small digital keypad blinks softly.<br>
           It seems you’ll need a code to access the rest.
       </p>
@@ -131,7 +125,7 @@ function tryUnlock() {
           ]"
           @click="onDrawerClick(d)"
         >
-          <!-- Show text messages like 'closed!' -->
+          <!-- Show text message 'closed!' -->
           <span v-if="d.text && d.text !== 'lock'">{{ d.text }}</span>
 
           <!-- Show lock icon only if d.text is 'lock' -->
@@ -144,25 +138,31 @@ function tryUnlock() {
         </div>
       </div>
 
-      <div class="board">
-        <p>
-          Beside the cabinet is a small digital keypad.<br>
-          It seems you’ll need a code to access the rest.<br>
-          Can you figure out the secret symbol? <br><br>
-        </p>
+      
 
-        <input
-          v-model="userCode"
-          maxlength="1"
-          type="text"
-          class="code-input"
-          placeholder="?"
-        />
-        <Button text="Submit" @click="tryUnlock" />
-        <!-- Inline message -->
-        <p v-if="message" :class="['message', messageType]">{{ message }}</p>
+      <div class="board">
+        <div>
+          <p>
+            Digital keypad.<br>
+            Add the code here:<br>
+          </p>
+        </div>
+   
+          <input
+            v-model="userCode"
+            maxlength="1"
+            type="text"
+            class="code-input"
+            placeholder="?"
+          />
+         
+              <Button text="Submit" @click="tryUnlock" />
+            
+              <!-- Inline message -->
+              <p v-if="message" :class="['message', messageType]">{{ message }}</p>
+          
+        </div>
       </div>
-    </div>
 
      <!-- <Button text="Parent Button" @click="completed()" />-->
       <template v-once>{{ (setCompleted(completed), '') }}</template>
@@ -173,12 +173,8 @@ function tryUnlock() {
       <div class="flexContainer">
       <div>
       <p>
-        You enter the code into the keypad.<br>
-        The lock clicks.<br><br>
-        A soft metallic sound echoes through the room as the remaining drawers slide open automatically.<br><br>
-
         Inside one of the newly opened drawers lies a small box labeled:<br>
-        “Guini – Prototype Batch D / Integration Logs / Confidential.”<br><br>
+        <strong>“Guini – Prototype Batch D / Integration Logs / Confidential.”</strong><br><br>
         Beneath the box rests a thin, old-fashioned diapositive film slide, marked carefully in pen:<br>
         “F.M. — 04/09”<br><br>
         It seems to be someone’s initials… but you don’t know anyone by that name.<br><br>
@@ -233,10 +229,15 @@ function tryUnlock() {
   width: 300px;
   height: 350px;
   padding: 10px;
-  border: 2px solid #444;
-  border-radius: 8px;
-  background-color: #5b5c75;
   font-size: 14px ;  
+}
+
+.xxx{
+  display: block;
+}
+
+.zzz {
+  display: block;
 }
 
 /* OPENABLE drawers */
