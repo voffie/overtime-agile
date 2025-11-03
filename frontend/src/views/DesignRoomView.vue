@@ -3,9 +3,9 @@ import { ref, computed } from "vue"
 
 import Button from '@/components/Button.vue'
 import PuzzleContainer from '@/components/PuzzleContainer.vue'
-import TemplateChild from '@/components/template/TemplateChild.vue'
 import Storyblock from '@/components/designroom/Storyblock.vue'
 import OverlayButton from "@/components/designroom/OverlayButton.vue"
+import DesignRoomPuzzle from "@/components/designroom/DesignRoomPuzzle.vue"
 import { storyMap } from "@/components/designroom/data/designroomData"
 
 const showButton = ref(false);
@@ -80,8 +80,8 @@ function previousPage() {
 
 
       <template #puzzleImpl="{ completed }" v-if="showButton">
-        <TemplateChild :solve="completed" />
-        <Button text="Parent Button" @click="completed()" />
+        <DesignRoomPuzzle :solve="completed" />
+        <!-- <Button text="Parent Button" @click="completed()" /> -->
       </template>
       <template #puzzleOutro>
         <p>
