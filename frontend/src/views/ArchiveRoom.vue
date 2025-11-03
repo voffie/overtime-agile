@@ -81,18 +81,20 @@ function tryUnlock() {
   <PuzzleContainer nextRoute="/room/design">
     <!-- Intro stays the same -->
     <template #puzzleIntro>
-      <p>
-        <!-- The Archive Room feels different from the rest of the office — quieter, tidier, almost too perfect.<br><br>  -->
-        Rows of sleek metal cabinets line the wall, each labeled neatly with engraved metal tags:<br>
-        GUINI INTERNAL / VERSIONS / ARCHIVE STORAGE<br><br>
-        <!-- The air smells faintly of disinfectant and new plastic.<br> -->
-        You can almost hear your own footsteps against the polished floor.<br>
-        Heartcore always took pride in order. Every document, every wire, every byte — exactly where it should be.<br><br>
-        You approach the main archive cabinet — the one used for physical backups before everything moved to the cloud.<br><br>
-        You start to open the drawers. Some are unlocked, some refuse to budge… <br><strong>Does it mean something?</strong><br><br><br>
-        Beside the cabinet, a small digital keypad blinks softly.<br>
-        It seems you’ll need a code to access the rest.
-      </p>
+      <div class="center">
+        <p>
+          <!-- The Archive Room feels different from the rest of the office — quieter, tidier, almost too perfect.<br><br>  -->
+          Rows of sleek metal cabinets line the wall, each labeled neatly with engraved metal tags:<br>
+          GUINI INTERNAL / VERSIONS / ARCHIVE STORAGE<br><br>
+          <!-- The air smells faintly of disinfectant and new plastic.<br> -->
+          You can almost hear your own footsteps against the polished floor.<br>
+          Heartcore always took pride in order. Every document, every wire, every byte — exactly where it should be.<br><br>
+          You approach the main archive cabinet — the one used for physical backups before everything moved to the cloud.<br><br>
+          You start to open the drawers. Some are unlocked, some refuse to budge… <br><strong>Does it mean something?</strong><br><br><br>
+          Beside the cabinet, a small digital keypad blinks softly.<br>
+          It seems you’ll need a code to access the rest.
+        </p>
+      </div>
     </template>
 
     <template #puzzleImpl="{ completed }">
@@ -105,27 +107,27 @@ function tryUnlock() {
       <!-- GAME  -->
     <div class="flexContainer">
       <div class="container">
-<div
-  v-for="d in drawers"
-  :key="d.id"
-  :class="[
-    d.kind === 'open' ? 'open' : 'close',
-    d.active ? 'active' : '',
-    d.shake ? 'shake' : ''
-  ]"
-  @click="onDrawerClick(d)"
->
-  <!-- Show text messages like 'closed!' -->
-  <span v-if="d.text && d.text !== 'lock'">{{ d.text }}</span>
+        <div
+          v-for="d in drawers"
+          :key="d.id"
+          :class="[
+            d.kind === 'open' ? 'open' : 'close',
+            d.active ? 'active' : '',
+            d.shake ? 'shake' : ''
+          ]"
+          @click="onDrawerClick(d)"
+        >
+          <!-- Show text messages like 'closed!' -->
+          <span v-if="d.text && d.text !== 'lock'">{{ d.text }}</span>
 
-  <!-- Show lock icon only if d.text is 'lock' -->
-  <img
-    v-else-if="d.text === 'lock'"
-    src="../assets/img/lock_black.png"
-    alt="Locked"
-    class="lock-icon"
-  />
-</div>
+          <!-- Show lock icon only if d.text is 'lock' -->
+          <img
+            v-else-if="d.text === 'lock'"
+            src="../assets/img/lock_black.png"
+            alt="Locked"
+            class="lock-icon"
+          />
+        </div>
       </div>
 
       <div class="board">
@@ -183,6 +185,13 @@ function tryUnlock() {
 <style scoped>
 
 /* MOBILE */
+
+/* ylemise teksti osa? */
+.center {
+  padding: 20px;
+  text-align: justify;
+  padding-top: 0;
+}
 
 .flexContainer {
   display: block;
@@ -256,8 +265,6 @@ function tryUnlock() {
   100%{ transform: translateX(0); }
 }
 
-
-
 .code-input {
   width: 100px;
   height: 150px;
@@ -274,8 +281,6 @@ function tryUnlock() {
   height: auto;
   align-self: center;
 }
-
-
 
 
 /* DESKTOP */
