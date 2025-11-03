@@ -4,7 +4,12 @@ import Button from '@/components/Button.vue'
 import Notes from "@/components/designroom/Notes.vue"
 import notesIcon from "@/assets/img/design-room/img/notes-icon.svg"
 
-const props = defineProps(['solve'])
+const props = defineProps({
+  solve: {
+    type: Function,
+    required: true
+  }
+})
 const puzzleCompleted = ref(false)
 const metaPuzzleCompleted = ref(false)
 const showModal = ref(false)
@@ -67,9 +72,9 @@ function isShowModal() {
 
 .notes-header {
   display: inline-flex;
-  justify-content: start;
+  justify-content: flex-start;
   background-color: var(--container-bg);
-  padding: 0.5rem auto;
+  padding: 0.5rem;
   text-align: center;
   border-radius: 0.3rem 1rem;
   margin-right: 0.5rem;
@@ -92,11 +97,8 @@ function isShowModal() {
 }
 
 .button-img {
-  display: flex;
   width: 100%;
   height: 100%;
-  justify-content: center;
-  align-items: center;
   object-fit: cover;
 
 }
@@ -106,7 +108,7 @@ function isShowModal() {
     margin-right: 0.5rem;
     padding-right: 2rem;
 
-    justify-content: end;
+    justify-content: flex-end;
   }
 }
 </style>
