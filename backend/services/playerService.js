@@ -6,10 +6,9 @@ export async function getAllPlayers() {
 
     return results;
   } catch (err) {
-    return err;
+    throw err;
   }
 }
-
 
 export async function getPlayerByUsername(username, context = "default") {
   let sql;
