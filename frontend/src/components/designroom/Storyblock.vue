@@ -1,6 +1,6 @@
 <script setup>
 
-import { watch, ref, computed } from "vue"
+import { watch, ref } from "vue"
 import Button from '@/components/Button.vue'
 
 
@@ -39,7 +39,7 @@ function showButtonClick() {
 
 }
 
-function isOverlayVisted() {
+function isOverlayVisited() {
   overlayEntered.value = true
 }
 
@@ -56,21 +56,13 @@ watch(() => props.title, () => {
 
 <template>
   <h2 class="story-title"> {{ props.title }} </h2>
-
   <p class="story-section"> {{ props.startStory }} </p>
-
-  <slot name="overlay" :onEntered="isOverlayVisted">
+  <slot name="overlay" :onEntered="isOverlayVisited">
     <hr class="story-divider" />
   </slot>
-
-
-
   <p class="story-section"> {{ props.endStory }} </p>
-
   <Button class="ctaButton" :text="props.ctaButtonText" @click="ctaButtonClick"
     v-if="!props.hasOverlaySlot || overlayEntered" />
-
-
 </template>
 
 
@@ -79,7 +71,7 @@ watch(() => props.title, () => {
   background-color: var(--border);
   text-align: center;
   border-radius: 2rem;
-  padding: 0.5rem auto;
+  padding: 0.5rem 0;
   line-height: 1.4;
   text-wrap: balance;
 }
@@ -88,11 +80,9 @@ watch(() => props.title, () => {
   font-family: "Syne Mono", monospace;
   font-weight: 400;
   font-style: normal;
-  padding: 0.5rem auto;
+  padding: 0.5rem 0;
   margin: 0.75rem auto;
   white-space: pre-line;
-
-
 }
 
 .story-divider {
