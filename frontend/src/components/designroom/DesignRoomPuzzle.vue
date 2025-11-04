@@ -38,7 +38,7 @@ function isShowModal() {
 
   <header class="puzzle-header">
     <h2 class="notes-header">Notes</h2>
-    <button class="notes-button" @click="isShowModal">
+    <button class="notes-button" @click="isShowModal" aria-label="Open notes">
       <img class="button-img" :src="notesIcon" alt="notepad icon black" />
     </button>
   </header>
