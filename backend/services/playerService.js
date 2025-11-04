@@ -1,13 +1,9 @@
 import { db } from "../db/index.js";
 
 export async function getAllPlayers() {
-  try {
-    const [results] = await db.query("SELECT id, username FROM `player`");
+  const [results] = await db.query("SELECT id, username FROM `player`");
 
-    return results;
-  } catch (err) {
-    throw err;
-  }
+  return results;
 }
 
 export async function getPlayerByUsername(username, context = "default") {
