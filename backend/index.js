@@ -3,6 +3,7 @@ import cors from "cors";
 
 import { PlayerRouter } from "./routes/playerRoutes.js";
 import { AuthRouter } from "./routes/authRoutes.js";
+import { GameRouter } from "./routes/gameRoutes.js";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use(PlayerRouter);
 app.use(AuthRouter);
+app.use(GameRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
