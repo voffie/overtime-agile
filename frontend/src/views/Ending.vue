@@ -57,17 +57,17 @@ function goBackToIntro() {
 
   <div class="choices">
     <div class="choice-item">
-      <button @click="stay">Stay working for the company</button>
+      <button id="stay-button" @click="stay">Stay working for the company</button>
       <img src="@/assets/img/ending/dalailama.png" alt="Person working at a computer" />
     </div>
 
     <div class="choice-item">
-      <button @click="quit">Quit the job</button>
+      <button id="quit-button" @click="quit">Quit the job</button>
       <img src="@/assets/img/ending/dalailama.png" alt="Person walking away from office building" />
     </div>
 
     <div class="choice-item">
-      <button @click="press">Go to the press</button>
+      <button id="press-button" @click="press">Go to the press</button>
       <img src="@/assets/img/ending/dalailama.png" alt="Person taking photo of a building with a camera" />
     </div>
   </div>

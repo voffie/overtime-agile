@@ -4,7 +4,7 @@ import "@/assets/css/office-styles.css"
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
-function quitGame() {
+function endGame() {
   router.push('/home')
 }
 </script>
@@ -18,7 +18,7 @@ Same as always, a canned soup. You walk to your desk and start the computer. A n
 
 <p>It's 5 files, 4 videos and a text file. You look through them, it's videos of you in every room you've entered yesterday. You open the text file. It's just one line: "We are watching you."</p>
 
-<button @click="quitGame">Quit game</button>
+<button id="end-button" @click="endGame">End game</button>
 
 </div>
 </template>

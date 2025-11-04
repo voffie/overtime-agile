@@ -3,7 +3,7 @@ import "@/assets/css/office-styles.css"
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
-function quitGame() {
+function endGame() {
   router.push('/home')
 }
 </script>
@@ -20,7 +20,7 @@ function quitGame() {
     were a Guini in every room you entered yesterday. They've seen everything.
 </p>
 
-<button @click="quitGame">Quit game</button>
+<button id="end-button" @click="endGame">End game</button>
 
 </div>
 </template>
