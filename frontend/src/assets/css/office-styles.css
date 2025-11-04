@@ -26,7 +26,14 @@
   font-size: 16px;
   border-radius: 20px;
 
-  display: block;
-  margin: 7px auto;
+  display: inline-block;
   text-align: center;
+  margin: 7px auto;
+
+}
+
+#ending-text {
+  font-size: 25px;
+  line-height: 1.6;
+  margin-bottom: 20px;
 }

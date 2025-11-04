@@ -9,7 +9,7 @@ function leaveOffice() {
 }
 </script>
 
-<template>
+<template #puzzleOutro>
   <div>
     <h1>Success!!</h1>
     <p>You successfully logged into the computer!</p>

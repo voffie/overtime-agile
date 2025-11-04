@@ -4,7 +4,6 @@ const props = defineProps({
   intro: Boolean
 })
 
-import Button from '@/components/Button.vue'
 const emit = defineEmits(["back"])
 </script>
 
