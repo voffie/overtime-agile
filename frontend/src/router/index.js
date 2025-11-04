@@ -88,7 +88,24 @@ router.beforeEach(async (to, from, next) => {
     })
     const data = await res.json()
     if (res.ok && data?.status) {
-      return next()
+      const gameId = localStorage.getItem("currentGameId");
+
+      if (!gameId && to.path.includes("/room")) {
+        return next({ name: "home" });
+      }
+
+      if (gameId && to.path.includes("/room")) {
+        const gameResponse = await fetch(`${API_BASE_URL}/api/games/${gameId}`);
+        const game = await gameResponse.json();
+
+        if (game.current_room === to.path) {
+          return next();
+        } else {
+          return false; // sends user back to the url they navigated from
+        }
+      }
+
+      return next();
     }
   } catch (err) {
     console.error('Token verification failed:', err)

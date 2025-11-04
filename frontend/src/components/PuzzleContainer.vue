@@ -11,7 +11,15 @@ function updateState(newState) {
   state.value = newState
 }
 
-function redirect() {
+async function redirect() {
+  const parts = props.nextRoute.split("/")
+  const nextRoom = parts.pop()
+  const gameId = localStorage.getItem("currentGameId")
+
+  await fetch(`localhost:3000/api/games/${gameId}`, {
+    body: JSON.stringify({ current_room: nextRoom })
+  })
+
   router.push(props.nextRoute)
 }
 </script>
