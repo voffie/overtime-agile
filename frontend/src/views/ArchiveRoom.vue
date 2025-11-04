@@ -330,9 +330,7 @@ function tryUnlock() {
   width: 350px;
   height: 450px;
   padding: 20px;
-  border: 2px solid #444;
   border-radius: 8px;
-  background-color: #5b5c75;
 }
 
 /* When an openable drawer is active/open */
