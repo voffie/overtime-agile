@@ -59,6 +59,12 @@ const router = createRouter({
       name: 'home',
       component: () => import('@/views/HomeView.vue'),
       meta: { title: ' ', requiredAuth: true }
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('@/views/ProfileView.vue'),
+      meta: { title: 'Overtime', requiredAuth: true }
     }
   ]
 })
