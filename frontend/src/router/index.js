@@ -63,15 +63,15 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to) => {
   if (!to.meta.requiredAuth) {
-    return next()
+    return true;
   }
 
   const token = localStorage.getItem('token')
 
   if (!token) {
-    return next({ name: 'login' })
+    return { name: "login" };
   }
 
   try {
@@ -79,8 +79,8 @@ router.beforeEach(async (to, from, next) => {
     const now = Date.now() / 1000
 
     if (decodedToken.exp && decodedToken.exp < now) {
-      localStorage.removeItem('token')
-      return next({ name: 'login' })
+      localStorage.removeItem("token");
+      return { name: "login" };
     }
 
     const res = await fetch(`${API_BASE_URL}/api/auth/verify`, {
@@ -91,26 +91,44 @@ router.beforeEach(async (to, from, next) => {
       const gameId = localStorage.getItem("currentGameId");
 
       if (!gameId && to.path.includes("/room")) {
-        return next({ name: "home" });
+        return { name: "home" };
       }
 
       if (gameId && to.path.includes("/room")) {
-        const gameResponse = await fetch(`${API_BASE_URL}/api/games/${gameId}`);
-        const game = await gameResponse.json();
+        try {
+          const gameResponse = await fetch(
+            `${API_BASE_URL}/api/games/${gameId}`,
+          );
 
-        if (game.current_room === to.path) {
-          return next();
-        } else {
-          return false; // sends user back to the url they navigated from
+          if (!gameResponse.ok) {
+            console.error("Failed to fetch game");
+            return { name: "home" };
+          }
+
+          const game = await gameResponse.json();
+
+          const targetRoom = to.path.split("/").pop();
+
+          if (game.game.current_room === targetRoom) {
+            return true;
+          } else {
+            console.warn(
+              `Access denied: current room is ${game.game.current_room}, attempted ${targetRoom}`,
+            );
+            return { path: `/room/${game.game.current_room}` }; // sends user back to the url they navigated from
+          }
+        } catch (error) {
+          console.error("Error checking room access:", error);
+          return { name: "home" };
         }
       }
 
-      return next();
+      return true;
     }
   } catch (err) {
-    console.error('Token verification failed:', err)
-    localStorage.removeItem('token')
-    return next({ name: 'login' })
+    console.error("Token verification failed:", err);
+    localStorage.removeItem("token");
+    return { name: "login" };
   }
 
 })
