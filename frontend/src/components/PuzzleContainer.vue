@@ -11,7 +11,33 @@ function updateState(newState) {
   state.value = newState
 }
 
-function redirect() {
+async function redirect() {
+  const parts = props.nextRoute.split("/")
+  const nextRoom = parts.pop()
+  const gameId = localStorage.getItem("currentGameId")
+
+  if (!gameId) {
+    console.error("No gameId found in localStorage")
+    return
+  }
+
+  try {
+  const response = await fetch(`http://localhost:3000/api/games/${gameId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    body: JSON.stringify({ current_room: nextRoom })
+    })
+
+    if (!response.ok) {
+      throw new Error("Failed to update room")
+    }
+  } catch (error) {
+    console.error("Error updating room:", error)
+    return
+  }
+
   router.push(props.nextRoute)
 }
 </script>
