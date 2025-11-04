@@ -28,7 +28,7 @@ export async function loginUser(req, res) {
     }
 
     const token = signToken({ id: player.id, username: player.username }, context);
-    return res.status(200).json({ token });
+    return res.status(200).json({ token, playerId: player.id });
 
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" })
