@@ -3,6 +3,7 @@ import postitImg from "@/assets/img/design-room/img/post-it.svg"
 import riddle1 from "@/assets/img/design-room/img/riddle-1.svg"
 import riddle2 from "@/assets/img/design-room/img/riddle-2.svg"
 import riddle3 from "@/assets/img/design-room/img/riddle-3.svg"
+import confession from "@/assets/img/design-room/img/confession.svg"
 
 export const noteData = {
   "desk": {
@@ -33,6 +34,12 @@ export const noteData = {
     id: 5,
     imgPath: riddle3,
     imgAltText: "Riddle about a color, presented as a poem centered within a heart outline on a bright yellow and white gradient background featuring crown and gem designs.",
+    available: false
+  },
+  "confession": {
+    id: 6,
+    imgPath: confession,
+    imgAltText: "Frank Miller confession and involvement in darker things",
     available: false
   }
 }

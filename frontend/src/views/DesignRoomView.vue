@@ -9,7 +9,7 @@ import DesignRoomPuzzle from "@/components/designroom/DesignRoomPuzzle.vue"
 import { storyMap } from "@/components/designroom/data/designroomData"
 
 const showButton = ref(false);
-const title = ref("Design Room Intro");
+const title = ref("Follow the Rabbit Down the Hole");
 
 const isStoryCompleted = (title) => {
   return title === "Start Puzzle"

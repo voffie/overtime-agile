@@ -1,8 +1,23 @@
 <script setup>
-import { ref } from "vue"
+import { ref, reactive, computed } from "vue"
 import Button from '@/components/Button.vue'
 import Notes from "@/components/designroom/Notes.vue"
+import RiddlePuzzle from "@/components/designroom/RiddlePuzzle.vue"
 import notesIcon from "@/assets/img/design-room/img/notes-icon.svg"
+import { noteData as importedNoteData } from "@/components/designroom/data/noteData"
+
+const noteData = reactive(JSON.parse(JSON.stringify(importedNoteData)))
+
+const lockedRiddles = computed(() => {
+  const riddles = {}
+
+  for (const [key, note] of Object.entries(noteData)) {
+    if (!note.available) riddles[key] = note
+  }
+  return riddles
+})
+
+
 
 const props = defineProps({
   solve: {
@@ -45,7 +60,8 @@ function isShowModal() {
 
 
   <section class="puzzle-main">
-    <Notes :show-modal="showModal" @close="isShowModal" />
+    <Notes :show-modal="showModal" @close="isShowModal" :note-data="noteData" />
+    <RiddlePuzzle :riddles="lockedRiddles" />
   </section>
 
 

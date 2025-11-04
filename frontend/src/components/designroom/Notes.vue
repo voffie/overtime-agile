@@ -1,25 +1,29 @@
 <script setup>
 import { ref } from "vue"
 import Button from "../Button.vue";
-import { noteData } from "@/components/designroom/data/noteData";
 
 const props = defineProps({
   showModal: {
     type: Boolean,
     required: true
   },
+  noteData: {
+    type: Object,
+    required: true,
+
+  }
 })
 
 const selectedNote = ref(null)
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close", "riddle-to-solve"]);
 
 function closeModal() {
   emit("close")
 }
 
 function isSelectedNote(key) {
-  selectedNote.value = noteData[key]
+  selectedNote.value = props.noteData[key]
 }
 
 function closeSelectedNote() {
@@ -34,7 +38,7 @@ function closeSelectedNote() {
   <section v-if="showModal" class="puzzle-modal">
     <p v-if="!selectedNote">Click to get better view of note</p>
     <div class="modal-gallery" v-if="!selectedNote">
-      <template v-for="(note, key) in noteData" :key="note.id">
+      <template v-for="(note, key) in props.noteData" :key="note.id">
         <figure @click="isSelectedNote(key)" class="modal-figure" v-if="note.available">
           <img class="modal-img" :src="note.imgPath" :alt="note.imgAltText">
           <figcaption class="modal-caption" v-if="note.available">{{ key }}</figcaption>
