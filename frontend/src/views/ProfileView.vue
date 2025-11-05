@@ -1,4 +1,24 @@
 <script setup>
+import axios from "@/axios"
+import { ref, onMounted } from "vue";
+
+const username = ref("Loading...");
+
+onMounted(async () => {
+  const storedUsername = localStorage.getItem("username");
+
+  if (!storedUsername) {
+    username.value = "Unknown user";
+    return;
+  }
+
+  try {
+    const res = await axios.get(`/api/players/${storedUsername}`);
+    username.value = res.data.player.username;
+  } catch (err) {
+    username.value = "Error loading user";
+  }
+});
 
 const games = ["10.02", "11.02", "12.02", "13.02", "14.02"]
 </script>
@@ -8,7 +28,7 @@ const games = ["10.02", "11.02", "12.02", "13.02", "14.02"]
 
         <div class="container-left">
             <div class="container-user">
-                <h1 class="username">Username</h1>
+                <h1 class="username">{{ username }}</h1>
                 <div class="container-user-image">
                     <img class="user-image" src="@/assets/img/overtimeprojectimage2.png" alt="User profile picture">
                 </div>
