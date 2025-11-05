@@ -8,6 +8,7 @@ import { timer } from '@/utils/timer.js'
 const props = defineProps(['nextRoute'])
 const state = ref('intro')
 const router = useRouter()
+const elapsedTimeFormatted = ref('00:00:00')
 
 function updateState(newState) {
   state.value = newState
@@ -15,12 +16,15 @@ function updateState(newState) {
   if(newState === 'outro') {
 
     try {
+      timer.stop()
+      const elapsedTimeSeconds = timer.getElapsedTimeInSeconds()
+      currentGame.updateTimeForCurrentRoom(elapsedTimeSeconds)
       const parts = props.nextRoute.split("/")
       const nextRoom = parts.pop()
-      currentGame.setCurrentRoom(nextRoom)
+      currentGame.updateCurrentRoom(nextRoom)
 
     } catch (error) {
-      console.error(`Error updating room: ${error.message}`)
+      console.error(`Error updating current room: ${error.message}`)
     }
   }
 }
@@ -44,6 +48,9 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <!-- Turn this on if you want to see the timer. It is only here as a help, not final solution.
+  <p>{{ elapsedTimeFormatted }}</p>
+  -->
   <section class="room-wrapper" :class="{ 'outro-wrapper': state === 'outro' }">
     <!-- Desktop -->
     <section v-if="state !== 'solved' && state !== 'outro'" class="puzzle-text">
