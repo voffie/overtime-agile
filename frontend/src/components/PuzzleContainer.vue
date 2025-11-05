@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Button from '@/components/Button.vue'
 import { currentGame } from '@/utils/currentGame.js'
@@ -28,6 +28,19 @@ function updateState(newState) {
 async function redirect() {
   router.push(props.nextRoute)
 }
+
+// When a player renders a PuzzleContainer, start the timer.
+onMounted(() => {
+  timer.start((formattedTime) => {
+    elapsedTimeFormatted.value = formattedTime
+  })
+})
+
+// Stop and reset timer if leaving unexpectedly
+onUnmounted(() => {
+  timer.reset()
+})
+
 </script>
 
 <template>
