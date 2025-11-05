@@ -4,7 +4,29 @@ import "@/assets/css/office-styles.css"
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
-function endGame() {
+async function endGame() {
+  const gameId = localStorage.getItem("currentGameId")
+
+  try {
+    const response = await fetch(`http://localhost:3000/api/games/${gameId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ 
+        is_completed: true,
+        ending_choice: 'stay'
+      })
+    })
+
+    if (!response.ok) {
+      throw new Error("Failed to update game status")
+    }
+  } catch (error) {
+    console.error("Error updating game status:", error)
+    return
+  }
+
   router.push('/home')
 }
 </script>
