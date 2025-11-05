@@ -29,7 +29,9 @@ function goBackToIntro() {
 
 <!-- Desktop -->
 <template>
-  <div v-if="!selected || selected === 'intro'" id="ending-text">
+  <div v-if="!selected || selected === 'intro'" id="ending-intro">
+    <div class="ending-text">
+    <h1>The ending is near</h1>
     <p>
       You've discovered that Guini wasn't just helping families “organize”. It has been harvesting data about families
       routines and schedules
@@ -41,8 +43,9 @@ function goBackToIntro() {
       Shaping choices you thought
       were yours. At work. At home. On your phone right now.
     </p>
-    <button class="choices-and-back-button" @click="showChoices">Go to choices</button>
-  </div>
+    <button class="choices-button" @click="showChoices">Go to choices</button>
+    </div>
+    </div>
 
 
 <div v-else-if="selected === 'choices'">
@@ -58,22 +61,22 @@ function goBackToIntro() {
   <div class="choices">
     <div class="choice-item">
       <button id="stay-button" @click="stay">Stay working for the company</button>
-      <img src="@/assets/img/ending/dalailama.png" alt="Person working at a computer" />
+      <img src="@/assets/img/ending/stay.png" alt="Person working at a computer" />
     </div>
 
     <div class="choice-item">
       <button id="quit-button" @click="quit">Quit the job</button>
-      <img src="@/assets/img/ending/dalailama.png" alt="Person walking away from office building" />
+      <img src="@/assets/img/ending/quit.png" alt="Door" />
     </div>
 
     <div class="choice-item">
       <button id="press-button" @click="press">Go to the press</button>
-      <img src="@/assets/img/ending/dalailama.png" alt="Person taking photo of a building with a camera" />
+      <img src="@/assets/img/ending/press.png" alt="Newspaper" />
     </div>
   </div>
 </div>
 
-    <button v-if="selected === 'choices'" class="choices-and-back-button" @click="goBackToIntro">Back to intro</button>
+    <button v-if="selected === 'choices'" class="back-button" @click="goBackToIntro">Back to intro</button>
 
 
   <div v-if="selected === 'stay'">
@@ -87,12 +90,30 @@ function goBackToIntro() {
   <div v-else-if="selected === 'press'">
     <Press />
   </div>
-
 </template>
 
 
-
 <style scoped>
+.ending-intro {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  line-height: 1.6;
+}
+.ending-text {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0px;
+  font-size: 27px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.ending-text p,
+.ending-text h1 {
+  margin: 0px;
+}
+
 .choices-intro {
   font-size: 20px;
   text-align: center;
@@ -116,7 +137,7 @@ function goBackToIntro() {
 .choices button {
   cursor: pointer;
   color: var(--button-text);
-  background-color: var(--button-bg);
+  background-color: #e69138;
   border-radius: 10px;
   font-weight: bold;
   padding: 5px 15px;
@@ -124,8 +145,8 @@ function goBackToIntro() {
   margin-bottom: 15px;
 }
 
-.choices-and-back-button {
-  margin-top: 300px;
+.back-button {
+  margin-top: 50px;
   cursor: pointer;
   color: var(--button-text);
   background-color: var(--button-bg);
@@ -135,8 +156,21 @@ function goBackToIntro() {
   border: none;
 }
 
+.choices-button {
+  margin-top: 20px;
+  cursor: pointer;
+  color: var(--button-text);
+  background-color:brown;
+  border-radius: 10px;
+  font-weight: bold;
+  padding: 15px 30px;
+  border: none;
+  font-size: 20px;
+}
+
 img {
   border-radius: 20px;
+  width: 70%;
 }
 
 @media screen and (max-width: 767px) {

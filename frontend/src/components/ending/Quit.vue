@@ -9,8 +9,9 @@ function endGame() {
 </script>
 
 <template>
-<div id="ending-text">
-<p>
+  <div class="ending-text">
+    <h1>You quit your job at HeartCore</h1>
+    <p>
     That's it, this company is evil. You can't work here anymore. The next morning you send a text to your boss saying that you quit and wont come back.
     You don't even care about your personalised coffee mug with your name on it, they can have it. 
 </p>
@@ -26,14 +27,33 @@ function endGame() {
 </template>
 
 <style scoped>
-button {
+.ending-text {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-size: 20px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.ending-text h1 {
+  margin-bottom: 20px;
+  font-size: 38px;
+}
+
+.ending-text p {
+  margin-bottom: 16px;
+}
+
+#end-button {
+  margin-top: 10px;
   cursor: pointer;
   color: var(--button-text);
-  background-color: var(--button-bg);
+  background-color: #e69138;
   border-radius: 10px;
   font-weight: bold;
-  padding: 5px 15px;
+  padding: 15px 30px;
   border: none;
-  margin-bottom: 15px;
+  font-size: 20px;
 }
 </style>
