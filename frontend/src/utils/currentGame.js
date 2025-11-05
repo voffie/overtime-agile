@@ -61,6 +61,32 @@ export const currentGame = {
         }
     },
 
+    async setCurrentRoom(nextRoom) {
+
+        try {
+
+            const gameId = ls.getGameId();
+
+            const updateGameRequest = {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ current_room: nextRoom })
+            };
+
+            const updateGameResponse = await fetch(
+                `http://localhost:3000/api/games/${gameId}`,
+                updateGameRequest
+            );
+
+            if (!updateGameResponse.ok) {
+                throw new Error("Failed to update room")
+            }
+
+        } catch (error) {
+            throw new Error(`Failed to get update room: ${error.message}`);
+        }
+    },
+
     async isActive() {
         const game = await this.getByPlayerId();
         return game ? true : false;
