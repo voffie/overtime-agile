@@ -30,13 +30,13 @@ export const currentGame = {
             const game = await this.get();
 
             if (!game) {
-                throw new Error(`Can not get current room from null game.`);
+                throw new Error(`Current game is null.`);
             }
 
             return game.current_room;
 
         } catch (error) {
-            throw new Error(`Failed to get current game: ${error.message}`);
+            throw new Error(`Failed to get current room: ${error.message}`);
         }
     },
 
