@@ -34,9 +34,18 @@ async function startNewGame() {
 }
 
 async function continueGame() {
+
+  try {
+
+    const currentRoom = await currentGame.getCurrentRoom();
+    routeTo(`/room/${currentRoom}`);
+    
+  } catch (error) {
+    errorMessage.value = "Failed to continue game.";
+    console.error(`Failed to continue game: ${error.message}`);
+  }
   
-  const currentRoom = await currentGame.getCurrentRoom();
-  routeTo("/room/" + currentRoom);
+  
 }
 
 async function createNewGame() {
