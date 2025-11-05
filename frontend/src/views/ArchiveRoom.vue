@@ -137,13 +137,10 @@ function tryUnlock() {
           />
         </div>
       </div>
-
-      
-
+ 
       <div class="board">
         <div>
           <p>
-            Digital keypad.<br>
             Add the code here:<br>
           </p>
         </div>
@@ -155,12 +152,10 @@ function tryUnlock() {
             class="code-input"
             placeholder="?"
           />
-         
-              <Button text="Submit" @click="tryUnlock" />
+            <Button text="Submit" @click="tryUnlock" />
             
               <!-- Inline message -->
               <p v-if="message" :class="['message', messageType]">{{ message }}</p>
-          
         </div>
       </div>
 
@@ -171,20 +166,18 @@ function tryUnlock() {
     <!-- Outro stays the same -->
     <template #puzzleOutro>
       <div class="flexContainer">
-      <div>
-      <p>
-        Inside one of the newly opened drawers lies a small box labeled:<br>
-        <strong>“Guini – Prototype Batch D / Integration Logs / Confidential.”</strong><br><br>
-        Beneath the box rests a thin, old-fashioned diapositive film slide, marked carefully in pen:<br>
-        “F.M. — 04/09”<br><br>
-        It seems to be someone’s initials… but you don’t know anyone by that name.<br><br>
-        You hold the slide up toward the light — but it’s too faint to make out.<br><br>
-        It looks like some kind of schematic or layout, but the details are impossible to see without the right equipment.<br>
-        And if anyone in Heartcore would have the proper tools, it’s the Design team.<br><br>
-        You place the slide carefully into your pocket and jot a quick note on your tablet.<br>
-        As you leave, the cabinet automatically locks behind you — drawers sliding back into their perfectly aligned grid with a quiet hum.<br>
-      </p>
-      </div>
+        <p>
+          Inside one of the newly opened drawers lies a small box labeled:<br>
+          <strong>“Guini – Prototype Batch D / Integration Logs / Confidential.”</strong><br><br>
+          Beneath the box rests a thin, old-fashioned diapositive film slide, marked carefully in pen:<br>
+          “F.M. — 04/09”<br><br>
+          It seems to be someone’s initials… but you don’t know anyone by that name.<br><br>
+          You hold the slide up toward the light — but it’s too faint to make out.<br><br>
+          It looks like some kind of schematic or layout, but the details are impossible to see without the right equipment.<br>
+          And if anyone in Heartcore would have the proper tools, it’s the Design team.<br><br>
+          You place the slide carefully into your pocket and jot a quick note on your tablet.<br>
+          As you leave, the cabinet automatically locks behind you — drawers sliding back into their perfectly aligned grid with a quiet hum.<br>
+        </p>
       <div>
         <img src="../assets/img/archiveRoom/Outro_archiveRoom.png" class="image_archiveRoom">
       </div>
@@ -197,7 +190,13 @@ function tryUnlock() {
 
 /* MOBILE */
 
-/* ylemise teksti osa? */
+@keyframes blinkBorder {
+  0% { border-color: #4a4e52; }
+  25% { border-color: #4a4e52a6; } /* lighter flash */
+  75% { border-color: #4a4e5259; } /* lighter flash */
+  100% { border-color: #4a4e52; }
+}
+
 .center {
   padding: 20px;
   text-align: justify;
@@ -230,14 +229,6 @@ function tryUnlock() {
   height: 350px;
   padding: 10px;
   font-size: 14px ;  
-}
-
-.xxx{
-  display: block;
-}
-
-.zzz {
-  display: block;
 }
 
 /* OPENABLE drawers */
@@ -290,6 +281,7 @@ function tryUnlock() {
   border: 10px solid #4a4e52;
   border-radius: 4px;
   background-image: url("../assets/img/archiveRoom/digiBoard.png");
+  animation: blinkBorder 3s infinite;
 }
 
 .image_archiveRoom {
@@ -307,49 +299,21 @@ function tryUnlock() {
 }
 
 .image_archiveRoom {
-  width: 800px;
-  padding: 5rem;
+  width: 700px;
+  padding: 0;
+  padding-left: 3rem;
 }
 
 .container {
-  background-image: url("../assets/img/archiveRoom/cabinet_drawer_alt2_520.png");
   width: 580px;
-  display: grid;
   grid-template-columns: repeat(4, 120px);
   grid-template-rows: repeat(5, 102px);
   gap: 10px;
   padding: 30px;
-  padding-top: 40px;
-  margin-top: 2rem;
+  padding-bottom: 0;
   margin-left: 10rem;
+  margin-bottom: 0;
 }
 
-.board {
-  display: block;
-  margin-top: 5rem;
-  width: 350px;
-  height: 450px;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-/* When an openable drawer is active/open */
-.open.active {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  background-image: url("../assets/img/archiveRoom/cabinet_illustration_drawer_cutout_120.png");
-  color: #111;
-}
-
-.code-input {
-  width: 100px;
-  height: 150px;
-  text-align: center;
-  font-size: 68px;
-  margin-right: 10px;
-  border: 10px solid #4a4e52;
-  border-radius: 4px;
-  background-image: url("../assets/img/archiveRoom/digiBoard.png");
-}
 }
 </style>
