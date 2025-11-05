@@ -85,7 +85,7 @@ export async function deleteGame(req, res) {
     if (!existingGame) {
       return res
         .status(404)
-        .json({ error: `Game with id ${gameId} not found` });
+        .json({ error: `Game with id ${gameId} not found.` });
     }
 
     await GameService.deleteGameById(gameId);
