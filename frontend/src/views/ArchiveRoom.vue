@@ -32,6 +32,7 @@ const userCode = ref("");     //User input
 const secretCode = "F";       // correct code
 const message = ref("");      // message text
 const messageType = ref("")   // "success" or "error"
+const unlocked = ref(false)
 
 let completedFunction = ref(null)
 
@@ -62,10 +63,11 @@ function onDrawerClick(d) {
 }
 
 function tryUnlock() {
+  if (unlocked.value) return
   if (userCode.value.toUpperCase() === secretCode) {
-    // unlock one of the locked drawers, e.g. the first closed one
     const locked = drawers.value.find(d => d.kind === "close")
     if (locked) {
+      unlocked.value = true
       locked.kind = "open"
       message.value = "✅ The lock clicks. You entered a correct code and the remaining drawers slide open automatically..."
       messageType.value = "success"
@@ -73,7 +75,7 @@ function tryUnlock() {
         if (completedFunction.value) {
           completedFunction.value() // moves to next room
           }
-      },5000)
+      },4200)
     }
   } else {
     message.value = "⚠️ Wrong code! Try again..."
@@ -83,7 +85,7 @@ function tryUnlock() {
   // clear message after a few seconds
   setTimeout(() => {
     message.value = ""
-  }, 5000)
+  }, 4200)
 }
 </script>
 
