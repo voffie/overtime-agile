@@ -1,17 +1,116 @@
 <script setup>
-import { useRouter } from 'vue-router'
-import Button from '@/components/Button.vue'
+import { useRouter } from 'vue-router';
+import { onMounted, ref } from 'vue';
+import { ls } from '@/utils/ls.js';
+import { currentGame } from '@/utils/currentGame.js';
 
-const router = useRouter()
+const router = useRouter();
+const errorMessage = ref("");
+const hasCurrentGame = ref(false);
+const btnTopText = ref("");
 
-function goTo(route) {
+function handleGame() {
+
+  if(hasCurrentGame.value === null) {
+    // do nothing.
+  } else if (hasCurrentGame.value) {
+    continueGame();
+  } else {
+    startNewGame();
+  }
+}
+
+async function startNewGame() {
+
+  try {
+    const newGameId = await createNewGame();
+    ls.setGameId(newGameId);
+    routeTo("/game-intro");
+
+  } catch (error) {
+    errorMessage.value = "Failed to start game.";
+    throw new Error(`Failed to start game: ${error.message}`);
+  }
+}
+
+async function continueGame() {
+
+  try {
+
+    const currentRoom = await currentGame.getCurrentRoom();
+    routeTo(`/room/${currentRoom}`);
+    
+  } catch (error) {
+    errorMessage.value = "Failed to continue game.";
+    console.error(`Failed to continue game: ${error.message}`);
+  }
+  
+  
+}
+
+async function createNewGame() {
+
+  try {
+
+    const playerId = ls.getPlayerId();
+
+    const newGameRequest = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ playerId })
+    };
+  
+    const newGameResponse = await fetch(
+      "http://localhost:3000/api/games", 
+      newGameRequest
+    );
+    
+    const data = await newGameResponse.json();
+
+    if(!newGameResponse.ok) {
+      throw new Error(data.error);
+    }
+
+    return data.gameId;
+
+  } catch (error) {
+    throw new Error(`Failed to create game: ${error.message}`);
+  }
+}
+
+function routeTo(route) {
   router.push(route)
 }
 
 function handleLogout() {
-  localStorage.removeItem('token')
-  router.push('/')
+  ls.removeAll();
+  routeTo('/');
 }
+
+onMounted( async() => {
+  
+  try {
+
+    const maybeCurrentGame = await currentGame.getByPlayerId();
+
+    if(maybeCurrentGame) {
+      ls.setGameId(maybeCurrentGame.id);
+      hasCurrentGame.value = true;
+      btnTopText.value = "Continue Game";
+    } else {
+      hasCurrentGame.value = false;
+      btnTopText.value = "Start Game";
+    }
+
+  } catch (error) {
+    errorMessage.value = "Failed to check current game";
+    console.error(`Failed to check current game: ${error.message}`);
+    hasCurrentGame.value = null;
+    btnTopText.value = "ERROR"
+  }
+  
+});
+
 </script>
 
 <template>
@@ -19,10 +118,11 @@ function handleLogout() {
 
     <div class="container-left">
       <div class="container-meny">
+        <div class="error" v-if="errorMessage">{{ errorMessage }}</div>
         <div class="container-buttons">
-          <button class="btn-meny btn-start" @click="goTo('/game-intro')">Start Game</button>
-          <button class="btn-meny" @click="goTo('/profile')">Profile</button>
-          <button class="btn-meny" @click="goTo('/leaderboard')">Leaderboard</button>
+          <button class="btn-meny btn-top" @click="handleGame">{{ btnTopText }}</button>
+          <button class="btn-meny" @click="routeTo('/profile')">Profile</button>
+          <button class="btn-meny" @click="routeTo('/leaderboard')">Leaderboard</button>
           <button class="btn-meny" @click="handleLogout">Logout</button>
         </div>
       </div>
@@ -68,9 +168,11 @@ function handleLogout() {
   border: 4px solid #E69138;
   border-radius: 2rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2.5rem;
+  gap: 1rem;
 }
 
 .container-buttons {
@@ -93,7 +195,7 @@ function handleLogout() {
   border: 2px dashed white;
 }
 
-.btn-start {
+.btn-top {
   background: #E69138;
   color: white;
   height: 5rem;
@@ -116,6 +218,10 @@ function handleLogout() {
 .overtime-slogan {
   font-size: 1.5rem;
   color: #E69138;
+}
+
+.error {
+  color: red;
 }
 
 @media screen and (max-width: 768px) {
@@ -153,7 +259,7 @@ function handleLogout() {
     border: 1.5px dashed white;
   }
 
-  .btn-start {
+  .btn-top {
     height: 3rem;
     font-size: 1.5rem;
   }
