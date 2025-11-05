@@ -96,3 +96,11 @@ export async function updateGame(id, updatedGame) {
         throw new Error(`Failed to UPDATE game in database with id: ${id}. ${error.message}`);
     }
 }
+
+export async function deleteGame(id) {
+  try {
+    await db.query("DELETE FROM game WHERE id = ?", [id])
+  } catch (error) {
+    throw new Error(`Failed to DELETE game in database with id: ${id}. ${error.message}`)
+  }
+}
