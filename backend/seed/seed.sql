@@ -22,6 +22,8 @@ CREATE TABLE game (
     'office',
     'ending'
   ) NOT NULL DEFAULT 'break',
+  
+  ) NOT NULL DEFAULT 'none',
   is_completed BOOLEAN NOT NULL DEFAULT FALSE,
   FOREIGN KEY (playerid) REFERENCES player(id) ON DELETE CASCADE
 );
