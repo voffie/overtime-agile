@@ -87,8 +87,9 @@ const handlesLogin = async () => {
       token_context: 'client',
     },
     requestType: 'login',
-    onSuccess: (token) => {
-      localStorage.setItem('token', token.token)
+    onSuccess: (data) => {
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('username', data.username)
       routeToNextPage.push({ name: 'home' })
     },
   })
