@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Button from '@/components/Button.vue'
+import { currentGame } from '@/utils/currentGame.js'
+import { timer } from '@/utils/timer.js'
 
 const props = defineProps(['nextRoute'])
 const state = ref('intro')
@@ -9,35 +11,21 @@ const router = useRouter()
 
 function updateState(newState) {
   state.value = newState
+
+  if(newState === 'outro') {
+
+    try {
+      const parts = props.nextRoute.split("/")
+      const nextRoom = parts.pop()
+      currentGame.setCurrentRoom(nextRoom)
+
+    } catch (error) {
+      console.error(`Error updating room: ${error.message}`)
+    }
+  }
 }
 
 async function redirect() {
-  const parts = props.nextRoute.split("/")
-  const nextRoom = parts.pop()
-  const gameId = localStorage.getItem("currentGameId")
-
-  if (!gameId) {
-    console.error("No gameId found in localStorage")
-    return
-  }
-
-  try {
-  const response = await fetch(`http://localhost:3000/api/games/${gameId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
-    body: JSON.stringify({ current_room: nextRoom })
-    })
-
-    if (!response.ok) {
-      throw new Error("Failed to update room")
-    }
-  } catch (error) {
-    console.error("Error updating room:", error)
-    return
-  }
-
   router.push(props.nextRoute)
 }
 </script>
