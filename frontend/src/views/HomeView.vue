@@ -11,7 +11,9 @@ const btnTopText = ref("");
 
 function handleGame() {
 
-  if(hasCurrentGame.value) {
+  if(hasCurrentGame.value === null) {
+    // do nothing.
+  } else if (hasCurrentGame.value) {
     continueGame();
   } else {
     startNewGame();
@@ -78,16 +80,26 @@ function handleLogout() {
 
 onMounted( async() => {
   
-  const maybeCurrentGame = await currentGame.getByPlayerId();
+  try {
 
-  if(maybeCurrentGame) {
-    ls.setGameId(maybeCurrentGame.id);
-    hasCurrentGame.value = true;
-    btnTopText.value = "Continue Game";
-  } else {
-    hasCurrentGame.value = false;
-    btnTopText.value = "Start Game";
+    const maybeCurrentGame = await currentGame.getByPlayerId();
+
+    if(maybeCurrentGame) {
+      ls.setGameId(maybeCurrentGame.id);
+      hasCurrentGame.value = true;
+      btnTopText.value = "Continue Game";
+    } else {
+      hasCurrentGame.value = false;
+      btnTopText.value = "Start Game";
+    }
+
+  } catch (error) {
+    errorMessage.value = "Failed to check current game";
+    console.error(`Failed to check current game: ${error.message}`);
+    hasCurrentGame.value = null;
+    btnTopText.value = "ERROR"
   }
+  
 });
 
 </script>
