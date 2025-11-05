@@ -96,3 +96,15 @@ export async function updateGame(id, updatedGame) {
         throw new Error(`Failed to UPDATE game in database with id: ${id}. ${error.message}`);
     }
 }
+
+export async function deleteGameById(id) {
+  try {
+    const [results] = await db.query("DELETE FROM game WHERE id = ?", [id])
+
+    if (results.affectedRows === 0) {
+      throw new Error(`No rows affected by delete.`)
+    }
+  } catch (error) {
+    throw new Error(`Failed to DELETE game in database with id: ${id}. ${error.message}`)
+  }
+}

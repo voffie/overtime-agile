@@ -4,13 +4,13 @@ import { computed } from 'vue'
 import Button from '@/components/Button.vue'
 
 const route = useRoute()
-const title = computed(() => route.meta.title || 'Overtime')
+const title = computed(() => route.meta.title || '')
 </script>
 
 <template>
-  <nav>
+  <nav v-if="route.meta.title">
     <p>{{ title }}</p>
-    <RouterLink to="/">
+    <RouterLink to="/home">
       <Button text="Home" />
     </RouterLink>
   </nav>
