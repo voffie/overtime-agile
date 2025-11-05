@@ -75,3 +75,24 @@ export async function updateGame(req, res) {
         return res.status(500).json({ error: error.message });
     }
 }
+
+export async function deleteGame(req, res) {
+  try {
+    const gameId = req.params.gameId;
+
+    const existingGame = await GameService.getGameById(gameId);
+
+    if (!existingGame) {
+      return res
+        .status(404)
+        .json({ error: `Game with id ${gameId} not found.` });
+    }
+
+    await GameService.deleteGameById(gameId);
+
+    return res.sendStatus(204);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
