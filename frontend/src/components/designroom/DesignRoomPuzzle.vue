@@ -61,7 +61,7 @@ function unlockRiddles(key) {
   }
 }
 
-const metaPuzzleText = ref(`The bunny head starts to vibrate and a burst of light flickers and then no more.\n You try to flick the switch again, but there's no response from the bunny.
+const metaPuzzleText = ref(`The bunny head starts to vibrate and a burst of light flickers and then no more.\nYou try to flick the switch again, but there's no response from the bunny.
         You look at the Post-it note again... and then decide to open the lid.
 
         A login screen appears with the question: "What are my favorite colors?"
