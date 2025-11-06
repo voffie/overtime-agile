@@ -39,9 +39,24 @@ const emit = defineEmits(["back", "toggle-backside"])
           Who is this? Another woman with the CEO? What a jerk!
         </p>
       </div>
+      <br>
+
+      <div class="mobile-picture">
+      <img
+        v-if="!props.showBackside"
+        class="painting-img img"
+        src="@/assets/img/execOffice/painting.png"
+        alt="Painting"
+      />
+      <img
+        v-else
+        class="paintingbackside-img img"
+        src="@/assets/img/execOffice/painting-backside.png"
+        alt="Painting backside"
+      />
+      </div>
 
       <div>
-        <br></br>
         <button
           class="button"
           @click="emit('toggle-backside')">
@@ -55,3 +70,17 @@ const emit = defineEmits(["back", "toggle-backside"])
   </div>
 </template>
 
+<style scoped>
+.mobile-picture {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+.mobile-picture {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+}
+</style>

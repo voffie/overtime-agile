@@ -13,10 +13,13 @@ const emit = defineEmits(["back"])
     <template v-if="props.intro">
       <h1>You look closer to Guini</h1>
       <p>This must be an older version of the guini doll. It looks like it's been through a lot.</p>
-        <br></br> 
+        <br>
       <p>Wait a minute... there is a lamp blinking in the eye! Is it recording? How long have I been watched? 
         I must get out of here before someone catches me sneaking around!</p>
       <br>
+       <div class="mobile-picture">
+      <img class="guini-img img" src="@/assets/img/execOffice/guini_office_animation.gif" alt="Guini-GIF" />
+      </div>
       <button class="button" @click="emit('back')">
         Go back to the office
       </button>
@@ -27,3 +30,18 @@ const emit = defineEmits(["back"])
     </template>
   </div>
 </template>
+
+<style scoped>
+.mobile-picture {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+.mobile-picture {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+}
+</style>

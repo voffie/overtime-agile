@@ -22,6 +22,11 @@ CREATE TABLE game (
     'office',
     'ending'
   ) NOT NULL DEFAULT 'break',
+  ending_choice ENUM(
+    'stay',
+    'quit',
+    'press'
+  ) DEFAULT NULL,
   is_completed BOOLEAN NOT NULL DEFAULT FALSE,
   FOREIGN KEY (playerid) REFERENCES player(id) ON DELETE CASCADE
 );

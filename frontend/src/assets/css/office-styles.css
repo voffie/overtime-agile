@@ -27,6 +27,13 @@
   border-radius: 20px;
 
   display: block;
-  margin: 7px auto;
   text-align: center;
+  margin: 7px auto;
+
+}
+
+#ending-text {
+  font-size: 25px;
+  line-height: 1.6;
+  margin-bottom: 20px;
 }

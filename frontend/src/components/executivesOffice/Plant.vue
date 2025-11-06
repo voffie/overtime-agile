@@ -13,6 +13,9 @@ const emit = defineEmits(["back"])
       <h1>You look closer to the plant</h1>
       <p>This plant got pests</p>
       <br>
+      <div class="mobile-picture">
+    <img class="plant-img img" src="@/assets/img/execOffice/plantinvestation.gif" alt="plant" />
+      </div>
       <button class="button" @click="emit('back')">
         Go back to the office
       </button>
@@ -24,3 +27,18 @@ const emit = defineEmits(["back"])
     </template>
   </div>
 </template>
+
+<style scoped>
+.mobile-picture {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+.mobile-picture {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+}
+</style>
