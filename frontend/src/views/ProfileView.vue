@@ -1,5 +1,4 @@
 <script setup>
-import axios from "@/axios"
 import { ref, onMounted } from "vue";
 import { computed } from "vue";
 
@@ -46,12 +45,16 @@ onMounted(async () => {
 
   try {
     // fetch username
-    const res = await axios.get(`/api/players/${storedUsername}`);
-    username.value = res.data.player.username;
+    const res = await fetch(`http://localhost:3000/api/players/${storedUsername}`);
+    const data = await res.json();
 
-    // fetch top 5 completed games
-    const gamesRes = await axios.get(`/api/games/top5/${storedUsername}`);
-    games.value = gamesRes.data.games;
+    username.value = data.player.username;
+
+    // fetch completed games
+    const gamesRes = await fetch(`http://localhost:3000/api/games/top5/${storedUsername}`);
+    const gameData = await gamesRes.json();
+    console.log(gameData.games)
+    games.value = gameData.games;
   } catch (err) {
     username.value = "Error loading user";
   }
