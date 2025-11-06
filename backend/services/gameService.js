@@ -110,23 +110,21 @@ export async function deleteGameById(id) {
 }
 
 export async function getTop5CompletedGamesByUsername(username) {
-  const sql = `
-    SELECT 
-      g.id,
-      g.current_room,
-      g.time_room_break,
-      g.time_room_archive,
-      g.time_room_design,
-      g.time_room_server,
-      g.time_room_office,
-      (g.time_room_break + g.time_room_archive + g.time_room_design + g.time_room_server + g.time_room_office) AS total_time
-    FROM game g
-    JOIN player p ON g.playerid = p.id
-    WHERE p.username = ? AND g.is_completed = 1
-    ORDER BY total_time ASC
-    LIMIT 5
-  `;
-
-  const [rows] = await db.query(sql, [username]);
+  const [rows] = await db.query(
+    `SELECT g.*
+     FROM game g
+     JOIN player p ON g.playerid = p.id
+     WHERE p.username = ?
+       AND (g.time_room_break > 0 
+        OR g.time_room_archive > 0
+        OR g.time_room_design > 0
+        OR g.time_room_server > 0
+        OR g.time_room_office > 0)
+     ORDER BY (
+          g.time_room_break + g.time_room_archive + g.time_room_design + g.time_room_server + g.time_room_office
+     ) ASC
+     LIMIT 5`,
+     [username]
+  );
   return rows;
 }
