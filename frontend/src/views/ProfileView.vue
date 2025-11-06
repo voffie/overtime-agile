@@ -1,10 +1,8 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { computed } from "vue";
+import { computed, ref, onMounted } from "vue";
 
 const username = ref("Loading...");
 const games = ref([]);
-const formatRoom = (room) => room.charAt(0).toUpperCase() + room.slice(1);
 
 function formatTime(seconds) {
   const m = Math.floor(seconds / 60);
@@ -53,7 +51,6 @@ onMounted(async () => {
     // fetch completed games
     const gamesRes = await fetch(`http://localhost:3000/api/games/top5/${storedUsername}`);
     const gameData = await gamesRes.json();
-    console.log(gameData.games)
     games.value = gameData.games;
   } catch (err) {
     username.value = "Error loading user";
