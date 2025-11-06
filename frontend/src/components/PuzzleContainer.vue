@@ -1,48 +1,67 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Button from '@/components/Button.vue'
+import { currentGame } from '@/utils/currentGame.js'
+import { timer } from '@/utils/timer.js'
 
 const props = defineProps(['nextRoute'])
 const state = ref('intro')
 const router = useRouter()
+const elapsedTimeFormatted = ref('00:00:00')
 
-function updateState(newState) {
-  state.value = newState
+async function updateState(newState) {
+
+  if(newState === 'outro') {
+
+    const dbUpdateSuccess = await persistTimeAndCurrentRoom()
+
+    if(dbUpdateSuccess) {
+      state.value = newState
+    }
+    
+  } else {
+    state.value = newState
+  }
 }
 
-async function redirect() {
-  const parts = props.nextRoute.split("/")
-  const nextRoom = parts.pop()
-  const gameId = localStorage.getItem("currentGameId")
-
-  if (!gameId) {
-    console.error("No gameId found in localStorage")
-    return
-  }
-
+async function persistTimeAndCurrentRoom(){
   try {
-  const response = await fetch(`http://localhost:3000/api/games/${gameId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
-    body: JSON.stringify({ current_room: nextRoom })
-    })
+    timer.stop()
+    const elapsedTimeSeconds = timer.getElapsedTimeInSeconds()
+    await currentGame.updateTimeForCurrentRoom(elapsedTimeSeconds)
+    const parts = props.nextRoute.split("/")
+    const nextRoom = parts.pop()
+    await currentGame.updateCurrentRoom(nextRoom)
+    return true;
 
-    if (!response.ok) {
-      throw new Error("Failed to update room")
-    }
   } catch (error) {
-    console.error("Error updating room:", error)
-    return
+    console.error(`Error updating current room: ${error.message}`)
+    return false;
   }
+}
 
+function redirect() {
   router.push(props.nextRoute)
 }
+
+onMounted(() => {
+  // When a player renders a PuzzleContainer, start the timer.
+  timer.start((formattedTime) => {
+    elapsedTimeFormatted.value = formattedTime
+  })
+})
+
+onUnmounted(() => {
+  timer.reset() // Stop and reset timer if leaving unexpectedly
+})
+
 </script>
 
 <template>
+  <!-- Turn this on if you want to see the timer. It is only here as a help, not final solution.
+  <p>{{ elapsedTimeFormatted }}</p>
+  -->
   <section class="room-wrapper" :class="{ 'outro-wrapper': state === 'outro' }">
     <!-- Desktop -->
     <section v-if="state !== 'solved' && state !== 'outro'" class="puzzle-text">
