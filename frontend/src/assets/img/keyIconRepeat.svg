@@ -62,12 +62,12 @@
     </clipPath>
   </defs>
   <path
-     style="opacity:0.997389;fill:none;fill-opacity:1;stroke:#e2dfe2;stroke-width:2;stroke-linejoin:bevel;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Triangle)"
+     style="opacity:0.997389;fill:none;fill-opacity:1;stroke:white;stroke-width:2;stroke-linejoin:bevel;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Triangle)"
      d="M 3.2340473,5.4098811 C 3.1584325,3.5050261 2.7491168,0.99361393 8.5562191,1.4367531 l 4.2665069,0.1385384 0.150236,2.3056436 0.0062,2.8221879"
      id="path11"
      sodipodi:nodetypes="ccccc" />
   <path
-     style="opacity:0.997389;fill:none;fill-opacity:1;stroke:#e2dfe2;stroke-width:2;stroke-linejoin:bevel;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Triangle)"
+     style="opacity:0.997389;fill:none;fill-opacity:1;stroke:white;stroke-width:2;stroke-linejoin:bevel;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Triangle)"
      d="m 12.962029,10.82118 c 0.03178,1.831795 1.127857,4.270147 -4.6792451,3.827007 l -4.923064,-0.04384 -0.150236,-2.305644 -0.0062,-2.8221883"
      id="path12"
      sodipodi:nodetypes="ccccc" />
