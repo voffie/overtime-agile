@@ -43,13 +43,16 @@ const props = defineProps({
 }
 
 .form-button {
+  background: #E69138;
+  color: white;
   width: 100%;
-  margin: 1rem auto;
+  margin-bottom: 1rem;
   font-size: larger;
 }
 
-.secondary-form-container {
-  border-top: 0.2rem double var(--border);
+.form-button-secondary {
+  border: 2px solid #E69138;
+  background: transparent;
 }
 
 .form-button-secondary {
