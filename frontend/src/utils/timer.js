@@ -42,7 +42,7 @@ export const timer = {
     },
 
     getElapsedTimeInSeconds() {
-        const seconds = Math.floor((this.elapsedTime % 60000) / 1000)
+        const seconds = Math.floor(this.elapsedTime / 1000)
         return seconds
     }
 };
