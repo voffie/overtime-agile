@@ -7,6 +7,7 @@ const guessInput = ref("")
 const guessCounter = ref(0)
 const text = ref("")
 const riddleKeys = ["riddle1", "riddle2", "riddle3", "confession"]
+const isTransitioning = ref(false)
 
 
 const index = ref(0)
@@ -114,10 +115,12 @@ function handlesCorrectGuess() {
   guessCounter.value = 0
   pickedColor.value = guessInput.value
   isWrongColor.value = true
+  isTransitioning.value = true
   setTimeout(() => {
     isWrongColor.value = false;
     text.value = ""
     index.value = 0
+    isTransitioning.value = false
     isImageLoaded.value = false
   }, 3500)
 
@@ -140,7 +143,7 @@ function isGuessCorrect() {
 <template>
   <section class="riddle-container">
     <section class="riddle-text" :class="{ 'show': currentRiddleText?.riddleInfo }">
-      <p class="riddle-information"> {{ currentRiddleText?.riddleInfo }} </p>
+      <p v-if="!isTransitioning" class="riddle-information"> {{ currentRiddleText?.riddleInfo }} </p>
     </section>
     <figure v-show="isImageLoaded" class="riddle-figure" :class="{ 'fade-in': isImageLoaded, 'blurry': isImageLoaded }">
       <img v-if="!isWrongColor" @load="onImageLoaded" class="riddle-img" :src="currentRiddle.imgPath"
@@ -152,7 +155,7 @@ function isGuessCorrect() {
       </div>
     </figure>
     <section class="riddle-input-container">
-      <section class="riddle-text" :class="{ 'show': currentRiddleText?.riddleInfo }">
+      <section v-if="!isTransitioning" class="riddle-text" :class="{ 'show': currentRiddleText?.riddleInfo }">
         <p :style="{ fontFamily: 'Share Tech Mono, monospace' }">{{ text }}</p>
         <p v-show="guessCounter >= 3 && riddleHint" class="riddle-hint"> {{ riddleHint }} </p>
       </section>
