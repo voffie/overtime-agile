@@ -90,6 +90,7 @@ const handlesLogin = async () => {
     onSuccess: (response) => {
       localStorage.setItem('token', response.token)
       localStorage.setItem('currentPlayerId', response.playerId)
+      localStorage.setItem('username', response.username)
       routeToNextPage.push({ name: 'home' })
     },
   })

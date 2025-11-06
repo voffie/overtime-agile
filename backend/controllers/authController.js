@@ -28,13 +28,12 @@ export async function loginUser(req, res) {
     }
 
     const token = signToken({ id: player.id, username: player.username }, context);
-    return res.status(200).json({ token, playerId: player.id });
+    return res.status(200).json({ token, playerId: player.id, username: player.username });
 
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" })
 
   }
-
 }
 
 export function verifyMyToken(req, res) {
@@ -44,7 +43,6 @@ export function verifyMyToken(req, res) {
     return res.status(401).json({ error: "Missing or invalid Authorization header", status: false });
 
   }
-
 
   try {
     const myToken = token.split(" ")[1];
@@ -56,6 +54,4 @@ export function verifyMyToken(req, res) {
     return res.status(403).json({ error: "Invalid or expired token refresh", status: false });
 
   }
-
-
 }

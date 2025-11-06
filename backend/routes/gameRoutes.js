@@ -11,3 +11,4 @@ GameRouter.get(
 GameRouter.get("/api/games/:gameId", GameController.getGameById);
 GameRouter.patch("/api/games/:gameId", GameController.updateGame);
 GameRouter.delete("/api/games/:gameId", GameController.deleteGame);
+GameRouter.get("/api/games/top5/:username", GameController.getTop5Games);

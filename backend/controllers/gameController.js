@@ -1,4 +1,5 @@
 import * as GameService from "../services/gameService.js";
+import { getTop5CompletedGamesByUsername } from "../services/gameService.js";
 
 export async function getGameById(req, res) {
 
@@ -96,3 +97,13 @@ export async function deleteGame(req, res) {
   }
 }
 
+export async function getTop5Games(req, res) {
+  const username = req.params.username;
+
+  try {
+    const results = await getTop5CompletedGamesByUsername(username);
+    return res.json({ games: results });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}
