@@ -108,3 +108,25 @@ export async function deleteGameById(id) {
     throw new Error(`Failed to DELETE game in database with id: ${id}. ${error.message}`)
   }
 }
+
+export async function getTop5CompletedGamesByUsername(username) {
+  const sql = `
+    SELECT 
+      g.id,
+      g.current_room,
+      g.time_room_break,
+      g.time_room_archive,
+      g.time_room_design,
+      g.time_room_server,
+      g.time_room_office,
+      (g.time_room_break + g.time_room_archive + g.time_room_design + g.time_room_server + g.time_room_office) AS total_time
+    FROM game g
+    JOIN player p ON g.playerid = p.id
+    WHERE p.username = ? AND g.is_completed = 1
+    ORDER BY total_time ASC
+    LIMIT 5
+  `;
+
+  const [rows] = await db.query(sql, [username]);
+  return rows;
+}

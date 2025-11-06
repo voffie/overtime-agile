@@ -3,6 +3,13 @@ import axios from "@/axios"
 import { ref, onMounted } from "vue";
 
 const username = ref("Loading...");
+const games = ref([]);
+
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}min ${s}s`;
+}
 
 onMounted(async () => {
   const storedUsername = localStorage.getItem("username");
@@ -13,14 +20,18 @@ onMounted(async () => {
   }
 
   try {
+    // fetch username
     const res = await axios.get(`/api/players/${storedUsername}`);
     username.value = res.data.player.username;
+
+    // fetch top 5 completed games
+    const gamesRes = await axios.get(`/api/games/top5/${storedUsername}`);
+    games.value = gamesRes.data.games;
   } catch (err) {
     username.value = "Error loading user";
   }
 });
 
-const games = ["10.02", "11.02", "12.02", "13.02", "14.02"]
 </script>
 
 <template>
@@ -37,14 +48,19 @@ const games = ["10.02", "11.02", "12.02", "13.02", "14.02"]
         
         <div class="container-right">
             <div class="container-games">
+                <div>You are in the room: <strong>{{ games[0]?.current_room }}</strong></div>
                 <div class="games-background">
                     <h3 class="games-title"><u>Top 5 Games</u></h3>
                     <div class="container-games-list">
-                        <ol>
-                            <li v-for="(game, index) in games" :key="index">
-                            {{ game }}
-                            </li>
-                        </ol>
+                        <ul>
+                        <li v-for="game in games" :key="game.id">
+                            Break Room: {{ formatTime(game.time_room_break) }}<br>
+                            Archive Room: {{ formatTime(game.time_room_archive) }}<br>
+                            Design Room: {{ formatTime(game.time_room_design) }}<br>
+                            Server Room: {{ formatTime(game.time_room_server) }}<br>
+                            Office Room: {{ formatTime(game.time_room_office) }}
+                        </li>
+                        </ul>
                     </div>
                 </div>
             </div>
