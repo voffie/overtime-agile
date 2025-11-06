@@ -69,10 +69,10 @@ const model = computed({
 <style scoped>
 .form-field {
   display: flex;
-  background: #aba3ab;
+  border: 2px solid var(--orange);
   border-radius: 1rem;
-  margin: 1rem;
-  flex-direction: row;
+  margin-bottom: 1rem;
+  gap: .5rem;
 }
 
 .form-label {
@@ -80,14 +80,25 @@ const model = computed({
   padding: 0.4rem;
 }
 
+.form-label img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .form-input {
-  background: #aba3ab;
+  background: none;
+  color: white;
   border-radius: 1rem;
-  width: 75%;
+  width: 100%;
   border: none;
   outline: none;
-  caret-color: #000000;
+  caret-color: #FFFFFF;
   font-weight: bolder;
+}
+
+.form-input::placeholder {
+  color: white;
 }
 
 .warning-message {

@@ -163,12 +163,12 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
 
 <template>
   <section class="home-page">
-    <h1 class="login-header">{{ isLogin ? 'Overtime' : 'Credentials' }}</h1>
+    <img src="@/assets/img/home/overtime-logo-v1-orange.svg" alt="Overtime logo" />
     <section class="login-page">
       <section class="form-container">
         <form class="form-login" @submit.prevent="handlesSubmit(isLogin)">
           <fieldset class="form-fieldset">
-            <legend class="form-legend">{{ isLogin ? 'Welcome' : 'New Account' }}</legend>
+            <legend class="form-legend">{{ isLogin ? 'Login' : 'Register' }}</legend>
             <FormField v-model="formValues.username" label-for="username" :icon-src="usernameIcon"
               icon-alt="username icon" input-type="text" name="username" placeholder="Enter username" :required="true"
               :warning-message="errorMessages.username" />
@@ -204,10 +204,14 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
 .home-page {
   height: 100%;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.login-header {
-  text-align: center;
+.home-page img {
+  width: 80%;
+  height: fit-content;
 }
 
 .form-container {
@@ -217,7 +221,8 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
   margin: 2rem auto;
   flex-direction: column;
   border-radius: 2rem;
-  background: var(--container-bg);
+  background: transparent;
+  border: 4px solid var(--orange);
   width: clamp(12.5rem, 90%, 28rem);
 }
 
@@ -227,7 +232,6 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
 
 .form-login {
   width: 100%;
-  margin: 1rem;
 }
 
 .form-legend {
@@ -279,6 +283,12 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
   .form-container {
     width: clamp(20rem, 70%, 42rem);
     margin: 1rem auto;
+  }
+
+  .home-page img {
+    width: 35%;
+    height: fit-content;
+    margin-bottom: 2rem;
   }
 }
 </style>
