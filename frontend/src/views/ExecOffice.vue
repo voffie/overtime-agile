@@ -59,7 +59,6 @@ function checkPassword(completed) {
           <button class="button" @click="letter()">Letter</button>
           <button class="button" @click="plant()">Plant</button>
           <button class="button" @click="guini()">Guini</button>
-
         </div>
         
       </div>
@@ -129,10 +128,10 @@ function checkPassword(completed) {
     
 
     <template #puzzleOutro>
-      <div>
+      <div class="success">
         <h1>Success!!</h1>
         <p>You successfully logged into the computer!</p>
-        <br>
+       <img class="computer-img" src="@/assets/img/execOffice/computer.png" alt="Computer" />
       </div>
     </template>
   </PuzzleContainer>
@@ -218,6 +217,15 @@ function checkPassword(completed) {
   background-color:#365134;
 }
 
+  .computer-img {
+    width: 60%;
+  }
+
+    .success {
+    display: grid;
+    justify-items: center;
+  }
+
 @media screen and (max-width: 767px) {
 
 .sign-in-form {
@@ -259,5 +267,6 @@ function checkPassword(completed) {
   .choices .computer-btn {
     grid-column: span 2;  
   }
+
 }
 </style>
