@@ -162,7 +162,7 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
 
 <template>
   <section class="home-page">
-    <img class="overtime-logo" src="@/assets/img/home/overtime-logo-v1-orange.svg" alt="Overtime logo" />
+    <img src="@/assets/img/home/overtime-logo-v1-orange.svg" alt="Overtime logo" />
     <section class="login-page">
       <section class="form-container">
         <form class="form-login" @submit.prevent="handlesSubmit(isLogin)">
@@ -221,7 +221,7 @@ const isTheSamePassword = (userPasswordEntered, repeatedEnteredPassword) => {
   flex-direction: column;
   border-radius: 2rem;
   background: transparent;
-  border: 4px solid #E69138;
+  border: 4px solid var(--orange);
   width: clamp(12.5rem, 90%, 28rem);
 }
 

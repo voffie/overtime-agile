@@ -69,7 +69,7 @@ const model = computed({
 <style scoped>
 .form-field {
   display: flex;
-  border: 2px solid #E69138;
+  border: 2px solid var(--orange);
   border-radius: 1rem;
   margin-bottom: 1rem;
   gap: .5rem;
@@ -83,6 +83,7 @@ const model = computed({
 .form-label img {
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
 
 .form-input {

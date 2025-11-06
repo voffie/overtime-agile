@@ -43,7 +43,7 @@ const props = defineProps({
 }
 
 .form-button {
-  background: #E69138;
+  background: var(--orange);
   color: white;
   width: 100%;
   margin-bottom: 1rem;
@@ -51,11 +51,8 @@ const props = defineProps({
 }
 
 .form-button-secondary {
-  border: 2px solid #E69138;
+  border: 2px solid var(--orange);
   background: transparent;
-}
-
-.form-button-secondary {
   font-size: small;
 }
 </style>

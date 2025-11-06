@@ -39,13 +39,13 @@ async function continueGame() {
 
     const currentRoom = await currentGame.getCurrentRoom();
     routeTo(`/room/${currentRoom}`);
-    
+
   } catch (error) {
     errorMessage.value = "Failed to continue game.";
     console.error(`Failed to continue game: ${error.message}`);
   }
-  
-  
+
+
 }
 
 async function createNewGame() {
@@ -59,12 +59,12 @@ async function createNewGame() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ playerId })
     };
-  
+
     const newGameResponse = await fetch(
-      "http://localhost:3000/api/games", 
+      "http://localhost:3000/api/games",
       newGameRequest
     );
-    
+
     const data = await newGameResponse.json();
 
     if(!newGameResponse.ok) {
@@ -88,7 +88,7 @@ function handleLogout() {
 }
 
 onMounted( async() => {
-  
+
   try {
 
     const maybeCurrentGame = await currentGame.getByPlayerId();
@@ -108,7 +108,7 @@ onMounted( async() => {
     hasCurrentGame.value = null;
     btnTopText.value = "ERROR"
   }
-  
+
 });
 
 </script>
@@ -127,7 +127,7 @@ onMounted( async() => {
         </div>
       </div>
     </div>
-    
+
 
     <div class="container-right">
       <div class="container-text">
@@ -137,7 +137,7 @@ onMounted( async() => {
 
     </div>
   </div>
-  
+
 </template>
 
 <style scoped>
@@ -165,7 +165,7 @@ onMounted( async() => {
 .container-meny {
   width: 80%;
   background: transparent;
-  border: 4px solid #E69138;
+  border: 4px solid var(--orange);
   border-radius: 2rem;
   display: flex;
   flex-direction: column;
@@ -183,7 +183,7 @@ onMounted( async() => {
 }
 
 .btn-meny {
-  border: 2px solid #E69138;
+  border: 2px solid var(--orange);
   background-color: transparent;
   color: white;
   font-weight: bold;
@@ -196,7 +196,7 @@ onMounted( async() => {
 }
 
 .btn-top {
-  background: #E69138;
+  background: var(--orange);
   color: white;
   height: 5rem;
   font-size: 1.8rem;
@@ -217,7 +217,7 @@ onMounted( async() => {
 
 .overtime-slogan {
   font-size: 1.5rem;
-  color: #E69138;
+  color: var(--orange);
 }
 
 .error {
@@ -237,9 +237,9 @@ onMounted( async() => {
   .container-right {
     flex: 0.6;
   }
-  
+
   .container-meny {
-    border: 3px solid #E69138;
+    border: 3px solid var(--orange);
     padding: 2rem;
     align-self: first baseline;
     margin-top: 1rem;
@@ -250,7 +250,7 @@ onMounted( async() => {
   }
 
   .btn-meny {
-    border: 1.5px solid #E69138;
+    border: 1.5px solid var(--orange);
     font-size: 1rem;
   }
 
