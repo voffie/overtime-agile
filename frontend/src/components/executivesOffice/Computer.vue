@@ -2,6 +2,7 @@
 import { ref } from "vue"
 import Successful from "./Successful.vue"
 import "@/assets/css/office-styles.css"
+import ExecOffice from "@/views/ExecOffice.vue"
 
 const props = defineProps({
   intro: Boolean
@@ -11,11 +12,12 @@ const password = ref("")
 const isSuccess = ref(false)
 const errorMessage = ref("")
 const correctPassword = "0621"
-const emit = defineEmits(["back"])
+const emit = defineEmits(["back", "solved"])
 
 function checkPassword() {
   if (password.value === correctPassword) {
     isSuccess.value = true
+    emit("solved")
   }
   else {
     isSuccess.value = false
@@ -44,9 +46,7 @@ function checkPassword() {
         Go back to the office
       </button>
       </div>
-      <div v-else>
-        <Successful @solved="emit('solved')" />
-      </div>
+
     </template>
     <template v-else>
       <img class="computer-img img" src="@/assets/img/execOffice/computer.png" alt="Computer" />

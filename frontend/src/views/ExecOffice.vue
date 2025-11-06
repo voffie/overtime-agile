@@ -118,10 +118,17 @@ function computer() {
       </div>
 
       <div v-else-if="selected === 'computer'">
-      <Computer @solved="markPuzzleSolved('executive-office')" />
+      <Computer/>
       </div>
     </template>
 
+    <template #puzzleOutro>
+      <div>
+        <h1>Success!!</h1>
+        <p>You successfully logged into the computer!</p>
+        <br>
+      </div>
+    </template>
   </PuzzleContainer>
 </template>
 
