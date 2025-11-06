@@ -1,15 +1,40 @@
 <script setup>
 import axios from "@/axios"
 import { ref, onMounted } from "vue";
+import { computed } from "vue";
 
 const username = ref("Loading...");
 const games = ref([]);
+const formatRoom = (room) => room.charAt(0).toUpperCase() + room.slice(1);
 
 function formatTime(seconds) {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
   return `${m}min ${s}s`;
 }
+
+function formatRoomFont(room) {
+  if (!room) return "";
+  return room.toUpperCase();
+}
+
+const filteredGames = computed(() => {
+  return games.value.map(game => {
+    const rooms = [
+      { name: "Break Room", time: game.time_room_break },
+      { name: "Archive Room", time: game.time_room_archive },
+      { name: "Design Room", time: game.time_room_design },
+      { name: "Server Room", time: game.time_room_server },
+      { name: "Office Room", time: game.time_room_office },
+    ].filter(r => r.time > 0);
+
+    return {
+      id: game.id,
+      current_room: game.current_room,
+      rooms
+    }
+  });
+});
 
 onMounted(async () => {
   const storedUsername = localStorage.getItem("username");
@@ -31,7 +56,6 @@ onMounted(async () => {
     username.value = "Error loading user";
   }
 });
-
 </script>
 
 <template>
@@ -48,18 +72,19 @@ onMounted(async () => {
         
         <div class="container-right">
             <div class="container-games">
-                <div><h2>You are in the <strong>{{ games[0]?.current_room }}</strong> room! </h2></div>
+                <div class="games-title">You are currently in the <br><strong>{{ formatRoomFont(games[0]?.current_room) }}</strong> room! </div>
+                
+                <hr class="divider" />
+
                 <div class="games-background">
-                    <h3 class="games-title"><u>Top 5 Games</u></h3>
+                    <h2>Solved rooms and times:</h2>
                     <div class="container-games-list">
                         <ul>
-                        <li v-for="game in games" :key="game.id">
-                            Break Room: {{ formatTime(game.time_room_break) }}<br>
-                            Archive Room: {{ formatTime(game.time_room_archive) }}<br>
-                            Design Room: {{ formatTime(game.time_room_design) }}<br>
-                            Server Room: {{ formatTime(game.time_room_server) }}<br>
-                            Office Room: {{ formatTime(game.time_room_office) }}
-                        </li>
+                            <li v-for="game in filteredGames" :key="game.id">
+                                <li v-for="room in game.rooms" :key="room.name">
+                                    {{ room.name }}: {{ formatTime(room.time) }}
+                                </li>                                
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -115,20 +140,26 @@ onMounted(async () => {
 }
 
 .games-background {
-    border: 4px solid #E69138;
-    border-radius: 2rem;
-    padding: 4rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
 .games-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .container-games-list {
     font-size: 1.2rem;
+}
+
+.divider {
+  width: 90%;
+  margin: 1rem auto;
+  border: 0;
+  border-top: 2px solid #E69138;
+  opacity: 0.7;
 }
 
 @media screen and (max-width: 768px) {
