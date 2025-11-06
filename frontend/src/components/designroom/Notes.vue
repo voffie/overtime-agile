@@ -16,7 +16,7 @@ const props = defineProps({
 
 const selectedNote = ref(null)
 
-const emit = defineEmits(["close", "riddle-to-solve"]);
+const emit = defineEmits(["close"]);
 
 function closeModal() {
   emit("close")

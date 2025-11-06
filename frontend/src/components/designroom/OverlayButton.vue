@@ -186,7 +186,6 @@ onUnmounted(() => {
   .overlay-backdrop {
     max-width: 67rem;
     max-height: 67rem;
-    position: relative;
   }
 }
 </style>
