@@ -169,7 +169,7 @@ onUnmounted(() => {
 }
 
 .overlay-title {
-  padding: 1rem auto;
+  padding: 1rem;
   border-radius: 1.2rem;
   background: var(--container-bg);
   text-align: center;
@@ -183,9 +183,11 @@ onUnmounted(() => {
 }
 
 @media screen and (min-width: 768px) {
+
   .overlay-backdrop {
     max-width: 67rem;
     max-height: 67rem;
+    overflow: auto;
   }
 }
 </style>
