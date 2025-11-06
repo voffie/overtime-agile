@@ -80,11 +80,11 @@ onMounted(async () => {
                     <h2>Solved rooms and times:</h2>
                     <div class="container-games-list">
                         <ul>
-                            <li v-for="game in filteredGames" :key="game.id">
+                            <template v-for="game in filteredGames" :key="game.id">
                                 <li v-for="room in game.rooms" :key="room.name">
                                     {{ room.name }}: {{ formatTime(room.time) }}
                                 </li>                                
-                            </li>
+                            </template>
                         </ul>
                     </div>
                 </div>
