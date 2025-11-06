@@ -10,22 +10,31 @@ const state = ref('intro')
 const router = useRouter()
 const elapsedTimeFormatted = ref('00:00:00')
 
-function updateState(newState) {
-  state.value = newState
+async function updateState(newState) {
 
   if(newState === 'outro') {
 
-    try {
-      timer.stop()
-      const elapsedTimeSeconds = timer.getElapsedTimeInSeconds()
-      currentGame.updateTimeForCurrentRoom(elapsedTimeSeconds)
-      const parts = props.nextRoute.split("/")
-      const nextRoom = parts.pop()
-      currentGame.updateCurrentRoom(nextRoom)
+    const dbUpdateSuccess = await persistTimeAndCurrentRoom()
 
-    } catch (error) {
-      console.error(`Error updating current room: ${error.message}`)
+    if(dbUpdateSuccess) {
+      state.value = newState
     }
+  }
+}
+
+async function persistTimeAndCurrentRoom(){
+  try {
+    timer.stop()
+    const elapsedTimeSeconds = timer.getElapsedTimeInSeconds()
+    await currentGame.updateTimeForCurrentRoom(elapsedTimeSeconds)
+    const parts = props.nextRoute.split("/")
+    const nextRoom = parts.pop()
+    await currentGame.updateCurrentRoom(nextRoom)
+    return true;
+
+  } catch (error) {
+    console.error(`Error updating current room: ${error.message}`)
+    return false;
   }
 }
 
@@ -33,16 +42,15 @@ async function redirect() {
   router.push(props.nextRoute)
 }
 
-// When a player renders a PuzzleContainer, start the timer.
 onMounted(() => {
+  // When a player renders a PuzzleContainer, start the timer.
   timer.start((formattedTime) => {
     elapsedTimeFormatted.value = formattedTime
   })
 })
 
-// Stop and reset timer if leaving unexpectedly
 onUnmounted(() => {
-  timer.reset()
+  timer.reset() // Stop and reset timer if leaving unexpectedly
 })
 
 </script>
