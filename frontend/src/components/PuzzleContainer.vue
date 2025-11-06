@@ -19,6 +19,9 @@ async function updateState(newState) {
     if(dbUpdateSuccess) {
       state.value = newState
     }
+    
+  } else {
+    state.value = newState
   }
 }
 
