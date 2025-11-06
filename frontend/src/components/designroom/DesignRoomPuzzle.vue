@@ -33,6 +33,7 @@ const puzzleCompleted = ref(false)
 const metaPuzzleCompleted = ref(false)
 const puzzleButtonVisible = ref(false)
 const hidePuzzle = ref(false)
+const shakeInput = ref(false)
 
 const showModal = ref(false)
 
@@ -70,17 +71,34 @@ const metaPuzzleText = ref(`The bunny head starts to vibrate and a burst of ligh
         You think.. and enter the following:`
 )
 
+function inputShakeDeactivator() {
+  const duration = 2500
+  if (shakeInput.value) {
+    setTimeout(() => {
+      shakeInput.value = false
+
+    }, duration);
+
+  }
+
+}
+
 function isGuessCorrect() {
-  const guessTrimmed = guessInput.value.trim()
+  const guessTrimmed = guessInput.value.replaceAll(" ", "");
+
   if (!guessTrimmed) {
     return
   }
   if (guessTrimmed.toLowerCase() === answerToMetaPuzzle.value.toLowerCase()) {
     metaPuzzleCompleted.value = true
+    return
 
   };
+  shakeInput.value = true
+
 
   guessInput.value = ""
+  inputShakeDeactivator()
 
 }
 
@@ -100,8 +118,8 @@ function isGuessCorrect() {
     <section v-else>
       <h2>One to rule them all</h2>
       <p class="meta-text">{{ metaPuzzleText }}</p>
-      <input @keyup.enter="isGuessCorrect()" v-model="guessInput" class="meta-input" type="text"
-        placeholder="What are my favorite colors ... ">
+      <input :class="{ 'shake': shakeInput }" @keyup.enter="isGuessCorrect()" v-model="guessInput" class="meta-input"
+        type="text" placeholder="What are my favorite colors ... ">
       <Button @click="isGuessCorrect" class="meta-button" text="Enter Password" />
     </section>
   </section>
@@ -184,6 +202,30 @@ function isGuessCorrect() {
   transition: all 0.2s ease-in-out;
   font-size: 1rem;
 
+}
+
+.meta-input.shake {
+  animation: shake 0.2s ease-in-out 0s 2;
+  box-shadow: 0 0 0.5em red;
+
+}
+
+@keyframes shake {
+  0% {
+    margin-left: 0rem;
+  }
+
+  25% {
+    margin-left: 0.5rem;
+  }
+
+  75% {
+    margin-left: -0.5rem;
+  }
+
+  100% {
+    margin-left: 0rem;
+  }
 }
 
 .meta-input:focus {
