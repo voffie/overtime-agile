@@ -41,7 +41,7 @@ async function persistTimeAndCurrentRoom(){
   }
 }
 
-async function redirect() {
+function redirect() {
   router.push(props.nextRoute)
 }
 
