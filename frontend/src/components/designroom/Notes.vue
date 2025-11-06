@@ -101,6 +101,7 @@ function closeSelectedNote() {
   flex-direction: column;
   align-items: center;
   box-shadow: 6px 18px 28px -2px #f9f9f9;
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .modal-img {

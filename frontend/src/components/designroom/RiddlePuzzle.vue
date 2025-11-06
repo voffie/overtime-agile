@@ -1,13 +1,14 @@
 <script setup>
-
+import { riddleData as riddleTextImported } from "@/components/designroom/data/riddleData"
 import { computed, ref } from "vue"
 import Button from "@/components/Button.vue"
 
 const guessInput = ref("")
-const text = ref("")
 const guessCounter = ref(0)
+const text = ref("")
+const riddleKeys = ["riddle1", "riddle2", "riddle3", "confession"]
 
-const answer = ref("black")
+
 const index = ref(0)
 const isImageLoaded = ref(false)
 
@@ -19,18 +20,51 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+
+  riddleText: {
+    type: Object,
+    required: false,
+    default: () => riddleTextImported,
+  }
 });
 
 const allRiddlesKeys = computed(() => {
-  return Object.keys(props.riddles)
+  return riddleKeys.filter(key => props.riddles[key])
 })
 
 const currentRiddleKey = computed(() => {
-  return [allRiddlesKeys.value[index.value]]
+  if (index.value >= allRiddlesKeys.value.length) {
+    return allRiddlesKeys.value[allRiddlesKeys.value.length - 1]
+  }
+  return allRiddlesKeys.value[index.value]
 });
 
 const currentRiddle = computed(() => {
   return props.riddles[currentRiddleKey.value]
+
+})
+
+const currentRiddleText = computed(() => {
+  return props.riddleText[currentRiddleKey.value]
+
+})
+
+const wrongHeaderText = computed(() => {
+  if (text.value === "Incorrect guess") return "The Add of the Future";
+  return `This "${pickedColor.value.toLocaleLowerCase()}" slide is different ...`
+
+})
+
+const riddleHint = computed(() => {
+
+  if (guessCounter.value > 0 && guessCounter.value % 3 === 0 && currentRiddleText.value.hint) {
+    const hints = currentRiddleText.value.hint;
+    const idx = Math.floor(Math.random() * hints.length);
+    return hints[idx];
+
+  }
+
+  return "Mhh might need to read this again..";
 
 })
 
@@ -54,7 +88,7 @@ function checkColorGuess() {
   if (guessInput.value.trim().length === 0 || !isColorValid(guessInput.value)) return false;
 
   const lowerCaseGuess = guessInput.value.toLowerCase();
-  const lowerCaseAnswer = answer.value.toLocaleLowerCase();
+  const lowerCaseAnswer = currentRiddleText?.value?.answer.toLocaleLowerCase();
   return lowerCaseAnswer === lowerCaseGuess;
 }
 
@@ -62,24 +96,42 @@ function onImageLoaded() {
   isImageLoaded.value = true
 }
 
+function handlesWrongGuess() {
+  text.value = "Incorrect guess"
+  isWrongColor.value = !isWrongColor.value
+  pickedColor.value = isValidCSSWordColor(guessInput.value) ? guessInput.value : "red";
+  setTimeout(() => {
+    isWrongColor.value = false;
+    text.value = ""
+  }, 2500)
+}
+
+function handlesCorrectGuess() {
+  let solvedRiddleKey = currentRiddleKey.value
+  emit("riddle-solved", solvedRiddleKey)
+  text.value = ""
+  index.value += 1
+  guessCounter.value = 0
+  pickedColor.value = guessInput.value
+  isWrongColor.value = true
+  setTimeout(() => {
+    isWrongColor.value = false;
+    text.value = ""
+    index.value = 0
+    isImageLoaded.value = false
+  }, 3500)
+
+}
+
 
 function isGuessCorrect() {
   if (!checkColorGuess()) {
-    text.value = "Incorrect guess"
-    isWrongColor.value = !isWrongColor.value
-    pickedColor.value = isValidCSSWordColor(guessInput.value) ? guessInput.value : "red";
-    setTimeout(() => {
-      isWrongColor.value = false;
-    }, 2500)
+    handlesWrongGuess()
   } else {
-    text.value = "Correct guess"
-    index.value += 1
+    handlesCorrectGuess()
   }
   guessInput.value = "";
   guessCounter.value += 1;
-
-
-
 }
 
 </script>
@@ -87,27 +139,35 @@ function isGuessCorrect() {
 
 <template>
   <section class="riddle-container">
-    <figure class="riddle-figure" :class="{ 'fade-in': isImageLoaded, 'blurry': isImageLoaded }">
+    <section class="riddle-text" :class="{ 'show': currentRiddleText?.riddleInfo }">
+      <p class="riddle-information"> {{ currentRiddleText?.riddleInfo }} </p>
+    </section>
+    <figure v-show="isImageLoaded" class="riddle-figure" :class="{ 'fade-in': isImageLoaded, 'blurry': isImageLoaded }">
       <img v-if="!isWrongColor" @load="onImageLoaded" class="riddle-img" :src="currentRiddle.imgPath"
         :alt="currentRiddle.imgAltText">
       <div class="riddle-wrong" v-else :style="{ backgroundColor: pickedColor }">
-        <h2 class="wrong-header">The Add of the Future</h2>
+        <h2 class="wrong-header">
+          {{ wrongHeaderText }}
+        </h2>
       </div>
     </figure>
-    <section class="riddle-container">
-      <section class="riddle-text" :class="{ 'show': text }">
-        <p class="riddle-information"> {{ text }} </p>
-        <p class="riddle-hint"> {{ text }} </p>
+    <section class="riddle-input-container">
+      <section class="riddle-text" :class="{ 'show': currentRiddleText?.riddleInfo }">
+        <p :style="{ fontFamily: 'Share Tech Mono, monospace' }">{{ text }}</p>
+        <p v-show="guessCounter >= 3 && riddleHint" class="riddle-hint"> {{ riddleHint }} </p>
       </section>
-      <input @keyup.enter="isGuessCorrect()" v-model="guessInput" class="riddle-input" type="text"
-        placeholder="Pick a Color Slide ... ">
-      <Button @click="isGuessCorrect()" class="riddle-button" text="Insert colored slide" />
+      <section class="riddle-input-container" v-if="currentRiddleKey !== 'confession'">
+        <input @keyup.enter="isGuessCorrect()" v-model="guessInput" class="riddle-input" type="text"
+          placeholder="Pick a Color Slide ... ">
+        <Button @click="isGuessCorrect" class="riddle-button" text="Insert colored slide" />
+      </section>
     </section>
   </section>
 </template>
 
 <style scoped>
-.riddle-container {
+.riddle-container,
+.riddle-input-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -116,7 +176,7 @@ function isGuessCorrect() {
   height: 100%;
   padding: 1rem;
   margin: 0.5rem auto;
-  gap: 1rem;
+  row-gap: 0.5rem;
 }
 
 .riddle-figure {
@@ -159,22 +219,22 @@ function isGuessCorrect() {
 
 .riddle-wrong {
   display: flex;
-  width: 100%;
-  height: 100%;
-  padding: 2rem;
-  width: 50vw;
-  height: 50vh;
+  height: 70vh;
+  width: 70vw;
   justify-content: center;
   align-items: center;
+  border: 4px dashed var(--border);
 
 }
 
 
-wrong-header {
+.wrong-header {
   text-align: center;
   text-wrap: balance;
-  padding: 2rem;
-  height: 100%;
+  padding: 0.5rem;
+  background: var(--background);
+  border-radius: 1rem 0.5rem;
+  margin: 0.5rem auto;
 
 }
 
@@ -188,6 +248,7 @@ wrong-header {
   text-wrap: balance;
   opacity: 0;
   transition: opacity 3.5s ease-in-out;
+  white-space: pre-line;
 }
 
 .riddle-text.show {
@@ -197,6 +258,7 @@ wrong-header {
 .riddle-information {
   border: 2px dashed var(--border);
   font-family: inherit;
+  padding: 1rem;
 }
 
 .riddle-hint {
@@ -235,5 +297,13 @@ wrong-header {
 .riddle-input::placeholder {
   color: #aaa;
   font-style: italic;
+}
+
+.riddle-button {
+  min-height: 4rem;
+  min-width: 4rem;
+  margin: 0.5rem auto;
+  width: 100%;
+  font-size: larger;
 }
 </style>

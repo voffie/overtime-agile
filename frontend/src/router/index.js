@@ -64,7 +64,7 @@ const router = createRouter({
       path: '/room/design',
       name: 'room-design',
       component: () => import('@/views/DesignRoomView.vue'),
-      meta: { title: 'Design Room', requiredAuth: false },
+      meta: { title: 'Design Room', requiredAuth: true },
     },
   ],
 })

@@ -47,6 +47,18 @@ function previousPage() {
   title.value = allStories.value[indexNew]
 }
 
+const designroomOutroText = ref(`
+A new schematic is displayed on Frank's laptop... Your heart stops.. not again!
+You look at the schematic and gasp ..
+Why does it have a hard drive and a radio component?
+What does it connect to and why?
+
+
+You tear up the bunny and find a hard drive, your next stop is to find a connector interface to bunnies proprietary ssd connection...
+You head to the server room since you remember seeing a cable there that might fit.
+
+`)
+
 </script>
 
 <template>
@@ -80,9 +92,9 @@ function previousPage() {
         <DesignRoomPuzzle :solve="completed" />
       </template>
       <template #puzzleOutro>
+        <h2 class="outro-header">Exiting the room in horror</h2>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat mollis erat. Nullam
-          pellentesque et, tincidunt ac sem. Proin.
+          {{ designroomOutroText }}
         </p>
       </template>
     </PuzzleContainer>
@@ -114,6 +126,19 @@ function previousPage() {
   padding: 0.75rem auto;
   font-weight: bold;
   margin: 0.5rem 0;
+
+}
+
+.outro-header {
+
+  display: inline-flex;
+  justify-content: flex-start;
+  background-color: var(--container-bg);
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 0.3rem 1rem;
+  margin-right: 0.5rem;
+  padding-left: 2rem;
 
 }
 </style>
