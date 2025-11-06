@@ -65,8 +65,14 @@ const router = createRouter({
       name: 'profile',
       component: () => import('@/views/ProfileView.vue'),
       meta: { title: 'Overtime', requiredAuth: true }
-    }
-  ]
+    },
+    {
+      path: '/room/design',
+      name: 'room-design',
+      component: () => import('@/views/DesignRoomView.vue'),
+      meta: { title: 'Design Room', requiredAuth: true },
+    },
+  ],
 })
 
 router.beforeEach(async (to) => {
