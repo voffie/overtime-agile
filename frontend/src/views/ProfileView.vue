@@ -48,7 +48,7 @@ onMounted(async () => {
         
         <div class="container-right">
             <div class="container-games">
-                <div>You are in the room: <strong>{{ games[0]?.current_room }}</strong></div>
+                <div><h2>You are in the <strong>{{ games[0]?.current_room }}</strong> room! </h2></div>
                 <div class="games-background">
                     <h3 class="games-title"><u>Top 5 Games</u></h3>
                     <div class="container-games-list">
