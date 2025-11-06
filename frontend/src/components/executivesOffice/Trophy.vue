@@ -15,7 +15,10 @@ const emit = defineEmits(["back"])
       <p>It says he's the winner of some manager award. 
         The price tag is still there. 30$ at Wallmart. 
         Did he buy this trophy himself? Pathetic.</p>
-              <br>
+        <br>
+        <div class="mobile-picture">
+        <img class="trophy-img img" src="@/assets/img/execOffice/trophy.png" alt="trophy" />
+        </div>
 
     <button class="button" @click="emit('back')">
         Go back to the office
@@ -28,3 +31,18 @@ const emit = defineEmits(["back"])
     </template>
   </div>
 </template>
+
+<style scoped>
+.mobile-picture {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+.mobile-picture {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+}
+</style>
