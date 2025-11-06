@@ -12,7 +12,7 @@ const btnTopText = ref("");
 function handleGame() {
 
   if(hasCurrentGame.value === null) {
-    // do nothing.
+    return // do nothing
   } else if (hasCurrentGame.value) {
     continueGame();
   } else {

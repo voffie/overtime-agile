@@ -61,6 +61,77 @@ export const currentGame = {
         }
     },
 
+    async updateCurrentRoom(room) {
+
+        try {
+
+            const allowedRooms = ['break', 'archive', 'design', 'server', 'office', 'ending'];
+
+            if (!allowedRooms.includes(room)) {
+                throw new Error(`Invalid room: "${room}".`);
+            }
+
+            const gameId = ls.getGameId();
+
+            const updateGameRequest = {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ current_room: room })
+            };
+
+            const updateGameResponse = await fetch(
+                `http://localhost:3000/api/games/${gameId}`,
+                updateGameRequest
+            );
+
+            const data = await updateGameResponse.json();
+
+            if (!updateGameResponse.ok) {
+                throw new Error(data.error);
+            }
+
+        } catch (error) {
+            throw new Error(`Failed to update current room: ${error.message}`);
+        }
+    },
+
+    async updateTimeForCurrentRoom(time) {
+
+        try {
+
+            const maybeTime = Number(time);
+
+            // Number(null or "") = 0
+            // Number(undefined or not a number) = NaN
+            if (isNaN(maybeTime) || maybeTime === 0) {
+                throw new Error(`Invalid time: "${time}".`);
+            }
+
+            const gameId = ls.getGameId();
+            const currentRoom = await this.getCurrentRoom();
+
+            const updateGameRequest = {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ [`time_room_${currentRoom}`]: time })
+            };
+
+            const updateGameResponse = await fetch(
+                `http://localhost:3000/api/games/${gameId}`,
+                updateGameRequest
+            );
+
+            const data = await updateGameResponse.json();
+
+            if (!updateGameResponse.ok) {
+                throw new Error(data.error);
+            }
+
+        } catch (error) {
+            throw new Error(`Failed to update time for current room: ${error.message}`);
+        }
+    },
+
     async isActive() {
         const game = await this.getByPlayerId();
         return game ? true : false;
