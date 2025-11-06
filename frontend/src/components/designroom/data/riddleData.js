@@ -9,13 +9,13 @@ export const riddleData = {
   "riddle2": {
     answer: "yellow",
     riddleInfo: "You insert the black QISR slide and a new maddening rhyme appears... Who wrote this? For what purpose? An elaborate prank..?!",
-    hint: ["Maybe... there's something beyond the text...?", "Mhh... maybe if I look around the desk something willl hit me... ?"]
+    hint: ["Maybe... there's something beyond the text...?", "Mhh... maybe if I look around the desk something will hit me... ?"]
 
   },
   "riddle3": {
     answer: "blue",
     riddleInfo: "You lift the blue slide... it feels different from the others. Worn edges. Tiny scratches across its surface. Someone’s handled this one often. But why? And who’s been watching?",
-    hint: ["Mhh... what does a crown, gem stones and blood all have in common..?", "Ehh… the winter one, the one about the seasons… how do ice and snow fit with everything else below it?", "mhh.. isn't suppose to be spring... why spring(s)?"]
+    hint: ["Mhh... what does a crown, gem stones and blood all have in common..?", "Ehh… the winter one, the one about the seasons… how do ice and snow fit with everything else below it?", "mhh.. isn't supposed to be spring... why spring(s)?"]
 
   },
   "confession": {

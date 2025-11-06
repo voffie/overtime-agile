@@ -16,6 +16,7 @@ const props = defineProps({
   connectsTo: { type: String, required: true },
   ctaButtonText: { type: String, required: true },
   hasOverlaySlot: { type: Boolean, default: false },
+  isIntroButton: { type: Boolean, default: false },
 
 })
 
@@ -26,7 +27,7 @@ const emit = defineEmits(['update:title', 'update:showButton'])
 
 
 function ctaButtonClick() {
-  if (props.ctaButtonText !== "Intro Completed") {
+  if (!props.isIntroButton) {
     emit("update:title", props.connectsTo)
   } else {
     showButtonClick()

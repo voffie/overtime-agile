@@ -17,7 +17,7 @@ export const storyMap = {
 
   },
   "Moving Towards the Dungeon": {
-    startStory: "As you move down the corridor, the office has a sudden change. The air is thicker, and the lack of natural light is evident.You have entered the so-called “office-dungeon,” where the design and server rooms live.",
+    startStory: "As you move down the corridor, the office has a sudden change. The air is thicker, and the lack of natural light is evident. You have entered the so-called “office-dungeon,” where the design and server rooms live.",
     endStory: "Frankly, you never liked this part of the office. It always gave you the heebie-jeebies, and on top of that, the department managers gave an eerie discomfort ...especially Frank Miller.",
     connectsTo: "Entering the Dragon’s Nest",
     ctaButtonText: "Continue down the stairs",
@@ -79,7 +79,7 @@ Curiosity got the better of you, and you pick up the post-it note`,
   },
   "Project Obscura": {
     startStory: "You flick the projector switch .....",
-    endStory: "and a crisp, whirring hum rings out as the gears engage to pull the new slide into place. Suddenly you feel a piercing gaze form the left..",
+    endStory: "and a crisp, whirring hum rings out as the gears engage to pull the new slide into place. Suddenly you feel a piercing gaze form the left...",
     connectsTo: "Follow the Rabbit Down the Hole",
     ctaButtonText: "Eww a.. bunny head?",
     hasOverlaySlot: true,
@@ -101,6 +101,7 @@ Curiosity got the better of you, and you pick up the post-it note`,
     ctaButtonText: "Intro Completed",
     hasOverlaySlot: false,
     overlay: null,
+    isIntroButton: true,
   }
 
 }

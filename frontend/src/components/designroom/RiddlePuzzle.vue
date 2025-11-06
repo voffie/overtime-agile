@@ -51,7 +51,7 @@ const currentRiddleText = computed(() => {
 
 const wrongHeaderText = computed(() => {
   if (text.value === "Incorrect guess") return "The Add of the Future";
-  return `This "${pickedColor.value.toLocaleLowerCase()}" slide is different ...`
+  return `This "${pickedColor.value.toLowerCase()}" slide is different ...`
 
 })
 
@@ -88,7 +88,7 @@ function checkColorGuess() {
   if (guessInput.value.trim().length === 0 || !isColorValid(guessInput.value)) return false;
 
   const lowerCaseGuess = guessInput.value.toLowerCase();
-  const lowerCaseAnswer = currentRiddleText?.value?.answer.toLocaleLowerCase();
+  const lowerCaseAnswer = currentRiddleText?.value?.answer.toLowerCase();
   return lowerCaseAnswer === lowerCaseGuess;
 }
 

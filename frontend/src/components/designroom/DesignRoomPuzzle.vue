@@ -71,10 +71,11 @@ const metaPuzzleText = ref(`The bunny head starts to vibrate and a burst of ligh
 )
 
 function isGuessCorrect() {
-  if (guessInput.value.trim() === 0) {
-    return false
+  const guessTrimmed = guessInput.value.trim()
+  if (!guessTrimmed) {
+    return
   }
-  if (guessInput.value.toLocaleLowerCase() === answerToMetaPuzzle.value.toLocaleLowerCase()) {
+  if (guessTrimmed.toLowerCase() === answerToMetaPuzzle.value.toLowerCase()) {
     metaPuzzleCompleted.value = true
 
   };
