@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Share+Tech+Mono&family=Syne+Mono&display=swap');
 
 :root {
   --background: #000;
@@ -9,6 +9,7 @@
   --border: gray;
   --warning: #fed400;
   --orange: #E69138;
+
   /* Extra Figma colors (group needs to decide variable names if they are used)
   #5f4a36;
   #85634a;
@@ -20,7 +21,6 @@
   ##767676;
   #b58c8c
 */
-  ;
 }
 
 *,
