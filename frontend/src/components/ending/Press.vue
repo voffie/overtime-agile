@@ -13,7 +13,7 @@ async function endGame() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         is_completed: true,
         ending_choice: 'press'
       })
@@ -27,7 +27,7 @@ async function endGame() {
     return
   }
 
-  router.push('/home')
+  router.push('/credits')
 }
 
 </script>

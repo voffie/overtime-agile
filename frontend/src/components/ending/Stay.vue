@@ -13,7 +13,7 @@ async function endGame() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         is_completed: true,
         ending_choice: 'stay'
       })
@@ -27,7 +27,7 @@ async function endGame() {
     return
   }
 
-  router.push('/home')
+  router.push('/credits')
 }
 </script>
 
@@ -36,7 +36,7 @@ async function endGame() {
   <div class="ending-text">
     <h1>You stay at Heartcore</h1>
 <p>
-The next morning comes and you get ready for a new day at Heartcore. You arrive at the office 5 minutes and put your lunchbox in the break room fridge. 
+The next morning comes and you get ready for a new day at Heartcore. You arrive at the office 5 minutes and put your lunchbox in the break room fridge.
 Same as always, a canned soup. You walk to your desk and start the computer. A new mail had arrived overnight, must be after you left. From an anonymous sender.</p>
 
 <p>It's 5 files, 4 videos and a text file. You look through them, it's videos of you in every room you've entered yesterday. You open the text file. It's just one line: "We are watching you."</p>
