@@ -1,20 +1,14 @@
 <script setup>
-import { useRouter } from 'vue-router'
 import { onMounted, ref, onUnmounted } from "vue"
 import WestLogo from "@/assets/img/West_Logo.svg"
-const router = useRouter()
 const showCredits = ref(false);
 const timeOutId = ref(null)
 
-function goBackTohome() {
-  router.push('/home');
-}
 onMounted(() => {
   clearAllTimeOut();
   const delay = 200;
   timeOutId.value = setTimeout(() => {
     showCredits.value = true
-
   }, delay);
 })
 
@@ -23,7 +17,7 @@ onUnmounted(() => {
   showCredits.value = false;
 });
 
-function clearAllTimeOut(){
+function clearAllTimeOut() {
   clearTimeout(timeOutId.value)
 
 }
@@ -34,16 +28,26 @@ const creditsData = {
     role: "Backend Login Flow & Design Room & Sound Engineer",
     coffeecups: 2500,
   },
-"Victoria Naenfeldt Eklund":{
-mockrole: "Aspect Assistant",
-role: "Break Room and Home Page Engineer",
-coffeecups: 1234
-},
-"Viktor Söderborg": {
-  mockrole: "Typing Assistant",
-  role: "Server Room creator & Secretary",
-  coffeecups: 0
-}
+  "Victoria Naenfeldt Eklund": {
+    mockrole: "Aspect Assistant",
+    role: "Break Room and Home Page Engineer",
+    coffeecups: 1234
+  },
+  "Viktor Söderborg": {
+    mockrole: "Typing Assistant",
+    role: "Server Room creator & Secretary",
+    coffeecups: 0
+  },
+  "Stelle Simonlatser": {
+    mockrole: "Interpretent",
+    role: "Archive Room services & Profile page controller",
+    coffeecups: 1529
+  },
+  "Tova Bryngelsson": {
+    mockrole: "Basic bitch",
+    role: "Executives Office and Ending master",
+    coffeecups: "I'm allergic to hot beverages",
+  }
 
 }
 
