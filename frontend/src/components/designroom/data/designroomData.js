@@ -35,7 +35,7 @@ export const storyMap = {
 
   "Entering the Dragon’s Nest": {
     startStory: "You push open the door… to the Design Room -->",
-    endStory: "Everywhere you look, there are desks covered with rulers, markers, and color-coded schematics. Bins overflow with rolled-up sheets of paper, and at the center of it all sits Frank Miller’s desk.",
+    endStory: "Everywhere you look, there are desks covered with rulers, markers, and color-coded schematics. Bins overflowing with rolled-up sheets of paper, and at the center of it all sits Frank Miller’s desk.",
     connectsTo: "Frank Miller’s Desk",
     ctaButtonText: "Walk to the desk",
     hasOverlaySlot: false,
@@ -44,7 +44,7 @@ export const storyMap = {
   },
 
   "Frank Miller’s Desk": {
-    startStory: "There are a few things around the desk that catch your eye: a guinea head from an old model, a post-it note with something scribbled on it, ",
+    startStory: "There are a few things around the desk that catch your eye: a Guini head from an old model, a Post-it note with something scribbled on it, ",
     endStory: `... a drawer full of colored slides some of them labeled QISR and lastly, the thing you came for: the old, trusty projector.
 
 Curiosity got the better of you, and you pick up the post-it note`,

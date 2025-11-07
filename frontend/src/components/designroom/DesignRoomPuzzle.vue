@@ -61,14 +61,14 @@ function unlockRiddles(key) {
   }
 }
 
-const metaPuzzleText = ref(`The bunny head starts to vibrate and a burst of light flickers and then no more.\n You try to flick switch again but no response from the bunny.
-        You look at the post-it note again and realize Frank's laptop is underneath it, you open the lid.
+const metaPuzzleText = ref(`The bunny head starts to vibrate and a burst of light flickers and then no more.\nYou try to flick the switch again, but there's no response from the bunny.
+        You look at the Post-it note again... and then decide to open the lid.
 
-        The login screen appears with the question: what are my favorite colors?
+        A login screen appears with the question: "What are my favorite colors?"
 
-        You pause and look at the Post-it note and remember the maddening journey of text.
+        You look at the Post-it note and recall the maddening journey of text.
 
-        You think.. and enter the following:`
+        ...and enter the following:`
 )
 
 function inputShakeDeactivator() {

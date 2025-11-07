@@ -14,13 +14,13 @@ export const riddleData = {
   },
   "riddle3": {
     answer: "blue",
-    riddleInfo: "You lift the blue slide... it feels different from the others. Worn edges. Tiny scratches across its surface. Someone’s handled this one often. But why? And who’s been watching?",
+    riddleInfo: "You pick up the yellow slide... and you insert it... Feeling a bit uneasy about the whole ordeal... where is this leading me..?",
     hint: ["Mhh... what does a crown, gem stones and blood all have in common..?", "Ehh… the winter one, the one about the seasons… how do ice and snow fit with everything else below it?", "mhh.. isn't supposed to be spring... why spring(s)?"]
 
   },
   "confession": {
     answer: "blue",
-    riddleInfo: "For a short moment... you hold your breath and pause...\nSuddenly the bunny head makes squealing noise almost like a cry...\n And the moment is gone.. \nAnd to your surprise, you notice that Frank's laptop hidden beneath the Post-It note.",
+    riddleInfo: "The blue slide felt different from the others. The worn edges, the tiny scratches across its surface. Someone had handled this slide often. Why? And who?.. You hold your breath and pause for a minute...\nSuddenly the bunny head makes a squealing noise almost like a cry... \n It was then you noticed that Frank's laptop, hidden beneath the Post-it note.",
     hint: null
 
   }
