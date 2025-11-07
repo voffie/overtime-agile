@@ -72,6 +72,12 @@ const router = createRouter({
       component: () => import('@/views/DesignRoomView.vue'),
       meta: { title: 'Design Room', requiredAuth: true },
     },
+    {
+      path: '/credits',
+      name: 'credits',
+      component: () => import('@/views/CreditsView.vue'),
+      meta: { title: 'Credits', requiredAuth: true },
+    },
   ],
 })
 
